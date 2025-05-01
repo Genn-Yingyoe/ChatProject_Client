@@ -91,5 +91,10 @@ namespace Login___Signup
                     return code;
             }
         }
+
+        private void txtNewID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

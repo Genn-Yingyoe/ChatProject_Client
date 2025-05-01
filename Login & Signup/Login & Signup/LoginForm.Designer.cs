@@ -36,6 +36,9 @@
             // 
             // txtID
             // 
+            this.txtID.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtID.Location = new System.Drawing.Point(25, 290);
             this.txtID.Multiline = true;
             this.txtID.Name = "txtID";
@@ -45,6 +48,9 @@
             // 
             // txtPW
             // 
+            this.txtPW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPW.Location = new System.Drawing.Point(25, 345);
             this.txtPW.Multiline = true;
             this.txtPW.Name = "txtPW";

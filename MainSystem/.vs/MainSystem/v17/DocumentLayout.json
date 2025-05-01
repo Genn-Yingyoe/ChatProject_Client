@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\mainhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\mainhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,12 +26,25 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainHub.cs",
+              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainHub.cs",
+              "RelativeDocumentMoniker": "MainSystem\\MainHub.cs",
+              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainHub.cs",
+              "RelativeToolTip": "MainSystem\\MainHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T08:03:06.64Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form1.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\Form1.cs",
-              "RelativeDocumentMoniker": "MainSystem\\Form1.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\Form1.cs [\uB514\uC790\uC778]",
-              "RelativeToolTip": "MainSystem\\Form1.cs [\uB514\uC790\uC778]",
+              "Title": "MainHub.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainHub.cs",
+              "RelativeDocumentMoniker": "MainSystem\\MainHub.cs",
+              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainHub.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\MainHub.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T02:41:39.297Z",
               "EditorCaption": " [\uB514\uC790\uC778]"

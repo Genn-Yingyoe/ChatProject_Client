@@ -42,7 +42,8 @@
             this.txtNewID.Name = "txtNewID";
             this.txtNewID.Size = new System.Drawing.Size(300, 50);
             this.txtNewID.TabIndex = 1;
-            this.txtNewID.Text = "ID\r\n";
+            this.txtNewID.Text = "NewID\r\n";
+            this.txtNewID.TextChanged += new System.EventHandler(this.txtNewID_TextChanged);
             // 
             // txtNewPW
             // 
@@ -51,7 +52,7 @@
             this.txtNewPW.Name = "txtNewPW";
             this.txtNewPW.Size = new System.Drawing.Size(300, 50);
             this.txtNewPW.TabIndex = 2;
-            this.txtNewPW.Text = "PW";
+            this.txtNewPW.Text = "NewPW";
             // 
             // txtName
             // 
