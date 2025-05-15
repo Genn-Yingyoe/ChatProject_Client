@@ -36,7 +36,7 @@ namespace ChatMoa_DataBaseServer
     internal class _User_Id__Inform_Box
     {
         //primary key
-        [DataMember] internal string Inform_Id;
+        [DataMember] internal int Inform_Id;
         [DataMember] internal string Inform_Kind;
         [DataMember] internal string Inform_Date;
         [DataMember] internal string Inform_Str;
@@ -123,7 +123,7 @@ namespace ChatMoa_DataBaseServer
     // Request Data parsing method
     // byte[0] == opcode                                | kind of request
     // byte[1 .. 6] == User_id(6)                       | User_Id that sent the request
-    // byte[7] == receive num of datas                  | receive num of data
-    // byte[8 .. (7+byte[7])] == receive lengths        | receive lengths of data
-    // byte[(7+byte[7])+1 .. ] == datas                 
+    // byte[7 .. 10] == receive num of datas(num)       | receive num of data
+    // byte[11 .. (10+num*4)] == receive lengths        | receive lengths of data
+    // byte[(10+num*4)+1 .. ] == datas                 
 }
