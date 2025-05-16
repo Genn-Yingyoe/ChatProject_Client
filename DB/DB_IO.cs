@@ -15,124 +15,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Services;
 using System.Windows.Forms;
 using System.Runtime.InteropServices.ComTypes;
-
-/*  ndjson 사용 예시
-[DataContract]
-internal class Person
-{
-    [DataMember]
-    internal string name;
-
-    [DataMember]
-    internal int age;
-}
-
-namespace testndjsonandTCP
-{
-    internal class Program
-    {
-        public static void Main()
-        {
-            var p1 = new Person();
-            var p2 = new Person();
-            var l = new List<Person>();
-            p1.name = "John";
-            p1.age = 42;
-            p2.name = "Bob";
-            p2.age = 1;
-            l.Add(p1);
-            l.Add(p2);
-
-            
-
-            
-            
-            using (var writer = new StreamWriter("output.ndjson"))
-            {
-                foreach (var p in l)
-                {
-                    var ms = new MemoryStream();
-                    var ser = new DataContractJsonSerializer(typeof(Person));
-                    ser.WriteObject(ms, p);
-
-                    byte[] json = ms.ToArray();
-                    ms.Close();
-
-                    string j = Encoding.UTF8.GetString(json, 0, json.Length);
-
-                    Console.WriteLine(j);
-                    writer.WriteLine(j);
-                }
-            }
-
-            using (var reader = new StreamReader("output.ndjson"))
-            {
-                var ser = new DataContractJsonSerializer(typeof(Person));
-                string line;
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    byte[] bytes = Encoding.UTF8.GetBytes(line);
-                    using (var ms = new MemoryStream(bytes))
-                    {
-                        var p = (Person)ser.ReadObject(ms);
-
-                        Console.Write("한줄: ");
-                        Console.WriteLine($"name = {p.name}, age={p.age}");
-                    }
-                }
-            }
-        }
-    }
-}
- */
-
-/*  비동기 사용법
- private static async Task<bool> TryAppendLineAsync(string path, string line, int retry = 3)
-{
-    for (int i = 0; i < retry; i++)
-    {
-        try
-        {
-            await AppendLineAsync(path, line);   // 비동기 버전 (WriteAsync 등 사용)
-            return true;                         // 성공
-        }
-        catch (IOException)
-        {
-            await Task.Delay(50);                // 백오프 후 재시도
-        }
-    }
-    return false;                                // 최종 실패
-}
-
-bool ok = await TryAppendLineAsync(path, jsonLine);
-if (!ok) Console.Error.WriteLine("저장 실패!");
-//////////////////////////////////////////////////////////////////
-//
-                        if (kind == 1)            // 텍스트
-                        {
-                            string text = Encoding.UTF8.GetString(body);
-                            var logObj = new Dictionary<string, object>   // ★ 익명 대신 Dictionary
-                            {
-                                ["ts"] = DateTime.UtcNow.ToString("o"),
-                                ["user"] = ep.ToString(),
-                                ["msg"] = text
-                            };
-                            TryAppendLine(@"Logs\chat.ndjson", SerializeJson(logObj));
-                        }
-                        else if (kind == 2)       // 이미지
-                        {\
-                            var logObj = new Dictionary<string, object>
-                            {
-                                ["ts"] = DateTime.UtcNow.ToString("o"),
-                                ["user"] = ep.ToString(),
-                                ["img"] = "fileName"
-                            };
-                            TryAppendLine(@"Logs\chat.ndjson", SerializeJson(logObj));
-                        }
-
-                        // 필요하다면 _clients.Keys 반복하며 브로드캐스트 가능
- */
+using System.Runtime.ConstrainedExecution;
+using System.Data;
+using System.Security.Cryptography;
 
 // idea : TCP 요청을 받아올 때, opcode를 지정 / opcode 별로 지정된 dictionary or POCO 객체 생성
 // ==> 이를 Data_Add,Edit,Del 에게 넘겨서 저장후 반환
@@ -176,7 +61,7 @@ namespace ChatMoa_DataBaseServer
         private static void DB_setup()
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
-            string dbDir = Path.Combine(basePath, "DB");
+            string dbDir = Path.Combine(basePath, @"\DB");
 
             if (!Directory.Exists(dbDir))
             {
@@ -258,8 +143,9 @@ namespace ChatMoa_DataBaseServer
                                    header[10];
 
                         int[] body_lengths = new int[bode_num];
-                        
-                        for(int i=0;i<bode_num;i++){
+
+                        for (int i = 0; i < bode_num; i++)
+                        {
                             byte[] temp = new byte[4];
                             await ReadExact(ns, temp, 4);
                             body_lengths[i] = (temp[0] << 24) |
@@ -269,33 +155,530 @@ namespace ChatMoa_DataBaseServer
                         }
 
                         byte[][] bodyBuf = new byte[bode_num][];
-                        for(int i=0;i<bode_num;i++){
+                        for (int i = 0; i < bode_num; i++)
+                        {
                             bodyBuf[i] = new byte[body_lengths[i]];
                             await ReadExact(ns, bodyBuf[i], body_lengths[i]);
                         }
 
                         string[] body = new string[bode_num];
 
-                        for(int i = 0; i < bode_num; i++)
+                        for (int i = 0; i < bode_num; i++)
                             body[i] = Encoding.UTF8.GetString(bodyBuf[i]);
 
-                        // ---- 콘솔 출력 ----
+
                         bool exist_user_id = await ExistUserAsync(user_id);
 
                         if (!exist_user_id)
                         {
                             Console.WriteLine("존재하지 않는 usercode 입니다");
                             //존재하지 않는 user_id
+                            break;
+                        }
+
+                        bool opcode_success = false;
+                        List<string> items = new List<string>() { user_id };
+                        foreach (string s in body)
+                            items.Add(s);
+
+                        List<string> path = new List<string>();
+                        List<int> delete_index = new List<int>();
+                        List<int> edit_index = new List<int>();
+                        var list = new List<(int, object)>();           //int >> 0 == Add | 1 == Edit | 2 == Delete
+
+                        if (opcode == 0)            //test              |   items = 
+                        {
+
+                        }
+                        else if (opcode == 1)       //register user     |   items = (User_id(not use), Id,Ps,Ps_question_index,Ps_ans,Name,Nickname)
+                        {
+                            //"User_Table.ndjson" user Add + "User_Info" user Add
+                            // + "_User_Id__Inform_Box" and "_User_Id__Friend_List" and "_User_Id__Setting_Info" empty file Add
+                            string new_user_id = await Create_User_Id();
+                            if(await SearchAsync<User_Table>(@"\DB\User_Table.ndjson",r=>r.Id == items[1]) != default)
+                            {
+                                //duplication id
+
+                            }
+                            User_Table make_user = new User_Table();
+                            make_user.User_Id = new_user_id;
+                            make_user.Id = items[1];
+                            make_user.Password = items[2];
+                            make_user.Ps_Question_Index = Int32.Parse(items[3]);
+                            make_user.Ps_Answer = items[4];
+                            path.Add(@"\DB\User_Table.ndjson");
+                            list.Add((0, make_user));
+
+                            User_Info make_user_info = new User_Info();
+                            make_user_info.User_Id = new_user_id;
+                            make_user_info.Name = items[5];
+                            make_user_info.Nickname = items[6];
+                            make_user_info.Profile_Image_Path = "";
+                            make_user_info.Chat_Room_List = new List<string>();
+                            make_user_info.Waiting_Chat_Room_List = new List<string>();
+                            path.Add(@"\DB\User_Info.ndjson");
+                            list.Add((0, make_user_info));
+
+                            string dir = Path.GetDirectoryName(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Inform_Box.ndjson");
+                            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                            if (!File.Exists(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Inform_Box.ndjson"))
+                            {
+                                using (File.Create(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Inform_Box.ndjson"))
+                                {
+                                }
+                            }
+                            dir = Path.GetDirectoryName(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Friend_List.ndjson");
+                            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                            if (!File.Exists(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Friend_List.ndjson"))
+                            {
+                                using (File.Create(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Friend_List.ndjson"))
+                                {
+                                }
+                            }
+
+                            _User_Id__Setting_Info make_user_setting_info1 = new _User_Id__Setting_Info()
+                            {
+                                Info_Id = "",
+                                Info_Str = ""
+                            };
+                            path.Add(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Setting_Info.ndjson");
+                            list.Add((0,make_user_setting_info1));
+
+                        }
+                        else if (opcode == 2)       //try login         |   items = (User_id(not use),Id,Ps)
+                        {
+                            //
+                            User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson",r => r.Id == items[1] && r.Password == items[2]);
+                            if (user != default)
+                            {
+                                //login success
+                            }
+                            else
+                            {
+                                //login failure
+                            }
+                        }
+                        else if (opcode == 3)       //find password     |   items = (User_id(not use),Id,Ps_index,Ps_ans,New_ps)
+                        {
+                            //if info same, "User_Table" Password Edit
+                            User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.Id == items[1]);
+                            if(user == default)
+                            {
+                                //not found id
+                            }
+                            else
+                            {
+                                if(user.Ps_Question_Index == Int32.Parse(items[1]) && user.Ps_Answer == items[2])
+                                {
+                                    //Ps_question success
+                                    user.Password = items[3];
+                                    path.Add(@"\DB\User_Table.ndjson");
+                                    using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                    {
+                                        int i = 0;
+                                        var ser = new DataContractJsonSerializer(typeof(User_Table));
+                                        string line;
+                                        while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                        {
+                                            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                            {
+                                                var row = (User_Table)ser.ReadObject(ms);
+                                                if (row.Id == items[1])
+                                                {
+                                                    edit_index.Add(i);
+                                                    break;
+                                                }
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                    list.Add((1,user));
+                                }
+                                else
+                                {
+                                    //Ps_question failure
+                                }
+                            }
+                        }
+                        else if (opcode == 4)       //change Nickname   |   items = (User_id, Nickname)
+                        {
+                            //
+                            User_Info user = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson",r => r.User_Id == user_id);
+                            user.Nickname = items[1];
+                            path.Add(@"\DB\User_Table.ndjson");
+                            using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                            {
+                                int i = 0;
+                                var ser = new DataContractJsonSerializer(typeof(User_Info));
+                                string line;
+                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                {
+                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    {
+                                        var row = (User_Info)ser.ReadObject(ms);
+                                        if (row.User_Id == user_id)
+                                        {
+                                            edit_index.Add(i);
+                                            break;
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                            list.Add((1, user));
+                        }
+                        else if (opcode == 5)       //change setting    |   items = (User_id, Info_id_1, Info_str_1, Info_id_2, Info_str_2, ... , Info_id_n, Info_str_n)
+                        {
+                            for(int i = 1; i <= items.Count; i++)
+                            {
+                                _User_Id__Setting_Info setting_info = new _User_Id__Setting_Info
+                                {
+                                    Info_Id = items[2 * i - 1],
+                                    Info_Str = items[2 * i]
+                                };
+                                path.Add(@"\DB\Users\" + user_id + @"\" + user_id + "_Setting_Info.ndjson");
+                                using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                {
+                                    int index = 0;
+                                    var ser = new DataContractJsonSerializer(typeof(_User_Id__Setting_Info));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                    {
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                        {
+                                            var row = (_User_Id__Setting_Info)ser.ReadObject(ms);
+                                            if (row.Info_Id == items[2 * i - 1])
+                                            {
+                                                edit_index.Add(index);
+                                                break;
+                                            }
+                                        }
+                                        index++;
+                                    }
+                                }
+                                list.Add((1, setting_info));
+                            }
+                        }
+                        else if (opcode == 6)       //friend request    |   items = (User_id, friend_id)
+                        {
+                            string friend = items[1];
+                            path.Add(@"\DB\Users\" + friend + @"\" + friend + "_Inform_Box.ndjson");
+                            list.Add((0, new _User_Id__Inform_Box
+                            {
+                                Inform_Id = (await LastInformId(path.Last())) + 1,
+                                Inform_Kind = "friend_request",
+                                Inform_Date = DateTime.Now.ToString("yyyyMMdd"),
+                                Inform_Str = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson",r=>r.User_Id == user_id)).Nickname + "님이 친구 요청을 보냈습니다.",
+                                need_items = new List<string> { user_id },
+                                Inform_Checked = false
+                            }));
+                        }
+                        else if (opcode == 7)       //friend delete     |   items = (User_id, friend_id)
+                        {
+                            string friend = items[1];
+                            path.Add(@"\DB\Users\" + user_id + @"\" + user_id + "_Friend_List.ndjson");
+                            using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                            {
+                                int i = 0;
+                                var ser = new DataContractJsonSerializer(typeof(_User_Id__Friend_List));
+                                string line;
+                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                {
+                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    {
+                                        var row = (_User_Id__Friend_List)ser.ReadObject(ms);
+                                        if (row.Friend_Id == friend)
+                                        {
+                                            delete_index.Add(i);
+                                            break;
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                            list.Add((2, null));
+
+                            path.Add(@"\DB\Users\" + friend + @"\" + friend + "_Friend_List.ndjson");
+                            using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                            {
+                                int i = 0;
+                                var ser = new DataContractJsonSerializer(typeof(_User_Id__Friend_List));
+                                string line;
+                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                {
+                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    {
+                                        var row = (_User_Id__Friend_List)ser.ReadObject(ms);
+                                        if (row.Friend_Id == user_id)
+                                        {
+                                            delete_index.Add(i);
+                                            break;
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                            list.Add((2, null));
+
+                        }
+                        else if (opcode == 8)       //check notify      |   items = (User_id, Inform_id, check_state)
+                                                    //>> check_state == 0 : 취소(or 의미없는 확인) / check_state == 1 : 수락
+                        {
+                            int inform_id = Int32.Parse(items[1]);
+                            if (items[2] == "1")
+                            {
+                                _User_Id__Inform_Box user_inform_box = await SearchAsync<_User_Id__Inform_Box>(@"\DB\Users\" + user_id + "_Inform_Box.ndjson",
+                                    r => r.Inform_Id == inform_id);
+                                path.Add(@"\DB\Users\" + user_id + "_Inform_Box.ndjson");
+                                user_inform_box.Inform_Checked = true;
+                                using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                {
+                                    int i = 0;
+                                    var ser = new DataContractJsonSerializer(typeof(_User_Id__Inform_Box));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                    {
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                        {
+                                            var row = (_User_Id__Inform_Box)ser.ReadObject(ms);
+                                            if (row.Inform_Id == inform_id)
+                                            {
+                                                edit_index.Add(i);
+                                                break;
+                                            }
+                                        }
+                                        i++;
+                                    }
+                                }
+                                list.Add((1, user_inform_box));
+                                if (user_inform_box.Inform_Kind == "friend_request")
+                                {
+                                    string friend = user_inform_box.need_items.First();
+                                    path.Add(@"\DB\Users\" + user_id + @"\" + user_id + "_Friend_List.ndjson");
+                                    list.Add((0,friend));
+
+                                    path.Add(@"\DB\Users\" + friend + @"\" + friend + "_Friend_List.ndjson");
+                                    list.Add((0, user_id));
+
+                                }
+                                else if(user_inform_box.Inform_Kind == "invite")
+                                {
+                                    string room_id = user_inform_box.need_items.First();
+                                    List<string> new_items = new List<string>();
+                                    new_items.Add(user_id);
+                                    new_items.Add(room_id);
+                                    new_items.Add(inform_id.ToString());
+                                    opcode_success = await ChatRoomClass.ChatHandlerAsync(ns, 35, new_items);
+                                }
+                            }
+                            else if (items[2] == "0")
+                            {
+                                //not execution
+                                _User_Id__Inform_Box user_inform_box = await SearchAsync<_User_Id__Inform_Box>(@"\DB\Users\" + user_id + "_Inform_Box.ndjson",
+                                    r => r.Inform_Id == inform_id);
+                                string room_id = user_inform_box.need_items.First();
+                                path.Add(@"\DB\Users\" + user_id + "_Inform_Box.ndjson");
+                                user_inform_box.Inform_Checked = true;
+
+                                using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                {
+                                    int i = 0;
+                                    var ser = new DataContractJsonSerializer(typeof(_User_Id__Inform_Box));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                    {
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                        {
+                                            var row = (_User_Id__Inform_Box)ser.ReadObject(ms);
+                                            if (row.Inform_Id == inform_id)
+                                            {
+                                                edit_index.Add(i);
+                                                break;
+                                            }
+                                        }
+                                        i++;
+                                    }
+                                }
+                                list.Add((1, user_inform_box));
+
+
+                                if (user_inform_box.Inform_Kind == "invite")
+                                {
+                                    path.Add(@"\DB\ChatRoom\" + room_id + @"\Chat_Room_" + room_id + "_Info.ndjson");
+                                    Chat_Room__Room_Id__Info room_info = await SearchAsync<Chat_Room__Room_Id__Info>(path.Last(), r => r.User_Id == user_id);
+                                    using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                    {
+                                        int i = 0;
+                                        var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Info));
+                                        string line;
+                                        while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                        {
+                                            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                            {
+                                                var row = (Chat_Room__Room_Id__Info)ser.ReadObject(ms);
+                                                if (row.User_Id == user_id)
+                                                {
+                                                    delete_index.Add(i);
+                                                    break;
+                                                }
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                    list.Add((2, null));
+
+                                    path.Add(@"\DB\User_Info.ndjson");
+                                    User_Info user = await SearchAsync<User_Info>(path.Last(), r => r.User_Id == user_id);
+                                    List<string> temp_waiting_list = user.Waiting_Chat_Room_List;
+                                    temp_waiting_list.Remove(room_id);
+                                    user.Waiting_Chat_Room_List = temp_waiting_list;
+                                    using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                    {
+                                        int i = 0;
+                                        var ser = new DataContractJsonSerializer(typeof(User_Info));
+                                        string line;
+                                        while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                        {
+                                            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                            {
+                                                var row = (User_Info)ser.ReadObject(ms);
+                                                if (row.User_Id == user_id)
+                                                {
+                                                    edit_index.Add(i);
+                                                    break;
+                                                }
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                    list.Add((1, user));
+                                }
+                            }
+                        }
+                        else if (opcode == 9)      //delete notify     |   items = (User_id, inform_id)
+                        {
+                            int inform_id = Int32.Parse(items[1]);
+
+                            path.Add(@"\DB\Users\" + user_id + "_Inform_Box.ndjson");
+                            using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                            {
+                                int i = 0;
+                                var ser = new DataContractJsonSerializer(typeof(_User_Id__Inform_Box));
+                                string line;
+                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                {
+                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    {
+                                        var row = (_User_Id__Inform_Box)ser.ReadObject(ms);
+                                        if (row.Inform_Id == inform_id)
+                                        {
+                                            delete_index.Add(i);
+                                            break;
+                                        }
+                                    }
+                                    i++;
+                                }
+                            }
+                            list.Add((2, null));
+                        }
+                        else if (opcode == 10)
+                        {
+                            // 향후 업데이트로 opcode가 추가된다면 추가로 코딩
+                        }
+                        else if (opcode >= 32)
+                        {
+                            opcode_success = await ChatRoomClass.ChatHandlerAsync(ns, opcode, items);
+                        }
+                        else if (opcode >= 64)
+                        {
+                            opcode_success = await SchedulerClass.SchedulerHandlerAsync(ns, opcode, items);
                         }
                         else
                         {
-                            //user_id가 존재시 
+                            // 향후 업데이트로 opcode가 추가된다면 추가로 코딩
                         }
 
-                    }
+                        IEnumerable<(object, string)> Add_temp = new List<(object, string)>();
+                        List<string> Edit_str = new List<string>();
+                        List<object> Edit_obj = new List<object>();
+                        List<int> Edit_int = new List<int>();
+                        List<string> Del_str = new List<string>();
+                        List<int> Del_int = new List<int>();
+                        int d_i = 0, e_i = 0;
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if (list[i].Item1 == 0)
+                                Add_temp.Append((list[i].Item2, path[i]));
+                            else if (list[i].Item1 == 1)
+                            {
+                                Edit_str.Add(path[i]);
+                                Edit_obj.Add(list[i].Item2);
+                                Edit_int.Add(edit_index[e_i++]);
+                            }
+                            else if (list[i].Item1 == 2)
+                            {
+                                Del_str.Add(path[i]);
+                                Del_int.Add(delete_index[d_i++]);
+                            }
+                            else
+                            {
+                                // error
+                                throw new Exception();
+                            }
+                        }
+
+                        if (Add_temp.Count() != 0)
+                        {
+                            opcode_success = await DB_IO.SafeBatchAppendAsync(Add_temp);
+                            if (opcode_success)
+                            {
+                                //error
+                                throw new Exception();
+                            }
+                        }
+                        if (Edit_str.Count() != 0)
+                        {
+                            opcode_success = await DB_IO.SafeBatchEditAsync(Edit_str, Edit_obj, Edit_int);
+                            if (!opcode_success)
+                            {
+                                //error
+                                throw new Exception();
+                            }
+                        }
+                        if (Edit_str.Count() != 0)
+                        {
+                            opcode_success = await DB_IO.SafeBatchDeleteAsync(Del_str, Del_int);
+                            if (!opcode_success)
+                            {
+                                //error
+                                throw new Exception();
+                            }
+                        }
+
+                        int total_len = 1;
+                        byte send_code = 0;
+                        if (opcode_success)
+                            send_code = 1;
+                            
+                        
+                        byte[] packet = new byte[total_len];
+
+                        packet[0] = send_code;
+
+                        try
+                        {
+                            await ns.WriteAsync(packet, 0, packet.Length)
+                                .ConfigureAwait(false);
+                        }
+                        catch (Exception e)
+                        {
+                            //error
+                            throw new Exception();
+                        }                        
+                    }   
                 }
             }
-            catch (IOException) { /* 연결 종료 */ }
+            catch (Exception e) { /* 연결 종료 */ }
             finally
             {
                 Console.WriteLine($"[LEFT] {ep}");
@@ -303,7 +686,7 @@ namespace ChatMoa_DataBaseServer
         }
 
         // 정확히 n바이트를 읽을 때까지 대기
-        private static async Task ReadExact(Stream s, byte[] buf, int len)  //complete
+        internal static async Task ReadExact(Stream s, byte[] buf, int len)  //complete
         {
             int read = 0;
             while (read < len)
@@ -337,7 +720,7 @@ namespace ChatMoa_DataBaseServer
         await SendAckAsync(ns, saved);     // ★ 1바이트 응답
         */
 
-        public async Task<string> Create_User_Id()      //complete
+        public static async Task<string> Create_User_Id()      //complete
         {
             string result="";
             bool exist = true;
@@ -465,7 +848,7 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
-        internal static async Task<bool> SafeBatchEditAsync(List<string> paths, List<Func<string, bool>> predicate)
+        internal static async Task<bool> SafeBatchEditAsync(List<string> paths, List<object> obj, List<int> index)
         {
             var items = new List<ItemInfo>();
             foreach (var p in paths)
@@ -475,13 +858,14 @@ namespace ChatMoa_DataBaseServer
 
                 items.Add(new ItemInfo
                 {
+                    Row = obj,
                     Path = p,
                     Temp = Path.Combine(dir, Guid.NewGuid() + ".tmp"),
                     Backup = Path.ChangeExtension(p, ".bak")
                 });
             }
 
-            if(items.Count() != predicate.Count())
+            if(items.Count() != index.Count())
             {
                 // error
                 return false;
@@ -491,7 +875,7 @@ namespace ChatMoa_DataBaseServer
             {
                 try
                 {
-                    await WriteTempEditAsync(items[i], predicate[i]).ConfigureAwait(false);
+                    await WriteTempEditAsync(items[i], index[i]).ConfigureAwait(false);
                 }
                 catch
                 {
@@ -522,7 +906,7 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
-        internal static async Task<bool> SafeBatchDeleteAsync(List<string> paths, List<Func<string, bool>> predicate)    
+        internal static async Task<bool> SafeBatchDeleteAsync(List<string> paths, List<int> index)    
         {
             var items = new List<ItemInfo>();
             foreach (var p in paths)
@@ -538,7 +922,7 @@ namespace ChatMoa_DataBaseServer
                 });
             }
 
-            if (items.Count() != predicate.Count())
+            if (items.Count() != index.Count())
             {
                 // error
                 return false;
@@ -548,7 +932,7 @@ namespace ChatMoa_DataBaseServer
             {
                 try 
                 { 
-                    await WriteTempDeleteAsync(items[i], predicate[i]).ConfigureAwait(false); 
+                    await WriteTempDeleteAsync(items[i], index[i]).ConfigureAwait(false); 
                 }
                 catch 
                 { 
@@ -599,10 +983,12 @@ namespace ChatMoa_DataBaseServer
                 await dest.WriteLineAsync(SerializeJson(it.Row));
             }
         }
-        private static async Task WriteTempEditAsync(ItemInfo it, Func<string, bool> predicate)
+        private static async Task WriteTempEditAsync(ItemInfo it, int index)
         {
             // 원본이 없으면 끝
             if (!File.Exists(it.Path)) return;
+
+            int i = 0;
 
             using (var src = new StreamReader(it.Path, Encoding.UTF8))
             using (var dest = new StreamWriter(it.Temp, false, Encoding.UTF8))
@@ -610,18 +996,21 @@ namespace ChatMoa_DataBaseServer
                 string line;
                 while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                 {
-                    if (predicate(line)) 
+                    if (i == index) 
                         await dest.WriteLineAsync(SerializeJson(it.Row))
                               .ConfigureAwait(false);
                     await dest.WriteLineAsync(line)
                               .ConfigureAwait(false);       // 유지 대상 → temp에 기록
+                    i++;
                 }
             }
         }
-        private static async Task WriteTempDeleteAsync(ItemInfo it, Func<string, bool> predicate)
+        private static async Task WriteTempDeleteAsync(ItemInfo it, int index)
         {
             // 원본이 없으면 끝
             if (!File.Exists(it.Path)) return;
+
+            int i = 0;
 
             using (var src = new StreamReader(it.Path, Encoding.UTF8))
             using (var dest = new StreamWriter(it.Temp, false, Encoding.UTF8))
@@ -629,9 +1018,10 @@ namespace ChatMoa_DataBaseServer
                 string line;
                 while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                 {
-                    if (predicate(line)) continue;          
+                    if (i == index) continue;
                     await dest.WriteLineAsync(line)
                               .ConfigureAwait(false);       // 유지 대상 → temp에 기록
+                    i++;
                 }
             }
         }
@@ -673,354 +1063,50 @@ namespace ChatMoa_DataBaseServer
                 
         }
 
-        /*
-        
-
-        public async Task RunAsync(CancellationToken token)
+        internal static async Task<T> SearchAsync<T>(string path, Func<T, bool> predicate)    
         {
-            _listener.Start();
-            Console.WriteLine($"[INFO] LISTEN {Port}");
+            if (!File.Exists(path)) return default;  // null
 
-            while (!token.IsCancellationRequested)
+            var ser = new DataContractJsonSerializer(typeof(T));
+
+            using (var reader = new StreamReader(path, Encoding.UTF8))
             {
-                TcpClient client = await _listener.AcceptTcpClientAsync();
-                _clients[client] = true;
-                //HandleClientAsync가 비동기로 돌아가기에 요청이 들어오는 Client마다 Run이 실행되면서 while은 멈추지않고 계속 새로운 Client 요청을 받아와 실행함
-                await Task.Run(() => HandleClientAsync(client));     // 백그라운드 처리      
-            }
-        }
-
-        private async Task HandleClientAsync(TcpClient client)      //예시 코드
-        {
-            EndPoint ep = client.Client.RemoteEndPoint;
-            Console.WriteLine($"[JOIN] {ep}");
-
-            try
-            {
-                
-                using (client)
-                using (NetworkStream ns = client.GetStream())
+                string line;
+                while ((line = await reader.ReadLineAsync().ConfigureAwait(false))!= null)
                 {
-                    ns.ReadTimeout = 1200_000;          // 20분 동안 추가 요청 없을 시 Socket을 닫음
-                    byte[] header = new byte[HeaderSize];
-                    
-                    while (true)        // 연결 유지 루프
+                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                     {
-                        await ReadExactAsync(ns, header, HeaderSize);
-
-                        List<string> db_path = new List<string>();
-                        List<int> data_modes = new List<int>();     // 0: Add, 1: Edit, 2:Delete, 3:Not work -1: Error
-                        byte opcode = header[0];
-                        string get_user_id = Encoding.ASCII.GetString(header, 1, 6);
-                        int num_of_data = header[7];
-                        List<int> len_of_data = new List<int>();
-
-                        if (!await Exist_User_Id(get_user_id))
-                        {
-                            //send error code: not exist User_Id
-                            opcode = 0;
-                            data_modes.Add(-1);
-                        }
-                        else
-                        {
-                            for (int i = 0; i < num_of_data; i++)
-                            {
-                                byte[] temp = new byte[1];
-                                await ReadExactAsync(ns, temp, 1);
-                                len_of_data.Add(BitConverter.ToInt32(temp, 1));
-                            }
-                        }
-
-                        var request_ser = new DataContractJsonSerializer(null);
-                        object request_data;
-                        List<string> datas = new List<string>();
-
-                        switch (opcode)
-                        {
-                            case 0:         //test code
-                                break;
-                            case 1:         //register user(Id,Ps,Ps_question_index,Ps_ans)
-                                request_ser = new DataContractJsonSerializer(typeof(User_Table));
-                                foreach(int len in len_of_data)
-                                {
-                                    byte[] temp = new byte[len];
-                                    await ReadExactAsync(ns, temp, len);
-                                    datas.Add(Encoding.UTF8.GetString(header, 0, len));
-                                }
-                                if(!await Exist_Id(datas[0]))
-                                {
-                                    db_path.Add("User_Table.ndjson");
-
-                                    request_data = new User_Table {
-                                        User_Id = Create_User_Id(),
-                                        Id = datas[0],
-                                        Password = datas[1],
-                                        Ps_Answer = datas[3],
-                                        Ps_Question_Index = Int32.Parse(datas[2])
-                                    };
-                                    data_modes.Add(0);
-                                }
-                                else
-                                {
-                                    data_modes.Add(-1);
-                                    //send error code: Id duplication 
-                                }
-
-                                break;
-                            case 2:         //try login(Id,Ps)
-                                request_ser = new DataContractJsonSerializer(typeof(User_Table));
-                                foreach (int len in len_of_data)
-                                {
-                                    byte[] temp = new byte[len];
-                                    await ReadExactAsync(ns, temp, len);
-                                    datas.Add(Encoding.UTF8.GetString(header, 0, len));
-                                }
-
-                                if (await Exist_Id(datas[0]))
-                                {
-                                    using (var reader = new StreamReader("User_Table.ndjson"))
-                                    {
-                                        var ser = new DataContractJsonSerializer(typeof(User_Table));
-                                        string line;
-
-                                        while ((line = await reader.ReadLineAsync()) != null)
-                                        {
-                                            byte[] temp = Encoding.UTF8.GetBytes(line);
-                                            using (var ms = new MemoryStream(temp))
-                                            {
-                                                var user = (User_Table)ser.ReadObject(ms);
-                                                if (user.Id == datas[0])
-                                                {
-                                                    if(user.Password == datas[1])
-                                                    {
-                                                        //login success
-                                                        //
-                                                        data_modes.Add(3);
-                                                    }
-                                                    else
-                                                    {
-                                                        //login failure
-                                                        //send Erro: not same ps
-                                                        data_modes.Add(-1);
-                                                    }
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    //send Error: not found Id
-
-                                    data_modes.Add(-1);
-                                }
-                                break;
-                            case 3:         //find password(Id,Ps_index,Ps_ans)
-                                request_ser = new DataContractJsonSerializer(typeof(User_Table));
-                                foreach (int len in len_of_data)
-                                {
-                                    byte[] temp = new byte[len];
-                                    await ReadExactAsync(ns, temp, len);
-                                    datas.Add(Encoding.UTF8.GetString(header, 0, len));
-                                }
-
-                                if (await Exist_Id(datas[0]))
-                                {
-                                    using (var reader = new StreamReader("User_Table.ndjson"))
-                                    {
-                                        var ser = new DataContractJsonSerializer(typeof(User_Table));
-                                        string line;
-
-                                        while ((line = await reader.ReadLineAsync()) != null)
-                                        {
-                                            byte[] temp = Encoding.UTF8.GetBytes(line);
-                                            using (var ms = new MemoryStream(temp))
-                                            {
-                                                var user = (User_Table)ser.ReadObject(ms);
-                                                if (user.Id == datas[0])
-                                                {
-                                                    if (user.Ps_Question_Index == Int32.Parse(datas[1]) && user.Ps_Answer == datas[2])
-                                                    {
-                                                        //find success
-                                                        //
-                                                        data_modes.Add(3);
-                                                    }
-                                                    else
-                                                    {
-                                                        //find failure
-                                                        //send Erro: not same ps
-                                                        data_modes.Add(-1);
-                                                    }
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    //send Error: not found Id
-
-                                    data_modes.Add(-1);
-                                }
-
-                                break;
-                            case 5:         //change Nickname(Nickname)
-                                request_ser = new DataContractJsonSerializer(typeof(User_Info));
-                                
-                                break;
-                            case 6:         //change setting
-                            case 7:         //friend request
-
-                                break;
-                            case 8:         //friend delete
-                            case 9:         //check notification        //수락, 거절, 확인
-                            case 10:        //delete notification
-                            case 32:        //make chat_room
-                            case 33:        //invite chat_room
-                            case 34:        //exit chat_room
-                            case 35:        //write chat
-                            case 36:        //read chat
-                            case 64:        //user schedule add
-                            case 65:        //user schedule edit
-                            case 66:        //user schedule delete
-                            case 67:        //chat_room schedule add
-                            case 68:        //chat_room schedule edit
-                            case 69:        //chat_room schedule delete
-                            default:
-                                break;
-                        }
-
-
-                        foreach(int data_mode in data_modes)
-                        {
-                            if (data_mode == 0)     //Add
-                            {
-                                if (await Data_Add())
-                                {
-                                    //success
-                                }
-                                else
-                                {
-                                    //fail
-                                }
-                            }
-                            else if (data_mode == 1) //Edit
-                            {
-                                if (await Data_Edit())
-                                {
-                                    //success
-                                }
-                                else
-                                {
-                                    //fail
-                                }
-                            }
-                            else if (data_mode == 2) //Delete
-                            {
-                                if (await Data_Edit())
-                                {
-                                    //success
-                                }
-                                else
-                                {
-                                    //fail
-                                }
-                            }
-                            else if (data_mode == 3) //Not work
-                            {
-
-                            }
-                            else                    //Error
-                            {
-
-                            }
-                            //loop end
-                        }
+                        var obj = (T)ser.ReadObject(ms);
+                        if (predicate(obj))
+                            return obj;         
                     }
                 }
-            }*/
-        //catch (IOException) { /* 연결 끊김 */ }
-        /*finally
-        {
-            _clients.TryRemove(client, out _);
-            Console.WriteLine($"[LEFT] {ep}");
-        }
-    }
-
-    private static readonly object _fileLock = new object();
-
-    // NDJSON 한 줄 안전하게 추가
-    private static void AppendLine(string path, string line)
-    {
-        string dir = Path.GetDirectoryName(path);
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-        lock (_fileLock)                       // 파일 무결성을 위한 최소 구간 lock
-        {
-            File.AppendAllText(path, line + Environment.NewLine, Encoding.UTF8);
-        }
-    }
-
-    bool TryAppendLine(string path, string line, int retry = 3)
-    {
-        for (int i = 0; i < retry; i++)
-        {
-            try
-            {
-                AppendLine(path, line);   // 내부는 예외 전파
-                return true;              // 성공
             }
-            catch (IOException)
-            {
-                Thread.Sleep(50);         // 잠시 기다렸다 재시도
-            }
+            return default;                        
         }
-        return false;                     // 최종 실패
-    }
 
-    // ------- entry point -------
-    private static async Task Main()
-    {
-        var cts = new CancellationTokenSource();
-        Console.CancelKeyPress += (s, e) =>
+        internal static async Task<Int32> LastInformId(string path)
         {
-            e.Cancel = true;
-            cts.Cancel();
-        };
-
-        Console.WriteLine("Press Ctrl+C to stop.");
-        await new DB_IO().RunAsync(cts.Token);
-    }
+            Int32 ans = -1;
+            var ser = new DataContractJsonSerializer(typeof(_User_Id__Inform_Box));
 
 
+            using (var reader = new StreamReader(path, Encoding.UTF8))
+            {
+                string line;
+                while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    // NDJSON → 객체 역직렬화
+                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                    {
+                        var row = (_User_Id__Inform_Box)ser.ReadObject(ms);
+                        if (row.Inform_Id > ans)
+                            ans = row.Inform_Id;
+                    }
+                }
+            }
 
-
-
-
-
-
-    private async Task<bool> Data_Add()
-    {
-        bool ans = false;
-
-        return ans;
-    }
-
-    private async Task<bool> Data_Edit()
-    {
-        bool ans = false;
-
-        return ans;
-    }
-
-    private async Task<bool> Data_Del()
-    {
-        bool ans = false;
-
-        return ans;
-    }
-        */
+            return ans;
+        }
     }
 }
