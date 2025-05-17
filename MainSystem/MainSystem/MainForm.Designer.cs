@@ -1,6 +1,6 @@
 ﻿namespace MainSystem
 {
-    partial class MainHub
+    partial class MainForm
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -42,9 +42,10 @@
             this.btnNewChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewChat.Location = new System.Drawing.Point(54, 12);
+            this.btnNewChat.Location = new System.Drawing.Point(47, 10);
+            this.btnNewChat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnNewChat.Name = "btnNewChat";
-            this.btnNewChat.Size = new System.Drawing.Size(49, 41);
+            this.btnNewChat.Size = new System.Drawing.Size(43, 33);
             this.btnNewChat.TabIndex = 0;
             this.btnNewChat.Text = "NewChat";
             this.btnNewChat.UseVisualStyleBackColor = true;
@@ -55,9 +56,10 @@
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(109, 12);
+            this.button2.Location = new System.Drawing.Point(95, 10);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(76, 41);
+            this.button2.Size = new System.Drawing.Size(66, 33);
             this.button2.TabIndex = 1;
             this.button2.Text = "Friend Invitation";
             this.button2.UseVisualStyleBackColor = true;
@@ -68,10 +70,14 @@
             this.flpMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flpMain.Location = new System.Drawing.Point(3, 145);
+            this.flpMain.AutoScroll = true;
+            this.flpMain.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpMain.Location = new System.Drawing.Point(3, 116);
+            this.flpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flpMain.Name = "flpMain";
-            this.flpMain.Size = new System.Drawing.Size(335, 304);
+            this.flpMain.Size = new System.Drawing.Size(293, 243);
             this.flpMain.TabIndex = 2;
+            this.flpMain.Paint += new System.Windows.Forms.PaintEventHandler(this.flpMain_Paint);
             // 
             // rdbFriend
             // 
@@ -79,11 +85,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbFriend.AutoSize = true;
-            this.rdbFriend.Location = new System.Drawing.Point(75, 84);
+            this.rdbFriend.Location = new System.Drawing.Point(66, 67);
+            this.rdbFriend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbFriend.Name = "rdbFriend";
-            this.rdbFriend.Size = new System.Drawing.Size(58, 19);
+            this.rdbFriend.Size = new System.Drawing.Size(47, 16);
             this.rdbFriend.TabIndex = 3;
-            this.rdbFriend.TabStop = true;
             this.rdbFriend.Text = "친구";
             this.rdbFriend.UseVisualStyleBackColor = true;
             this.rdbFriend.CheckedChanged += new System.EventHandler(this.rdbFriend_CheckedChanged);
@@ -93,12 +99,13 @@
             this.rdbChatroom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbChatroom.AutoCheck = false;
             this.rdbChatroom.AutoSize = true;
-            this.rdbChatroom.Location = new System.Drawing.Point(191, 84);
+            this.rdbChatroom.Location = new System.Drawing.Point(167, 67);
+            this.rdbChatroom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbChatroom.Name = "rdbChatroom";
-            this.rdbChatroom.Size = new System.Drawing.Size(73, 19);
+            this.rdbChatroom.Size = new System.Drawing.Size(59, 16);
             this.rdbChatroom.TabIndex = 4;
-            this.rdbChatroom.TabStop = true;
             this.rdbChatroom.Text = "채팅방";
             this.rdbChatroom.UseVisualStyleBackColor = true;
             // 
@@ -107,9 +114,10 @@
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(191, 12);
+            this.button3.Location = new System.Drawing.Point(167, 10);
+            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(81, 41);
+            this.button3.Size = new System.Drawing.Size(71, 33);
             this.button3.TabIndex = 5;
             this.button3.Text = "Calendar";
             this.button3.UseVisualStyleBackColor = true;
@@ -119,18 +127,19 @@
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(278, 12);
+            this.button4.Location = new System.Drawing.Point(243, 10);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(60, 41);
+            this.button4.Size = new System.Drawing.Size(52, 33);
             this.button4.TabIndex = 6;
             this.button4.Text = "Config";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // MainHub
+            // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 453);
+            this.ClientSize = new System.Drawing.Size(299, 362);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.rdbChatroom);
@@ -138,8 +147,11 @@
             this.Controls.Add(this.flpMain);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnNewChat);
-            this.Name = "MainHub";
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "MainForm";
             this.Text = "ChatMoa";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
