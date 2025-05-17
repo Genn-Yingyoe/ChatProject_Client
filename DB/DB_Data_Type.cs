@@ -30,16 +30,19 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
         [DataMember] internal string Profile_Image_Path;
+        [DataMember] internal List<string> Chat_Room_List;
+        [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
 
     [DataContract]  //Add, Del
     internal class _User_Id__Inform_Box
     {
         //primary key
-        [DataMember] internal string Inform_Id;
+        [DataMember] internal int Inform_Id;
         [DataMember] internal string Inform_Kind;
         [DataMember] internal string Inform_Date;
         [DataMember] internal string Inform_Str;
+        [DataMember] internal List<string> need_items;
         [DataMember] internal bool Inform_Checked;
     }
 
@@ -63,7 +66,7 @@ namespace ChatMoa_DataBaseServer
     {
         //length size = 8 | primary key
         [DataMember] internal string Room_Id;
-        [DataMember] internal int Users_Num;
+        [DataMember] internal int Users_Num;        //invite_state가 true인 멤버만 해당
     }
 
     [DataContract]  //Add, Edit, Del
@@ -74,6 +77,7 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal int Read_Msg_Num;
         [DataMember] internal string Read_Last_Date;
         [DataMember] internal string Sche_List; //temp type
+        [DataMember] internal bool invite_state;
     }
 
     [DataContract]  //Add
@@ -83,7 +87,7 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal int Msg_Id;
         //foregin key from "Chat_Room__Room_Id__Info"
         [DataMember] internal string User_Id;
-        [DataMember] internal int Msg_Kind;
+        [DataMember] internal int Msg_Kind;         // 0 == manager chat | 1 == user chat
         [DataMember] internal string Date;
         [DataMember] internal string Msg_Str; 
     }
@@ -123,7 +127,7 @@ namespace ChatMoa_DataBaseServer
     // Request Data parsing method
     // byte[0] == opcode                                | kind of request
     // byte[1 .. 6] == User_id(6)                       | User_Id that sent the request
-    // byte[7] == receive num of datas                  | receive num of data
-    // byte[8 .. (7+byte[7])] == receive lengths        | receive lengths of data
-    // byte[(7+byte[7])+1 .. ] == datas                 
+    // byte[7 .. 10] == receive num of datas(num)       | receive num of data
+    // byte[11 .. (10+num*4)] == receive lengths        | receive lengths of data
+    // byte[(10+num*4)+1 .. ] == datas                 
 }
