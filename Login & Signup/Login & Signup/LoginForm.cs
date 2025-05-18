@@ -19,10 +19,18 @@ namespace Login___Signup
         //0.2 -> 로그인 및 회원가입 기능 개선
         //0.3 -> Server 연결
 
+        public string code = string.Empty;
+
         private const string UserDBPath = "UserDB.txt";
         public LoginForm()
         {
             InitializeComponent();
+        }
+
+        private void btnSignup_Click(object sender, EventArgs e)
+        {
+            SignupForm signupForm = new SignupForm();
+            signupForm.ShowDialog();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -44,24 +52,14 @@ namespace Login___Signup
 
                 if (parts[0] == inputID && parts[1] == inputPW) // 여기에 메인 대화창을 띄울 코드를 넣을것
                 {
-                    // 로그인 성공 시 메인 대화창을 띄우는 코드
-                    // MainChatForm mainChatForm = new MainChatForm();
-                    // mainChatForm.Show();
-                    // this.Hide();
-                    // 임시로 MessageBox로 대체
-                    {
-                        MessageBox.Show("로그인 성공!");
-                    return;
+                    로그인 성공 시 메인 대화창을 띄우는 코드
+                    MainChatForm mainForm = new MainForm();
+                    MainChatForm.Show();
+                    this.Hide();
                 }
+
+                MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
             }
-
-            MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
-        }
-
-        private void btnSignup_Click(object sender, EventArgs e)
-        {
-            SignupForm signupForm = new SignupForm();
-            signupForm.ShowDialog();
         }
     }
 }
