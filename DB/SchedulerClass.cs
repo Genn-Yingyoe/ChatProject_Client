@@ -23,20 +23,19 @@ namespace ChatMoa_DataBaseServer
             string path = "";
             int mode = -1;
             int handle_index = -1;
-            object result = new object();
+            List<object> result = new List<object>();
 
-            if (opcode <= 67)
+            if (opcode < 67)
                 path = @"\DB\Users\" + User + @"\" + User + "_Scheduler.ndjson";
             else
                 path = @"\DB\ChatRoom\" + items[1] + @"\Chat_Room_" + items[1] + "_Scheduler.ndjson";
-            
-            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly }
+            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly }   | test success
             {
                 //"_User_Id__Scheduler" schedule Add
                 mode = 0;
-                result = new _User_Id__Scheduler
+                result.Add(new _User_Id__Scheduler
                 {
-                    Sche_Id = await LastScheId(path,0) + 1,
+                    Sche_Id = await LastScheId(path, 0) + 1,
                     Category = items[1],
                     Begin_Date = items[2],
                     Finish_Date = items[3],
@@ -45,14 +44,14 @@ namespace ChatMoa_DataBaseServer
                     Weekly = items[6],
                     Monthly = items[7],
                     Yearly = items[8]
-                };
+                });
             }
-            else if(opcode == 65)       //user schedule edit        |   items = { User_id, _User_Id__Scheduler.* }
+            else if(opcode == 65)       //user schedule edit        |   items = { User_id, _User_Id__Scheduler.* }      | test success
             {
                 //"_User_Id__Scheduler" schedule Edit
                 mode = 1;
                 int sche_id = Int32.Parse(items[1]);
-                result = new _User_Id__Scheduler
+                result.Add (new _User_Id__Scheduler
                 {
                     Sche_Id = sche_id,
                     Category = items[2],
@@ -63,7 +62,7 @@ namespace ChatMoa_DataBaseServer
                     Weekly = items[7],
                     Monthly = items[8],
                     Yearly = items[9]
-                };
+                });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
                     int i = 0;
@@ -84,7 +83,7 @@ namespace ChatMoa_DataBaseServer
                     }
                 }
             }
-            else if (opcode == 66)      //user schedule delete      |   items = { User_id, Sche_id }
+            else if (opcode == 66)      //user schedule delete      |   items = { User_id, Sche_id }        | test success
             {
                 //"_User_Id__Scheduler" schedule Del
                 mode = 2;
@@ -109,11 +108,11 @@ namespace ChatMoa_DataBaseServer
                     }
                 }
             }
-            else if (opcode == 67)      //chat_room schedule add    |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }
+            else if (opcode == 67)      //chat_room schedule add    |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success(chat_room_info에 개인별 일정 추가 미완)
             {
-                //"Chat_Room__Room_Id__Scheduler" schedule Add
+                //"Chat_Room__Room_Id__Scheduler" schedule Add          
                 mode = 0;
-                result = new Chat_Room__Room_Id__Scheduler
+                result.Add( new Chat_Room__Room_Id__Scheduler
                 {
                     Sche_Id = await LastScheId(path, 1) + 1,
                     User_Id = User,
@@ -125,14 +124,14 @@ namespace ChatMoa_DataBaseServer
                     Weekly = items[7],
                     Monthly = items[8],
                     Yearly = items[9]           
-                };
+                });
             }
-            else if (opcode == 68)      //chat_room schedule edit   |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }
+            else if (opcode == 68)      //chat_room schedule edit   |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Edit
                 mode = 1;
                 int sche_id = Int32.Parse(items[2]);
-                result = new Chat_Room__Room_Id__Scheduler
+                result.Add( new Chat_Room__Room_Id__Scheduler
                 {
                     Sche_Id = sche_id,
                     User_Id = User,
@@ -144,7 +143,7 @@ namespace ChatMoa_DataBaseServer
                     Weekly = items[8],
                     Monthly = items[9],
                     Yearly = items[10]
-                };
+                });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
                     int i = 0;
@@ -165,7 +164,7 @@ namespace ChatMoa_DataBaseServer
                     }
                 }
             }
-            else if (opcode == 69)      //chat_room schedule delete |   items = { User_id, Room_id, Sche_id }
+            else if (opcode == 69)      //chat_room schedule delete |   items = { User_id, Room_id, Sche_id }           | test success
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Del
                 mode = 2;
@@ -198,15 +197,17 @@ namespace ChatMoa_DataBaseServer
 
             if(mode == 0)
             {
+                
                 IEnumerable<(object, string)> temp = new List<(object, string)>
                 {
-                    (result, path)
+                    (result[0], path)
                 };
                 ans = await DB_IO.SafeBatchAppendAsync(temp);
             }
             else if (mode == 1)
             {
-                ans = await DB_IO.SafeBatchEditAsync(new List<string>() { path }, new List<object>() {result}, new List<int>() { handle_index });
+                Console.WriteLine("진입");
+                ans = await DB_IO.SafeBatchEditAsync(new List<string>() { path }, new List<object>() { result[0] }, new List<int>() { handle_index });
             }
             else if (mode == 2)
             {
@@ -225,7 +226,17 @@ namespace ChatMoa_DataBaseServer
         {
             Int32 ans = -1;
             bool exist = false;
-            if(mode == 0)           //User_Scheduler
+
+            string dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (!File.Exists(path))
+            {
+                using (File.Create(path))
+                {
+                }
+            }
+
+            if (mode == 0)           //User_Scheduler
             {
                 var ser = new DataContractJsonSerializer(typeof(_User_Id__Scheduler));
 

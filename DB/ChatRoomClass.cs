@@ -28,12 +28,12 @@ namespace ChatMoa_DataBaseServer
             List<int> edit_index = new List<int>();
             var list = new List<(int, object)>();           //int >> 0 == Add | 1 == Edit | 2 == Delete
 
-
-            if (opcode == 32)           //make chat_room    |   items = {User_id, Friend_id_1, Friend_id_2, ... , Friend_id_n}
+            if (opcode == 32)           //make chat_room    |   items = {User_id, Friend_id_1, Friend_id_2, ... , Friend_id_n}      | test success
             {
                 //"Chat_Room_List" newChatRoom Add + "Chat_Room__Room_Id__Info.ndjson"  Add(not empty) + All "_User_Id__Inform_Box" ChatInviteNotification Add
                 // + "Chat_Room__Room_Id___Date_" Add + "User_Info.ndjson" Chat_Room_List Edit + "Chat_Room__Room_Id__Scheduler" .ndjson Add(can empty)
                 string new_room_id = await Create_Room_Id();
+                Console.WriteLine(new_room_id);     //debug
                 path.Add(@"\DB\Chat_Room_List.ndjson");
                 list.Add((0, new Chat_Room_List{
                     Room_Id = new_room_id,
@@ -56,7 +56,7 @@ namespace ChatMoa_DataBaseServer
                     Sche_List = "",
                     invite_state = true
                 }));
-
+                
                 for (int i = 1; i < items.Count(); i++)
                 {
                     string friend = items[i];
@@ -104,9 +104,9 @@ namespace ChatMoa_DataBaseServer
                     }
                     list.Add((1, friend_info));
                 }
-
+                
                 path.Add(@"\DB\ChatRoom\" + new_room_id + @"\" + DateTime.Now.ToString("yyyy") + @"\Chat_Room_" 
-                            + new_room_id + "_" + DateTime.Now.ToString("yyyyMMdd"));
+                            + new_room_id + "_" + DateTime.Now.ToString("yyyyMMdd")+".ndjson");
                 string dir = Path.GetDirectoryName(path.Last());
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 list.Add((0, new Chat_Room__Room_Id___Date_{
@@ -154,7 +154,7 @@ namespace ChatMoa_DataBaseServer
                 }
 
             }
-            else if (opcode == 33)      //invite chat_room  |   itmes = {User_id, Room_id, Friend_id}
+            else if (opcode == 33)      //invite chat_room  |   itmes = {User_id, Room_id, Friend_id}       | test success
             {
                 //"_User_Id__Inform_Box" ChatInviteNotification Add + "Chat_Room__Room_Id__Info.ndjson" new user(false) Add
                 // + "User_Info.ndjson" friend.Waiting_Chat_Room Edit
@@ -206,7 +206,7 @@ namespace ChatMoa_DataBaseServer
                 }
                 list.Add((1, friend_info));
             }
-            else if (opcode == 34)      //exit chat_room    |   itmes = {User_id, Room_id}
+            else if (opcode == 34)      //exit chat_room    |   itmes = {User_id, Room_id}      | test success
             {
                 //"Chat_Room_List" Users_Num Edit + "Chat_Room__Room_Id__Info" row Del + "Chat_Room__Room_Id___Date_" exit Msg Add(by admin) + "User_Info" Chat_Room_List Edit
                 // if(user is last member)
@@ -238,7 +238,7 @@ namespace ChatMoa_DataBaseServer
                     Room_Id = room_id,
                     Users_Num = (await DB_IO.SearchAsync<Chat_Room_List>(path.Last(),r => r.Room_Id == room_id)).Users_Num - 1
                 }));
-
+                
                 path.Add(@"\DB\ChatRoom\" + room_id + @"\Chat_Room_" + room_id + "_Info.ndjson");
                 using (var src = new StreamReader(path.Last(), Encoding.UTF8))
                 {
@@ -259,10 +259,10 @@ namespace ChatMoa_DataBaseServer
                         i++;
                     }
                 }
-                list.Add((2, new Chat_Room__Room_Id__Info{User_Id = User}));
+                list.Add((2, null));
 
                 path.Add(@"\DB\ChatRoom\" + room_id + @"\" + DateTime.Now.ToString("yyyy") + @"\Chat_Room_"
-                           + room_id + "_" + DateTime.Now.ToString("yyyyMMdd"));
+                           + room_id + "_" + DateTime.Now.ToString("yyyyMMdd")+".ndjson");
                 string dir = Path.GetDirectoryName(path.Last());
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 list.Add((0, new Chat_Room__Room_Id___Date_
@@ -273,7 +273,7 @@ namespace ChatMoa_DataBaseServer
                     Date = DateTime.Now.ToString("yyyyMMddHHmmss"),
                     Msg_Str = User_Nickname + "님이 채팅방에서 나갔습니다"
                 }));
-
+                Console.WriteLine("진입");
                 User_Info user_info = await DB_IO.SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == User);
                 List<string> user_info_list = user_info.Chat_Room_List;
                 user_info_list.Remove(room_id);
@@ -300,7 +300,7 @@ namespace ChatMoa_DataBaseServer
                 }
                 list.Add((1, user_info));
             }
-            else if (opcode == 35)      //enter chat_room   |   items = {User_id, Room_id, Inform_id}
+            else if (opcode == 35)      //enter chat_room   |   items = {User_id, Room_id, Inform_id}       | test success
             {
                 //"Chat_Room_List" Users_Num Edit + "Chat_Room__Room_Id__Info" invite_state Edit + "User_Info" Chat_Room_List Edit
                 // + "Chat_Room__Room_Id___Date_" enter Msg Add(manager) + "_User_Id__Inform_Box" ChatInviteNotification Del
@@ -391,7 +391,7 @@ namespace ChatMoa_DataBaseServer
                 list.Add((1, user_info));
 
                 path.Add(@"\DB\ChatRoom\" + room_id + @"\" + DateTime.Now.ToString("yyyy") + @"\Chat_Room_"
-                           + room_id + "_" + DateTime.Now.ToString("yyyyMMdd"));
+                           + room_id + "_" + DateTime.Now.ToString("yyyyMMdd")+".ndjson");
                 string dir = Path.GetDirectoryName(path.Last());
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 list.Add((0, new Chat_Room__Room_Id___Date_
@@ -425,7 +425,7 @@ namespace ChatMoa_DataBaseServer
                 }
                 list.Add((2, null));
             }
-            else if (opcode == 36)      //write chat        |   itmes = {User_id, Room_id, Chat_msg}
+            else if (opcode == 36)      //write chat        |   itmes = {User_id, Room_id, Chat_msg}        | test success
             {
                 //"Chat_Room__Room_Id__Info" row(manager, user) Edit + "Chat_Room__Room_Id___Date_" Msg Add(by user)
                 string room_id = items[1];
@@ -482,7 +482,7 @@ namespace ChatMoa_DataBaseServer
                 list.Add((1, user_info));
 
                 path.Add(@"\DB\ChatRoom\" + room_id + @"\" + DateTime.Now.ToString("yyyy") + @"\Chat_Room_"
-                        + room_id + "_" + DateTime.Now.ToString("yyyyMMdd"));
+                        + room_id + "_" + DateTime.Now.ToString("yyyyMMdd")+".ndjson");
                 string dir = Path.GetDirectoryName(path.Last());
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 list.Add((0, new Chat_Room__Room_Id___Date_
@@ -495,7 +495,7 @@ namespace ChatMoa_DataBaseServer
                 }));
 
             }
-            else if (opcode == 37)      //read chat         |   itmes = {User_id, Room_id}
+            else if (opcode == 37)      //read chat         |   itmes = {User_id, Room_id}          | test success(모듈화 완성 후 try-catch문 수정 필요
             {
                 // Sending Msg with SendAckAsync() + "Chat_Room__Room_Id__Info" row Edit +  
                 string room_id = items[1];
@@ -503,9 +503,9 @@ namespace ChatMoa_DataBaseServer
                 int last_msg_index = (await DB_IO.SearchAsync<Chat_Room__Room_Id__Info>(info_path, r => r.User_Id == "000000")).Read_Msg_Num;
                 Chat_Room__Room_Id__Info user_info = await DB_IO.SearchAsync<Chat_Room__Room_Id__Info>(info_path, r => r.User_Id == User);
                 int read_user_msg_index = user_info.Read_Msg_Num;
-                string read_user_msg_date = user_info.Read_Last_Date;
-                string msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date + @"\Chat_Room_"
-                        + room_id + "_" + read_user_msg_date;
+                string read_user_msg_date = user_info.Read_Last_Date.Substring(0,8);
+                string msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0,4) + @"\Chat_Room_"
+                        + room_id + "_" + read_user_msg_date+".ndjson";
 
                 while (last_msg_index != read_user_msg_index)
                 {
@@ -522,11 +522,11 @@ namespace ChatMoa_DataBaseServer
                         DateTime next = dt.AddDays(1);
                         read_user_msg_date = next.ToString("yyyyMMdd");
 
-                        msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date + @"\Chat_Room_"
-                        + room_id + "_" + read_user_msg_date;
+                        msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
+                        + room_id + "_" + read_user_msg_date + ".ndjson";
                         new_msg = await DB_IO.SearchAsync<Chat_Room__Room_Id___Date_>(msg_path, r => r.Msg_Id == read_user_msg_index);
                     }
-
+                    
                     int[] send_lengths = new int[5];
                     //read_msg_opcode는 고정적으로 앞에 1byte를 차지함
                     send_lengths[0] = 1;    //new_msg.Msg_Id
@@ -559,10 +559,10 @@ namespace ChatMoa_DataBaseServer
 
                     try
                     {
-                        await ns.WriteAsync(packet, 0, packet.Length)
-                            .ConfigureAwait(false);
+                        //await ns.WriteAsync(packet, 0, packet.Length)         //Client 정식 module화를 안했기에 예외 발생할 수 있음
+                        //    .ConfigureAwait(false);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         //error
                         read_user_msg_index--;
@@ -572,7 +572,7 @@ namespace ChatMoa_DataBaseServer
                     try
                     {
                         byte[] send_success = new byte[1];
-                        await DB_IO.ReadExact(ns, send_success, 1);
+                        //await DB_IO.ReadExact(ns, send_success, 1);           //Client 정식 module화 이후 사용가능
                     }
                     catch (Exception e)
                     {
@@ -580,8 +580,8 @@ namespace ChatMoa_DataBaseServer
                         read_user_msg_index--;
                         break;
                     }
-                }
 
+                }
                 path.Add(info_path);
                 user_info.Read_Msg_Num = read_user_msg_index;
                 user_info.Read_Last_Date = read_user_msg_date;
@@ -611,7 +611,7 @@ namespace ChatMoa_DataBaseServer
                 // 향후 업데이트로 opcode가 추가된다면 추가로 코딩
             }
 
-            IEnumerable<(object, string)> Add_temp = new List<(object, string)>();
+            var Add_temp = new List<(object, string)>();
             List<string> Edit_str = new List<string>();
             List<object> Edit_obj = new List<object>();
             List<int> Edit_int = new List<int>();
@@ -621,7 +621,7 @@ namespace ChatMoa_DataBaseServer
             for(int i = 0; i < list.Count; i++)
             {
                 if (list[i].Item1 == 0)
-                    Add_temp.Append((list[i].Item2, path[i]));
+                    Add_temp.Add((list[i].Item2, path[i]));
                 else if (list[i].Item1 == 1)
                 {
                     Edit_str.Add(path[i]);
@@ -687,6 +687,15 @@ namespace ChatMoa_DataBaseServer
         {
             var ser = new DataContractJsonSerializer(typeof(Chat_Room_List));
             bool exist = false;
+
+            string dir = Path.GetDirectoryName(@"\DB\Chat_Room_List.ndjson");           
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (!File.Exists(@"\DB\Chat_Room_List.ndjson"))
+            {
+                using (File.Create(@"\DB\Chat_Room_List.ndjson"))
+                {
+                }
+            }
 
             using (var reader = new StreamReader(@"\DB\Chat_Room_List.ndjson", Encoding.UTF8))
             {
