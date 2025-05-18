@@ -1,4 +1,4 @@
-﻿namespace Login___Signup
+﻿namespace MainSystem
 {
     partial class LoginForm
     {
@@ -39,10 +39,11 @@
             this.txtID.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtID.Location = new System.Drawing.Point(25, 290);
+            this.txtID.Location = new System.Drawing.Point(22, 232);
+            this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtID.Multiline = true;
             this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(300, 50);
+            this.txtID.Size = new System.Drawing.Size(263, 41);
             this.txtID.TabIndex = 0;
             this.txtID.Text = "ID\r\n";
             // 
@@ -51,18 +52,20 @@
             this.txtPW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPW.Location = new System.Drawing.Point(25, 345);
+            this.txtPW.Location = new System.Drawing.Point(22, 276);
+            this.txtPW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPW.Multiline = true;
             this.txtPW.Name = "txtPW";
-            this.txtPW.Size = new System.Drawing.Size(300, 50);
+            this.txtPW.Size = new System.Drawing.Size(263, 41);
             this.txtPW.TabIndex = 1;
             this.txtPW.Text = "PW";
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(50, 400);
+            this.btnLogin.Location = new System.Drawing.Point(44, 320);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(90, 40);
+            this.btnLogin.Size = new System.Drawing.Size(79, 32);
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -70,9 +73,10 @@
             // 
             // btnSignup
             // 
-            this.btnSignup.Location = new System.Drawing.Point(210, 400);
+            this.btnSignup.Location = new System.Drawing.Point(184, 320);
+            this.btnSignup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSignup.Name = "btnSignup";
-            this.btnSignup.Size = new System.Drawing.Size(90, 40);
+            this.btnSignup.Size = new System.Drawing.Size(79, 32);
             this.btnSignup.TabIndex = 3;
             this.btnSignup.Text = "SignUp";
             this.btnSignup.UseVisualStyleBackColor = true;
@@ -80,15 +84,17 @@
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 453);
+            this.ClientSize = new System.Drawing.Size(299, 362);
             this.Controls.Add(this.btnSignup);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPW);
             this.Controls.Add(this.txtID);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LoginForm";
             this.Text = "ChatMoa";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

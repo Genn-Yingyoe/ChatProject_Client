@@ -1,4 +1,4 @@
-﻿namespace Login___Signup
+﻿namespace MainSystem
 {
     partial class SignupForm
     {

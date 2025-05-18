@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainSystem;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Login___Signup
+namespace MainSystem
 {
     public partial class LoginForm : Form
     {
@@ -19,7 +20,7 @@ namespace Login___Signup
         //0.2 -> 로그인 및 회원가입 기능 개선
         //0.3 -> Server 연결
 
-        public string code = string.Empty;
+        public static string code = "";
 
         private const string UserDBPath = "UserDB.txt";
         public LoginForm()
@@ -52,14 +53,23 @@ namespace Login___Signup
 
                 if (parts[0] == inputID && parts[1] == inputPW) // 여기에 메인 대화창을 띄울 코드를 넣을것
                 {
-                    로그인 성공 시 메인 대화창을 띄우는 코드
-                    MainChatForm mainForm = new MainForm();
-                    MainChatForm.Show();
+                    MainForm mainForm = new MainForm();
+                    mainForm.Show();
                     this.Hide();
-                }
 
-                MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+                    mainForm.InitializeAfterLogin(parts[2]); // 로그인 후 초기화 호출
+                }
+                else if (parts[0] == inputID && !(parts[1] == inputPW))
+                {
+                    MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+                }
+                else { }
             }
+        }
+
+        private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
