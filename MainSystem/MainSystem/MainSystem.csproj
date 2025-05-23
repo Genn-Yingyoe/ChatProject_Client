@@ -102,11 +102,16 @@
     <None Include="bin\Debug\main.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\AdobeColor-Complementary.png" />
-    <Content Include="bin\Debug\AdobeColor-Dream.png" />
-    <Content Include="bin\Debug\AdobeColor-Ocean.png" />
-    <Content Include="bin\Debug\AdobeColor-Split Complementary.png" />
-    <Content Include="bin\Debug\AdobeColor-Triangle.png" />
+    <Content Include="bin\Debug\AdobeColor-Complementary.jpeg" />
+    <Content Include="bin\Debug\AdobeColor-Dream.jpeg" />
+    <Content Include="bin\Debug\AdobeColor-Ocean.jpeg" />
+    <Content Include="bin\Debug\AdobeColor-Split Complementary.jpeg" />
+    <Content Include="bin\Debug\AdobeColor-Triangle.jpeg" />
+    <Content Include="bin\Debug\ChatMoa.ico" />
+    <Content Include="bin\Debug\default_profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

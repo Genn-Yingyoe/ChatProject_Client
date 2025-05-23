@@ -25,7 +25,7 @@ namespace MainSystem
 
         private void SignupForm_Load(object sender, EventArgs e)
         {
-
+            this.BackColor = Color.White;
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
