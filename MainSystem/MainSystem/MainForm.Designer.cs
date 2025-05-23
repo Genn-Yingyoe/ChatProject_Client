@@ -71,7 +71,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpMain.AutoScroll = true;
-            this.flpMain.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpMain.Location = new System.Drawing.Point(3, 116);
             this.flpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flpMain.Name = "flpMain";
@@ -124,9 +123,7 @@
             // 
             // button4
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button4.Location = new System.Drawing.Point(243, 10);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
