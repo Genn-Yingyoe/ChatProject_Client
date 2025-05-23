@@ -80,6 +80,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SignupForm.resx">
       <DependentUpon>SignupForm.cs</DependentUpon>
@@ -96,6 +97,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\main.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\AdobeColor-Complementary.png" />
+    <Content Include="bin\Debug\AdobeColor-Dream.png" />
+    <Content Include="bin\Debug\AdobeColor-Ocean.png" />
+    <Content Include="bin\Debug\AdobeColor-Split Complementary.png" />
+    <Content Include="bin\Debug\AdobeColor-Triangle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

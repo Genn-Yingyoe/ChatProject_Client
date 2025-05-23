@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.btnNewChat = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
@@ -84,11 +85,13 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbFriend.AutoSize = true;
+            this.rdbFriend.Checked = true;
             this.rdbFriend.Location = new System.Drawing.Point(66, 67);
             this.rdbFriend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbFriend.Name = "rdbFriend";
             this.rdbFriend.Size = new System.Drawing.Size(47, 16);
             this.rdbFriend.TabIndex = 3;
+            this.rdbFriend.TabStop = true;
             this.rdbFriend.Text = "친구";
             this.rdbFriend.UseVisualStyleBackColor = true;
             this.rdbFriend.CheckedChanged += new System.EventHandler(this.rdbFriend_CheckedChanged);
@@ -107,6 +110,7 @@
             this.rdbChatroom.TabIndex = 4;
             this.rdbChatroom.Text = "채팅방";
             this.rdbChatroom.UseVisualStyleBackColor = true;
+            this.rdbChatroom.CheckedChanged += new System.EventHandler(this.rdbChatroom_CheckedChanged);
             // 
             // button3
             // 
@@ -144,6 +148,7 @@
             this.Controls.Add(this.flpMain);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnNewChat);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
             this.Text = "ChatMoa";

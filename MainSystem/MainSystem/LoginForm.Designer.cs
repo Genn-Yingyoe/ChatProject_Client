@@ -28,10 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.txtID = new System.Windows.Forms.TextBox();
             this.txtPW = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnSignup = new System.Windows.Forms.Button();
+            this.pbApp = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbApp)).BeginInit();
             this.SuspendLayout();
             // 
             // txtID
@@ -39,62 +42,98 @@
             this.txtID.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtID.Location = new System.Drawing.Point(22, 232);
-            this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtID.Multiline = true;
+            this.txtID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtID.Font = new System.Drawing.Font("돋움", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtID.Location = new System.Drawing.Point(14, 240);
+            this.txtID.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.txtID.MaxLength = 30;
             this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(263, 41);
+            this.txtID.Size = new System.Drawing.Size(273, 25);
             this.txtID.TabIndex = 0;
-            this.txtID.Text = "ID\r\n";
+            this.txtID.WordWrap = false;
+            this.txtID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtID_KeyDown);
             // 
             // txtPW
             // 
+            this.txtPW.AcceptsReturn = true;
             this.txtPW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPW.Location = new System.Drawing.Point(22, 276);
+            this.txtPW.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPW.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPW.Font = new System.Drawing.Font("돋움", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtPW.Location = new System.Drawing.Point(14, 281);
             this.txtPW.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtPW.Multiline = true;
+            this.txtPW.MaxLength = 30;
             this.txtPW.Name = "txtPW";
-            this.txtPW.Size = new System.Drawing.Size(263, 41);
+            this.txtPW.Size = new System.Drawing.Size(273, 25);
             this.txtPW.TabIndex = 1;
-            this.txtPW.Text = "PW";
+            this.txtPW.UseSystemPasswordChar = true;
+            this.txtPW.TextChanged += new System.EventHandler(this.txtPW_TextChanged);
+            this.txtPW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPW_KeyDown);
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(44, 320);
+            this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnLogin.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLogin.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnLogin.Location = new System.Drawing.Point(37, 319);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(79, 32);
             this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "Login";
-            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnSignup
             // 
-            this.btnSignup.Location = new System.Drawing.Point(184, 320);
+            this.btnSignup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnSignup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSignup.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
+            this.btnSignup.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSignup.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnSignup.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSignup.Location = new System.Drawing.Point(187, 319);
             this.btnSignup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSignup.Name = "btnSignup";
             this.btnSignup.Size = new System.Drawing.Size(79, 32);
             this.btnSignup.TabIndex = 3;
             this.btnSignup.Text = "SignUp";
-            this.btnSignup.UseVisualStyleBackColor = true;
+            this.btnSignup.UseVisualStyleBackColor = false;
             this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
+            // 
+            // pbApp
+            // 
+            this.pbApp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbApp.Image = global::MainSystem.Properties.Resources.main;
+            this.pbApp.ImageLocation = "C:\\Users\\admin\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\bin\\Debug\\main.pn" +
+    "g";
+            this.pbApp.Location = new System.Drawing.Point(14, 12);
+            this.pbApp.Name = "pbApp";
+            this.pbApp.Size = new System.Drawing.Size(273, 222);
+            this.pbApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbApp.TabIndex = 4;
+            this.pbApp.TabStop = false;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(299, 362);
             this.Controls.Add(this.btnSignup);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPW);
             this.Controls.Add(this.txtID);
+            this.Controls.Add(this.pbApp);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LoginForm";
             this.Text = "ChatMoa";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,6 +145,7 @@
         private System.Windows.Forms.TextBox txtPW;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnSignup;
+        private System.Windows.Forms.PictureBox pbApp;
     }
 }
 

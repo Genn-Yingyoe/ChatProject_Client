@@ -9,16 +9,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Runtime.InteropServices;
 
 namespace MainSystem
 {
     public partial class LoginForm : Form
     {
+        public const int EM_SETRECT = 0xB3;
+
         private string version = "0.0.1";   // 버전 정보
         //0.0 -> 기본 로그인 기능 및 회원가입 기능
         //0.1 -> 메인 대화창 연결 및 데이터 %appdata% 경로로 이동
         //0.2 -> 로그인 및 회원가입 기능 개선
         //0.3 -> Server 연결
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref RECT lParam);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        private void SetTextBoxPadding(System.Windows.Forms.TextBox tb, int left, int top, int right, int bottom)
+        {
+            RECT rect = new RECT
+            {
+                Left = left,
+                Top = top,
+                Right = tb.ClientSize.Width - right,
+                Bottom = tb.ClientSize.Height - bottom
+            };
+
+            SendMessage(tb.Handle, EM_SETRECT, IntPtr.Zero, ref rect);
+        }
 
         public static string code = "";
 
@@ -63,13 +92,43 @@ namespace MainSystem
                 {
                     MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
                 }
-                else { }
+                else
+                {
+
+                }
             }
         }
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+
+                btnLogin.PerformClick();
+            }
+        }
+
+        private void txtPW_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+
+                btnLogin.PerformClick();
+            }
+        }
+
+        private void txtPW_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
