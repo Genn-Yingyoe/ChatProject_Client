@@ -88,6 +88,7 @@ namespace MainSystem
             {
                 string friendNick = "(정보 없음)";
                 string friendImagePath = "default_profile.png"; // 기본 프로필 경로 (이미지 없을 경우)
+                string friendCode = "";
 
                 // 닉네임 찾기
                 foreach (var line in File.ReadAllLines(UserDBPath))
@@ -96,6 +97,7 @@ namespace MainSystem
                     if (parts.Length >= 6 && parts[0] == friendId)
                     {
                         friendNick = parts[5];
+                        friendCode = parts[3];
                         break;
                     }
                 }
@@ -115,7 +117,9 @@ namespace MainSystem
                     Size = new Size(50, 50),
                     Location = new Point(0, 0),
                     SizeMode = PictureBoxSizeMode.Zoom,
-                    Image = Image.FromFile(friendImagePath)
+                    Image = Image.FromFile(friendImagePath),
+                    Text = friendNick,
+                    Tag = friendCode
                 };
 
                 // 버튼
@@ -137,6 +141,15 @@ namespace MainSystem
                     MessageBox.Show($"'{clickedButton.Text}' 클릭됨 (NickName: {selectedFriendNick})");
                 };
 
+                pic.Click += (sender, e) =>
+                {
+                    var clickedPicture = sender as PictureBox;
+                    string selectedFrinedCode = clickedPicture.Tag.ToString();
+                    MessageBox.Show($"'{clickedPicture.Text}' 클릭됨 (Code: {selectedFrinedCode})");
+
+                };
+
+
                 // 구성요소 패널에 추가
                 friendPanel.Controls.Add(pic);
                 friendPanel.Controls.Add(btn);
@@ -146,6 +159,11 @@ namespace MainSystem
             }
 
 
+        }
+
+        private void Pic_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void flpMain_Paint(object sender, PaintEventArgs e)

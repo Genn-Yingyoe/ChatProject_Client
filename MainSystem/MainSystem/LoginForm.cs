@@ -18,12 +18,6 @@ namespace MainSystem
     {
         public const int EM_SETRECT = 0xB3;
 
-        private string version = "0.0.1";   // 버전 정보
-        //0.0 -> 기본 로그인 기능 및 회원가입 기능
-        //0.1 -> 메인 대화창 연결 및 데이터 %appdata% 경로로 이동
-        //0.2 -> 로그인 및 회원가입 기능 개선
-        //0.3 -> Server 연결
-
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref RECT lParam);
 
@@ -127,6 +121,11 @@ namespace MainSystem
         }
 
         private void txtPW_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
         {
 
         }

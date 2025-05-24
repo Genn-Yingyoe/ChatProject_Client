@@ -158,6 +158,7 @@
             this.Name = "LoginForm";
             this.Text = "ChatMoa";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

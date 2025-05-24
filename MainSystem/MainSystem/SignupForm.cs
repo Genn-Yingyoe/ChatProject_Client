@@ -25,7 +25,6 @@ namespace MainSystem
 
         private void SignupForm_Load(object sender, EventArgs e)
         {
-            this.BackColor = Color.White;
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -93,6 +92,11 @@ namespace MainSystem
         }
 
         private void txtNewID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNewPW_TextChanged(object sender, EventArgs e)
         {
 
         }
