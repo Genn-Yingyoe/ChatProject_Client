@@ -1,0 +1,425 @@
+﻿0. 기본적인 Data 이동 구조
+
+	- 기본적으로 1개 이상의 Client(채팅 프로그램 | User) - 1개의 Server(서버 프로그램 | Server) 통신 구조를 가진다.
+	- 모든 Data 이동은 Client로부터 시작되고, Server의 전송으로 마무리 된다.
+	- 통신 구조는 앞으로 있을 예제 및 DCM에서 2가지로 나뉜다.
+
+		#1. Server의 DB에 저장된 특정 Data를 전달 받을 필요가 없는 경우(ex. 회원가입 >> 회원가입의 경우는 성공 또는 실패 여부만 알면 된다)
+			ㄴ Server로부터 Data가 1번만 전달되며, return 되는 string의 값으로 "1" 또는 "0"만 전달된다. (1: 처리성공 | 0: 처리실패)
+
+		#2. Server의 DB에 저장된 특정 Data를 전달받아야 하는 경우
+			ㄴ Server로부터 0개 이상의 특정 Data가 전달되며, 마지막으로 return 되는 string의 값은 바로 위의 #1과 동일하다.
+			ㄴ 특정 Data는 opcode마다 형식이 다르고 정해져있지만, 주로 이미 형식화된 DB_Data_Type.cs 파일 안에 있는 Data 형식 구조를 따른다. (ex. User_Info 변수)
+			ㄴ 하지만 Server로부터 해당 데이터를 받을 때는 직렬화가 된 상태로 받는다.
+			ㄴ 직렬화란 '{}' 안에 각 형식화된 변수(Data)의 요소들을 마치 Dictionary 처럼 key(세부 변수 name):value(해당 변수에 저장된 값) 형태로 저장하여, 한 줄의 string으로 표현된다.
+			ㄴ 이 직렬화된 Data를 받아온 후에 이를 형식화된 Data처럼 자유롭게 사용하고 싶다면 DCM Class내에 포함되어있는 "private T DeSerializeJson<T>(int num, int index);" 를 사용하면 된다.
+			ㄴ 이를 다시 직렬화해서 file에 저장하고 싶을 때는 "private static string SerializeJson(object obj);"를 사용하면 된다.
+			ㄴ 각 함수들의 자세한 사용법은 이후 나올 예제 파트에서 다루겠다.
+
+	- Server에서는 Client의 요청을 처리하는 도중에 Data 추가, 수정, 삭제에 문제가 생길 경우, 해당 요청을 즉시 취소하며, 중간에 적용중이던 작업들은 모두 백업된다.(Data 무결성)
+	- 이 경우 서버측은 Client에게 byte[2]{ 0 , 0 }을 return 한다. 그와 동시에 서버측과 TCP 통신이 끊기게 된다.
+	
+
+
+1. DCM함수
+
+	$$ private string user_id $$
+		- user를 구분짓는 primary key이며, 6자리 숫자(string)로 구성되어 있다. 
+		- 이는 Login과 Logout으로만 값이 변경되어야 하며, User가 직접적으로 이를 수정하면 안 된다.
+
+	$$ private Dictionary<int,List<string>> received_data $$
+		- 해당 member 변수는 서버측으로부터 받아온 Data를 저장해두는 DCM Class내 변수이다. 
+			ㄴ int(key)는 개발자가 서버에 보낸 요청을 구별하는 식별키의 용도로 보면 된다.
+			ㄴ List<string>(value)는 해당 요청이 서버에서 정상적으로 처리된 후의 받아온 Data들이다. 
+
+	$$ internal async Task<KeyValuePair<bool,(int ,List<int>)>> db_request_data(byte opcode, List<string> items) $$
+		- 해당 member 함수는 비동기 함수이기에 await를 항시 사용한다. 사용전에 예제를 꼭 참고하는 것을 추천한다.
+		- Client(DCM Class)측에서 Server에게 요청을 보낼 때 사용하는 함수이며, DCM Class 객체를 선언 후 사용가능하다. (거의 대부분 해당 함수 위주로 사용하면 된다.)
+		- db_request_data의 전달 인자로는 byte opcode와 List<string> items가 있다.
+		- opcode는 각각의 특정 요청을 뜻하며, items는 각 opcode가 필요로하는 string들을 순서에 맞게 저장하여 넘겨야 한다.
+		- return type은 KeyValuePair<bool,(int ,List<int>)> 이다.
+			ㄴ key에 해당하는 bool 변수의 의미는 서버로부터 받은 Data가 있는지 없는지에 대한 여부이다. 없다면 해당 함수의 인자가 opcode에 맞게 전달되지 않았거나, 서버자체가 장애를 겪는 경우이다.
+			ㄴ value에 해당하는 (int, List<int>)에서 먼저 int는 위에 received_data에 식별키(key)에 해당하며, List<int>는 received_data의 value(List<string>)의 index를 똑같이 담아둔 값이다.
+				ㄴ List<int>를 통해 key의 해당하는 bool값을 결정한다. 추가적으로 List<int>의 Count와 List<string>의 Count를 비교하여 Data를 받아오는 과정에서 문제가 생긴게 있는지 확인 가능하다.
+
+	$$ private bool Clear_receive_data(int num) $$
+		- 위의 db_request_data를 통해 Data를 정상적으로 받아와, 해당 Data의 사용이 끝났다면 해당 함수로 사용이 끝난 Data를 received_data에서 제거해주는 것을 필수로 한다.
+		- 인자의 num은 위에서 나온 요청을 구별하는 식별키(received_data의 key 값)을 입력하면 된다.
+		
+	$$ private T DeSerializeJson<T>(int num, int index) $$
+		- 위에서 언급되었던 함수로 직렬화된 data 형식에 알맞은 데이터 형식(T)를 지정해주면, 역직렬화되어 '형식화된 Data 변수'가 return 된다.(마치 typecasting 같은 함수라고 생각하면 좋다)
+		- 해당 역직렬화는 received_data에 저장된 data만을 지원하며, 인자의 해당하는 num과 index는 각 received_data의 식별키와 해당 value(List<string>)의 index를 의미한다.
+
+	$$ private static string SerializeJson(object obj) $$
+		- 해당 함수는 형식화 되어있는 Data 변수를 직렬화하여 한 줄의 string 변수로 return 해준다.
+		- static으로 선언되었기에 DCM Class에 저장된 변수들과 별개로 "string str = DCM.SerializeJson( ... );" 형태로 자유롭게 사용가능하다.
+
+
+2. opcode
+	
+	- 먼저 opcode는 1byte 형태의 변수이다.(0~255)
+	- opcode의 범위는 크게 3가지로 분류되며, Main System과 관련되어 있는 경우는 1~31  |  Chatting, ChatRoom과 관련되어 있는 경우는 32~63  |  Scheduler와 관련되어 있는 경우는 64~ 이다.
+
+	$$ Detail of opcode $$
+
+		[Main]
+
+		#opcode 1	: register(회원가입)							|  need items = {id, ps, ps_question_index, ps_question_answer, name(변경불가), nickname(변경가능) } 
+			ㄴ 회원가입을 진행하는 opcode이다.
+			ㄴ Server는 중복되는 id가 존재 및 회원가입 실패 시 "0" return  /  회원가입 성공 시 "1" return 
+			ㄴ 회원가입에 성공하면 고유한 User_Id(6자리 digit)를 서버에서 부여받는다.
+
+		#opcode 2	: login(로그인)									|	need items = {id, ps}
+			ㄴ 로그인을 진행하는 opcode이다.
+			ㄴ Server는 로그인에 성공하면 로그인한 계정의 User_Id를 return 받은 후, "1"을 추가로 return
+			ㄴ Server는 로그인에 실패하면 "0"을 return 받고 끝난다.
+
+		#opcode 3	: change_password(비밀번호 변경)				|	need items = {id, ps_question_index, ps_question_answer, new_ps}
+			ㄴ 비밀번호를 변경하는 opcode이다.
+			ㄴ id, ps_question_index, ps_question_answer가 일치하면 비밀번호 변경 시도에 성공한다.
+			ㄴ Server는 비밀번호 변경 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 4	: change_nickname(닉네임 변경)					|	need items = {new_nickname}
+			ㄴ 닉네임을 변경하는 opcode이다.
+			ㄴ Server는 닉네임 변경 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 5	: change_setting(세팅 변경)						|	need items = {setting_id_1, change_setting_str_1, setting_id_2, change_setting_str_2, ...}
+			ㄴ ChatMoa 프로그램의 User별 세팅을 변경하는 opcode이다.
+			ㄴ items는 id와 str을 한 쌍으로 입력해야하며, 한번에 여러 개를 입력 가능하다.
+			ㄴ Server는 세팅 변경 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 6	: friend_request(친구 요청)						|	need items = {frined_id}
+			ㄴ 친구 요청을 보내는 opcode이다.
+			ㄴ items의  friend_id는 User_Id, 즉 고유 6자리 숫자(string)을 입력해야한다.
+			ㄴ Server에서 정상적으로 요청이 처리되었다면, 상대방 Inform_Box에 친구 요청 알림이 추가된다.
+			ㄴ Server는 친구 요청에 실패 시 "0" return  /  성공 시 "1" return
+
+
+		#opcode 7	: friend_delete(친구 삭제)						|	need items = {frined_id}
+			ㄴ 현재 나의 친구 목록에 있는 친구를 삭제하는 opcode이다.
+			ㄴ User들의 Friend_List DB에는 친구들의 User_Id가 저장되어 있다.
+			ㄴ Server에서 정상적으로 요청이 처리되었다면, 나와 친구 측의 Friend_List에서 서로 각자의 Data가 사라진다.
+			ㄴ 삭제가 되어도 상대에게 별도로 알림이 추가되지 않는다.
+			ㄴ Server는 친구 삭제 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 8	: check_notify(알림 확인/수락)					|	need items = {Inform_Id, check_state}
+			ㄴ 나에게 온 알림 중 읽지 않은 알림의 상태를 처리하는 opcode이다.
+			ㄴ 알림의 Category마다 확인 버튼만 있는 알림이 존재하거나, 수락 및 거절이 있는 알림이 존재한다. (더 자세한 내용은 뒤에 나올 DB_Data_Type을 참고)
+			ㄴ 알림 Data에서 need_items 라는 변수는 해당 요청을 처리하는데 필요한 Data 정보를 담고 있다.(ex. Frined_Id, Room_Id 등)
+			ㄴ 확인 및 거절을 하는 경우(서버 공지, 운영자 공지 등)는 check_state에 "0"을 전달하면 된다.
+			ㄴ 수락을 하는 경우(친구 요청, 채팅방 초대 등)는 check_state에 "1"을 전달하면 된다.
+			ㄴ 친구 요청을 수락하는 경우에는 상대방과 친구과 되며, 서로 Friend_List DB가 업데이트 된다. (거절의 경우는 알림의 읽음상태 말고 변화가 없다)
+			ㄴ 채팅방 초대를 수락하는 경우에는 나의 ChatRoom_List가 업데이트 되며, 또한 해당 채팅방에 정보들이 추가 및 업데이트된다. (후자는 Client 개발자가 신경을 안 써도 된다)
+			ㄴ 채팅방 초대를 거절하면 DB에 미리 만들어진 임시 Data들이 삭제된다.(이 또한 Client 개발자는 신경을 안 써도 된다)
+			ㄴ Server는 알림 확인/수락/거절 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
+			
+		#opcode 9	: delete_notify(알림 삭제)						|	need items = {Inform_Id}
+			ㄴ 나에게 온 알림 중 읽은 알림에 한해 알림을 삭제하는 opcode이다.
+			ㄴ 읽지 않은 알림은 해당 opcode가 실행되지 않도록 Client 개발자가 신경써야 한다.
+			ㄴ Server에서 정상적으로 요청이 처리되었다면, 나의 Inform_Box에서 해당 Inform_Id를 가진 알림이 삭제된다.
+			ㄴ Server는 알림 삭제 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 10	: read_friend_list(친구목록 읽기)				|	need items = {}		//빈 List를 전달
+			ㄴ 나의 친구 목록을 읽어오는 opcode이다.
+			ㄴ 항상 친구 목록을 전부 읽어온다(다른 PC 환경에서 접속했을 때, Data를 정상적으로 읽기 위함이다)
+			ㄴ Server에서 정상적으로 요청이 처리 중이라면, "_User_Id__Friend_List" Type의 변수가 직렬화된채로 전달된다.( ex. 전달되는 Data 중 하나 == "{ "Frined_Id":"123014", "Nickname": "kw1" }" )
+			ㄴ 정상적으로 처리 중이라면, Friend_List의 모든 Data(친구)를 Client에 보내어 received_data에 저장한다.
+			ㄴ Server는 정상적으로 요청이 완료되었다면, 마지막으로 "1"을 return  /  비정상적으로 완료되었다면 "0"을 return 하고 Data 통신을 마무리한다.
+
+		#opcode 11	: read_all_of_notify(알림 전체 읽기)			|	need items = {}		//빈 List를 전달 
+			ㄴ 나의 알림 목록을 읽어오는 opcode이다.
+			ㄴ 항상 알림 목록을 전부 읽어온다(다른 PC 환경에서 접속했을 때, Data를 정상적으로 읽기 위함이다)
+			ㄴ Server에서 정상적으로 요청이 처리 중이라면, "_User_Id__Inform_Box" Type의 변수가 직렬화된채로 전달된다.
+			ㄴ 정상적으로 처리 중이라면, 나의 Inform_Box에 저장된 모든 Data(알림)를 Client에 보내어 received_data에 저장한다.
+			ㄴ Server는 정상적으로 요청이 완료되었다면, 마지막으로 "1"을 return  /  비정상적으로 완료되었다면 "0"을 return 하고 Data 통신을 마무리한다.
+
+		#opcode 12	: read_user_setting(유저 세팅 읽기)				|	need items = {}		//빈 List를 전달 
+			ㄴ 나의 세팅 목록을 읽어오는 opcode이다.
+			ㄴ 항상 세팅 목록을 전부 읽어온다(다른 PC 환경에서 접속했을 때, Data를 정상적으로 읽기 위함이다)
+			ㄴ Server에서 정상적으로 요청이 처리 중이라면, "_User_Id__Setting_Info" Type의 변수가 직렬화된채로 전달된다.
+			ㄴ 정상적으로 처리 중이라면, 나의 Setting_Info에 저장된 모든 Data(세팅 정보)를 Client에 보내어 received_data에 저장한다.
+			ㄴ Server는 정상적으로 요청이 완료되었다면, 마지막으로 "1"을 return  /  비정상적으로 완료되었다면 "0"을 return 하고 Data 통신을 마무리한다.
+
+		--------------------------------------------------------------------------------------------------------------------------------
+
+		[Chat]
+
+		#opcode 32	: make_chat_room(채팅방 만들기)					|	need items = {Frined_Id_1, Frined_Id_2, ...}
+			ㄴ 나를 포함해 최소 1명 이상의 친구를 초대하여 채팅방을 만드는 opcode이다.
+			ㄴ 채팅방이 정상적으로 생성되면 처음에 혼자(나) 방에 입장된 상태이다.
+			ㄴ 초대한 각 친구들에게는 채팅방 초대 알림이 추가된다.
+			ㄴ 각 친구들이 요청을 거절 및 수락하기 전에는 해당 ChatRoom_Info에 친구들의 invite_state가 false값을 가진 상태로 User Data가 추가되어 있다.
+			ㄴ 각 친구들이 요청을 수락하는 경우 해당 ChatRoom_Info에 해당하는 친구들의 invite_state는 true가 되며, 입장된 상태가 된다.
+			ㄴ 각 친구들이 요청을 거절하는 경우 해당 ChatRoom_Info에 해당하는 친구들의 정보는 아예 삭제 된다.
+			ㄴ Server에서 채팅방이 정상적으로 생성이 되었다면 채팅방의 Room_Id를 return하고서 "1"을 return
+			ㄴ 생성에 실패했다면 별도로 다른 Data를 전달하지 않고 "0"만 return
+
+		#opcode 33	: invite_chat_room(채팅방 초대)					|	need items = {Room_Id, Friend_Id}
+			ㄴ Room_Id에 해당하는 채팅방에 친구 1명을 초대하는 opcode이다.
+			ㄴ 해당 opcode는 한 번에 친구를 1명 씩만 처리할 수 있기에 여러 친구를 초대하는 경우에 Client 개발자는 반복문을 활용해야한다.
+			ㄴ 채팅방 만들기와 거의 유사한 매커니즘을 지녔기에 각 요청에 대한 DB 처리는 채팅방 만들기와 같다.
+			ㄴ Server는 채팅방 초대 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 34	: exist_chat_room(채팅방 나가기)				|	need items = {Room_Id}
+			ㄴ Room_Id에 해당하는 채팅방을 나가는 opcode이다.
+			ㄴ 채팅방에서 나가게 된다면 해당 ChatRoom_Info에 본인의 정보는 삭제된다.
+			ㄴ 추가로 채팅방에는 본인 나갔다는 관리자 메세지가 전송된다.
+			ㄴ 이 외에 본인의 ChatRoom_List에는 해당 Room_Id가 삭제된다.
+			ㄴ Server는 채팅방 나가기 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 35	: enter_chat_room(채팅방 입장)					|	need items = {Room_Id}
+			ㄴ 채팅방 초대 알림에서 수락을 눌러 Room_Id에 해당하는 채팅방에 입장하는 opcode이다.
+			ㄴ 해당 ChatRoom_Info에 본인의 invite_state는 true로 수정되며, 채팅방에 소속된 멤버가 된다.
+			ㄴ 본인의 ChatRoom_List에는 해당 Room_id가 추가된다.
+			ㄴ 입장 시, 본인 입장했다는 관리자 메세지가 채팅방에 추가된다.
+			ㄴ Server는 채팅방 입장 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 36	: write_chat(채팅 쓰기)							|	need items = {Room_Id, chat_category, chat_str}
+			ㄴ Room_Id에 해당하는 채팅방에 채팅을 쓰는 opcode이다.
+			ㄴ chat_category와 그에 해당하는 정보인 chat_str을 인자로 전달한다.
+				ㄴ기본적으로 0은 관리자 메세지로 Client 개발자는 이를 사용하면 안된다.
+				ㄴ추가로 기본 채팅의 Category는 1이며, Chat 개발자는 적합한 Structure만 제작한다면 0,1 이후의 Category를 자유롭게 추가하고 처리하면 된다.
+			ㄴ 해당 요청이 정상적으로 처리된다면, ChatRoom_Info에서 본인이 마지막으로 읽은 msg_id는 자연스럽게 본인이 보낸 chat이 된다.
+			ㄴ Server는 채팅 쓰기 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 37	: read_chat(채팅 읽기)							|	need items = {Room_Id, last_read_msg_id, last_read_msg_date(yyyyMMdd)}
+			ㄴ Room_Id에 해당하는 채팅방에서 안 읽은 채팅을 읽는 opcode이다.
+			ㄴ 해당 opcode는 last_read_msg를 통해 복잡한 매커니즘을 가진다.
+			ㄴ last_read_msg_id는 현재 환경에서 마지막으로 읽어온 msg_id를 전달한다.
+			ㄴ last_read_msg_date 또한 동일하다.
+			ㄴ last_read_msg_id/date를 통해, 현재까지 write된 chat을 순차적으로 받아온다. 이때 data는 "Chat_Room__Room_Id___Date_" type의 변수가 직렬화되어 전달된다.
+			ㄴ 단, 다음과 같은 특수 상황에 경우는 위의 동작과 다르게 Data가 처리되어 Server로부터 전달되며, 인자 또한 특수하게 지정하여 전달해야한다.
+				ㄴ 특수 상황은 다음과 같다 >> 다른 PC에서는 읽었지만, 새로운 PC에서 채팅방에 대한 정보가 없이 시작하는 경우이다.
+				ㄴ 이 경우, last_read_msg_id는 -1을, last_read_msg_date는 현재 날짜를 전달한다.
+				ㄴ 그러면 Server에서는 현재 Client가 가진 Data가 없다고 판단하며, 현재 날짜의 일주일 전부터 chat을 조회한다.
+				ㄴ 이때 일주일 안에 생성된 chat이 존재한다면 그 시점부터 현재 시점까지 읽는다.
+				ㄴ 만약 일주인 안에 생성된 chat이 존재하지 않는다면 "0"을 return하고 데이터 통신을 끝낸다.
+				ㄴ User는 만약 이전에 Chat이 궁금할 경우에 채팅창을 위로 드래그 하면, 일주일 이전의 Chat을 read하는 opcode를 실행시킨다.
+				ㄴ 이 경우는 마지막으로 읽은 날짜를 미리 저장해두어, 해당 날짜에서 7일전의 날짜를 last_read_msg_date로 전달한다.(이때 last_read_msg_id는 계속 -1을 유지한다.)
+				ㄴ 받아온 chat 기록이 없다면 일주일간의 채팅이 없다고 채팅방에 나오게 하며, 받아온 chat 기록이 존재하면 그 chat 부터 채팅방에 띄운다.
+			ㄴ 현재 DB에 저장된 chat을 끝까지 읽어서 Client에 전달했다면 Server는 "1"을 마지막으로 return하고 데이터 통신을 끝낸다.
+			ㄴ 현재 DB에 저장된 chat을 끝까지 읽어오지 못했다면, Server는 "0"을 마지막으로 return 하고 데이터 통신을 끝낸다.
+			
+		#opcode 38	: read my_chat_room_list(내 채팅방 목록 읽기)	|	need items = {}		//빈 List를 전달 
+			ㄴ 현재 본인이 입장한 채팅방 목록(Room_Id)을 읽어오는 opcode이다.
+			ㄴ Server는 입장한 채팅방에 대해 Room_Id(string) 형태로 Client에게 Data를 return 한다.
+			ㄴ 모든 채팅방에 대한 Data 전달이 정상적으로 끝났다면 "1"을 return  /  비정상적으로 끝났다면 "0"을 return 
+
+		#opcode 39	: read chat_room_users(채팅방 멤버 읽기)		|	need items = {Room_Id}
+			ㄴ Room_Id에 해당하는 채팅방 유저들의 Info를 읽어오는 opcode이다.
+			ㄴ Server는 각 유저들의 Info를 "Chat_Room__Room_Id__Info" Type의 Data를 전달하는데, 이때 Data는 직렬화된 string 형태의 Data로 전달한다.
+			ㄴ Server는 채팅방 멤버 읽기 요청 실패 시 마지막에 "0"을 return  /  성공 시 마지막에 "1"을 return
+
+		--------------------------------------------------------------------------------------------------------------------------------
+
+		[Scheduler]
+
+		#opcode 64	: user_sche_add(유저 스케쥴 추가)				|	need items = {Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+			ㄴ 본인의 Scheulder DB에 스케쥴을 추가하는 opcode이다.
+			ㄴ Server는 유저 스케쥴 추가 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 65	: user_sche_edit(유저 스케쥴 수정)				|	need items = {Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+			ㄴ 본인의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 수정하는 opcode이다.
+			ㄴ Server는 유저 스케쥴 수정 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 66	: user_sche_delete(유저 스케쥴 삭제)			|	need items = {Sche_Id}
+			ㄴ 본인의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 삭제하는 opcode이다.
+			ㄴ Server는 유저 스케쥴 삭제 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 67	: read_user_sche(유저 스케쥴 목록 읽기)			|	need items = {}		//빈 List를 전달
+			ㄴ 본인의 Scheulder DB에 스케쥴을 전부 읽어오는 opcode이다.
+			ㄴ Server는 저장된 스케쥴을 "_User_Id__Scheduler" Type의 변수가 직렬화된 String형태의 Data로 return 한다.
+			ㄴ 모든 스케쥴에 대한 Data 전달이 정상적으로 끝났다면 "1"을 return  /  비정상적으로 끝났다면 "0"을 return 
+
+		#opcode 68	: chatroom_sche_add(채팅방 스케쥴 추가)			|	need items = {Room_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에 스케쥴을 추가하는 opcode이다.
+			ㄴ Server는 채팅방 스케쥴 추가 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 69	: chatroom_sche_edit(채팅방 스케쥴 수정)		|	need items = {Room_Id, Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 수정하는 opcode이다.
+			ㄴ Server는 채팅방 스케쥴 수정 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 70	: chatroom_sche_delete(채팅방 스케쥴 삭제)		|	need items = {Room_Id, Sche_Id}
+			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 삭제하는 opcode이다.
+			ㄴ Server는 채팅방 스케쥴 삭제 요청 실패 시 "0" return  /  성공 시 "1" return
+
+		#opcode 71	: read_chatroom_sche(채팅방 스케쥴 목록 읽기)	|	need items = {Room_Id}
+			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에 스케쥴을 전부 읽어오는 opcode이다.
+			ㄴ Server는 저장된 스케쥴을 "Chat_Room__Room_Id__Scheduler" Type의 변수가 직렬화된 String형태의 Data로 return 한다.
+			ㄴ 모든 스케쥴에 대한 Data 전달이 정상적으로 끝났다면 "1"을 return  /  비정상적으로 끝났다면 "0"을 return
+
+
+3. DB_Data_Type
+
+	[간단한 사용법]
+	
+	User_Table test_name = new User_Table();		or		User_Table test_name = new User_Table() { User_Id = "123123", Id = "ididid", Password = "pspsps"};
+	
+	Console.WriteLine(test_name.User_Id)  
+	>> output: 123132
+
+	직렬화된 Data는 다음과 같이 저장되어 있음. 
+	string line = (만약 Server로부터 친구리스트에 대한 정보를 받아온다면);			//해당 Data type은 "_User_Id__Friend_List" 이므로
+	Console.WriteLine(line)  
+	>> output: { "Friend_Id":"123123", "Nickname":"Kwangwooni" }
+
+
+	해당 Data에서 각 변수에 대한 값을 사용하거나 수정하고 싶다면 
+	_User_Id__Friend_List my_friend = DCM.DeSerializeJson<_User_Id__Friend_List>( ... );		// { "Friend_Id":"123123", "Nickname":"Kwangwooni" }
+	my_friend.Nickname = "광운이";
+
+	Console.WriteLine(my_friend.Nickname)
+	>> output: 광운이
+
+	Console.WriteLine(my_friend.Friend_Id)
+	>> output: 123123
+	
+	--------------------------------------------------------------------------------------------------------------------------------
+
+	[데이터 형식]
+
+	[DataContract]
+    internal class User_Table           
+    {
+        [DataMember] internal string User_Id;			// length size = 6 | primary key		| "000000"은 관리자 id로 각종 DB처리에 대해서 도움을 줌(Client 유저 또한 이를 활용 가능)
+        [DataMember] internal string Id;
+        [DataMember] internal string Password;
+        [DataMember] internal int Ps_Question_Index;
+        [DataMember] internal string Ps_Answer;
+    }
+		ㄴ 모든 User들의 로그인 및 패스워드 관련 정보를 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract]
+    internal class User_Info            
+    {
+        [DataMember] internal string User_Id;			// primary key and foregin key from <User_Id of "User_Table">
+        [DataMember] internal string Name;
+        [DataMember] internal string Nickname;
+        [DataMember] internal string Profile_Image_Path;
+        [DataMember] internal List<string> Chat_Room_List;
+        [DataMember] internal List<string> Waiting_Chat_Room_List;
+    }
+		ㄴ 모든 User들의 각종 정보를 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract]  
+    internal class _User_Id__Inform_Box
+    {
+        [DataMember] internal int Inform_Id;			// primary key
+        [DataMember] internal string Inform_Kind;		// 현재 지정된 형식은 "friend_request", "invite" (<<채팅방 초대) 뿐이며, Main Client 개발자가 자유롭게 사용하면 된다.
+														// 단 형식을 추가할 시, DB 개발자에게 알려줘야지 처리 Logic code를 추가할 수 있다.
+        [DataMember] internal string Inform_Date;
+        [DataMember] internal string Inform_Str;
+        [DataMember] internal List<string> need_items;
+        [DataMember] internal bool Inform_Checked;
+    }
+		ㄴ 각 User들의 알림 정보를 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract]  
+    internal class _User_Id__Friend_List
+    {
+        [DataMember] internal string Friend_Id;			// primary key and foregin key from <User_Id of "User_Table">
+        [DataMember] internal string Nickname;			// User가 친구의 Nickname을 본인만 보이는 다른 Nickname으로 설정해도 무관
+    }
+		ㄴ 각 User들의 친구 정보를 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract] 
+    internal class _User_Id__Setting_Info
+    {
+        [DataMember] internal string Info_Id;			// primary key
+        [DataMember] internal string Info_Str;
+    }
+		ㄴ 각 User들의 세팅 정보를 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract] 
+    internal class Chat_Room_List
+    {
+        [DataMember] internal string Room_Id;			// length size = 8 and primary key
+        [DataMember] internal int Users_Num;			// invite_state가 true인 멤버만 해당
+    }
+		ㄴ 모든 채팅방에 대한 Room_Id와 입장한 있는 유저의 수를 한 쌍으로 저장하는 DB의 Data 형식이다. 
+
+
+
+    [DataContract]  
+    internal class Chat_Room__Room_Id__Info
+    {
+        [DataMember] internal string User_Id;			// length size = 6 | primary key and foregin key from <User_Id "User_Table">
+        [DataMember] internal int Read_Msg_Num;
+        [DataMember] internal string Read_Last_Date;
+        [DataMember] internal string Sche_List;			// 해당 정보에 대한 사용은 Scheduler 개발자가 자유롭게 사용하면 된다.
+        [DataMember] internal bool invite_state;
+    }
+		ㄴ 각 채팅방에 대한 유저들의 정보를 저장하는 DB의 Data 형식이다.
+		ㄴ 모든 채팅방에는 "000000"의 User_Id를 가지는 관리자가 포함되어 있고(인원 수에는 Count 하지 않는다.), 이는 Data처리에 도움을 준다.
+
+
+
+    [DataContract]
+    internal class Chat_Room__Room_Id___Date_
+    {
+        [DataMember] internal int Msg_Id;				// primary key
+        [DataMember] internal string User_Id;			// foregin key from <User_Id of "Chat_Room__Room_Id__Info">
+        [DataMember] internal int Msg_Kind;				// 0 == 관리자 메세지	|  1 == user chat	|  추가적인 형식은 Chatting Client 개발자가 자유롭게 사용하면 된다.
+        [DataMember] internal string Date;
+        [DataMember] internal string Msg_Str; 
+    }
+		ㄴ 각 채팅에 대한 정보를 날짜별로 저장하는 DB의 Data 형식이다.
+
+
+
+    [DataContract]
+    internal class _User_Id__Scheduler
+    {
+        [DataMember] internal int Sche_Id;				// primary key
+        [DataMember] internal string Category;
+        [DataMember] internal string Begin_Date;
+        [DataMember] internal string Finish_Date;
+        [DataMember] internal string Sche_Str;
+        [DataMember] internal string Daily;     
+        [DataMember] internal string Weekly;     
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+    }
+		ㄴ 각 User들의 스케쥴에 대한 정보를 저장하는 DB의 Data 형식이다.
+		ㄴ Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정해놓았다. 수정이 필요할시 DB 개발자에게 말해주면 된다.
+
+
+
+    [DataContract]  
+    internal class Chat_Room__Room_Id__Scheduler
+    {
+        [DataMember] internal int Sche_Id;				//primary key
+        [DataMember] internal string User_Id;			//foregin key from <User_Id of "Chat_Room__Room_Id__Info">
+        [DataMember] internal string Category;
+        [DataMember] internal string Begin_Date;
+        [DataMember] internal string Finish_Date;
+        [DataMember] internal string Sche_Str;
+        [DataMember] internal string Daily;    
+        [DataMember] internal string Weekly;   
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+    }	
+		ㄴ 각 채팅방들의 스케쥴에 대한 정보를 저장하는 DB의 Data 형식이다.
+
+
+4. DB 및 Test_Clinet 사용법(1대 PC로 2개 프로그램 돌리는 경우)
+
+	(1) 먼저 DB_IO.cs + DB_Data_Type.cs + ChatRoomClass.cs + SchedulerClass.cs + Program.cs 파일들이 동일한 프로젝트 폴더 내에 들어 있어야 한다. 
+	(2) Test_Client에 해당하는 Form1.cs + Form1.cs [디자인] 파일들이 동일한 프로젝트 폴더 내에 들어 있어야 한다.(단 (1) 프로젝트와는 다른 프로젝트에 담겨야 한다.)
+	(3) Visual Studio 2022에서 시작 항목을 ChatMoa_DataBaseServer로 지정하고서 F5로 실행을 시작한다.
+	(4) (3)이 처음 실행되고 나서 Console 창에 DBSETUP이 정상적으로 떴다면 기본적인 DB폴더가 생성되었을 것이다.
+	(5) Visual Studio 2022에서 우측 솔루션 탐색기를 키고서, (2) file들이 포함된 Window Forms 프로젝트를 우클릭하여 "디버그>디버깅 없이 시작" 을 누른다.
+	(6) (5)까지 정상적으로 진행됬다면 DB을 실행중인 Server Console 창과 Test_Client를 실행한 Window Forms 창이 각각 1개씩 떠있을 것이다.
+	(7) 그러면 Window Forms 창에서 형식에 맞게 Data를 입력하고서 Button을 누르면 Server측으로 Data가 송신되어 처리 후 Window Forms에서는 MessageBox가 결과를 출력해줄 것이다.
+	(8) 실제 DB에 저장된 Data들이 어떻게 변하고 있는지 확인하려면 DB폴더를 찾아서 살펴보면 된다.(ndjson파일은 메모장으로 열면 된다.)
+	(9) 보통 C드라이브에 DB폴더가 생성된다.
