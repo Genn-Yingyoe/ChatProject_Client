@@ -277,7 +277,7 @@ internal class _User_Id__Scheduler
 
 -Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정
 
--수정이 필요할시 DB 개발자에게 문의의
+-수정이 필요할시 DB 개발자에게 문의
 
 
 ### Chat_Room__Room_Id__Scheduler
