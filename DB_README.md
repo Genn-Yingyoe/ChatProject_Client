@@ -238,7 +238,9 @@ internal class Chat_Room__Room_Id__Info
 }
 ```
 -각 채팅방에 대한 유저들의 정보 저장
+
 -모든 채팅방에 **"000000"의 User_Id를 가지는 관리자**가 포함되어 있음
+
 -관리자는 인원 수에 포함되지 않으며 데이터 처리에 용이하게 하기 위해 추가됨
 
 ### Chat_Room__Room_Id___Date
