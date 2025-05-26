@@ -272,7 +272,9 @@ internal class _User_Id__Scheduler
 }
 ```
 -각 User들의 Schedule 정보 저장
+
 -Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정
+
 -수정이 필요할시 DB 개발자에게 문의의
 
 
