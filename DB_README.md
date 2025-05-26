@@ -297,7 +297,8 @@ internal class Chat_Room__Room_Id__Scheduler
     [DataMember] internal string Yearly;
 }
 ```
--각 채팅방들의 Schedule에 대한 정보 저장
+-각 채팅들의 Schedule 정보 저장
+
 ---
 
 # 4. DB server 및 Test_Client 사용법
