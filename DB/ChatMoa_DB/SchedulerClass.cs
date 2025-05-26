@@ -15,7 +15,7 @@ namespace ChatMoa_DataBaseServer
 {
     internal class SchedulerClass
     {
-        internal static async Task<bool> SchedulerHandlerAsync(NetworkStream ns, byte opcode, List<string> items)
+        internal static async Task<bool> SchedulerHandlerAsync(NetworkStream ns, byte opcode, List<string> items, List<string> send_datas)
         {
             bool ans = false;
             string User = items[0];
@@ -25,7 +25,7 @@ namespace ChatMoa_DataBaseServer
             int handle_index = -1;
             List<object> result = new List<object>();
 
-            if (opcode < 67)
+            if (opcode < 68)
                 path = @"\DB\Users\" + User + @"\" + User + "_Scheduler.ndjson";
             else
                 path = @"\DB\ChatRoom\" + items[1] + @"\Chat_Room_" + items[1] + "_Scheduler.ndjson";
@@ -45,6 +45,7 @@ namespace ChatMoa_DataBaseServer
                     Monthly = items[7],
                     Yearly = items[8]
                 });
+                send_datas.Add("1");
             }
             else if(opcode == 65)       //user schedule edit        |   items = { User_id, _User_Id__Scheduler.* }      | test success
             {
@@ -82,6 +83,7 @@ namespace ChatMoa_DataBaseServer
                         i++;
                     }
                 }
+                send_datas.Add("1");
             }
             else if (opcode == 66)      //user schedule delete      |   items = { User_id, Sche_id }        | test success
             {
@@ -107,8 +109,37 @@ namespace ChatMoa_DataBaseServer
                         i++;
                     }
                 }
+                send_datas.Add("1");
             }
-            else if (opcode == 67)      //chat_room schedule add    |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success(chat_room_info에 개인별 일정 추가 미완)
+            else if (opcode == 67)      //read all of user_schedule         |   items = { User_id } 
+            {
+                try
+                {
+                    if (!File.Exists(path))
+                    {
+                        send_datas.Add("0");
+                    }
+                    else
+                    {
+                        using (var src = new StreamReader(path, Encoding.UTF8))     
+                        {
+                            string line;
+                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                            {
+                                send_datas.Add(line);
+                            }
+                        }
+                        send_datas.Add("1");
+                        mode = 3;
+                        ans = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    send_datas = new List<string>() { "0" };
+                }
+            }
+            else if (opcode == 68)      //chat_room schedule add    |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success(chat_room_info에 개인별 일정 추가 미완)
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Add          
                 mode = 0;
@@ -125,8 +156,9 @@ namespace ChatMoa_DataBaseServer
                     Monthly = items[8],
                     Yearly = items[9]           
                 });
+                send_datas.Add("1");
             }
-            else if (opcode == 68)      //chat_room schedule edit   |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success
+            else if (opcode == 69)      //chat_room schedule edit   |   items = { User_id, Room_id, Chat_Room__Room_Id__Scheduler.* }       | test success
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Edit
                 mode = 1;
@@ -163,8 +195,9 @@ namespace ChatMoa_DataBaseServer
                         i++;
                     }
                 }
+                send_datas.Add("1");
             }
-            else if (opcode == 69)      //chat_room schedule delete |   items = { User_id, Room_id, Sche_id }           | test success
+            else if (opcode == 70)      //chat_room schedule delete |   items = { User_id, Room_id, Sche_id }           | test success
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Del
                 mode = 2;
@@ -188,8 +221,37 @@ namespace ChatMoa_DataBaseServer
                         i++;
                     }
                 }
+                send_datas.Add("1");
             }
-            else
+            else if (opcode == 71)      //read all of user_schedule
+            {
+                try
+                {
+                    if (!File.Exists(path))
+                    {
+                        send_datas.Add("0");
+                    }
+                    else
+                    {
+                        using (var src = new StreamReader(path, Encoding.UTF8))
+                        {
+                            string line;
+                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                            {
+                                send_datas.Add(line);
+                            }
+                        }
+                        send_datas.Add("1");
+                        mode = 3;
+                        ans = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    send_datas = new List<string>() { "0" };
+                }
+            }
+            else        // 채팅방 알림 읽기
             {
                 // 향후 업데이트로 opcode가 추가된다면 추가로 코딩
             }
@@ -212,6 +274,10 @@ namespace ChatMoa_DataBaseServer
             else if (mode == 2)
             {
                 ans = await DB_IO.SafeBatchDeleteAsync(new List<string>() { path }, new List<int>() { handle_index });
+            }
+            else if (mode == 3)
+            {
+                return ans;
             }
             else
             {
