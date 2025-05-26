@@ -423,3 +423,5 @@
 	(7) 그러면 Window Forms 창에서 형식에 맞게 Data를 입력하고서 Button을 누르면 Server측으로 Data가 송신되어 처리 후 Window Forms에서는 MessageBox가 결과를 출력해줄 것이다.
 	(8) 실제 DB에 저장된 Data들이 어떻게 변하고 있는지 확인하려면 DB폴더를 찾아서 살펴보면 된다.(ndjson파일은 메모장으로 열면 된다.)
 	(9) 보통 C드라이브에 DB폴더가 생성된다.
+
+	※ Test_Client(Window Forms)에서 body에 문자열을 입력할 때, '/'를 기준으로 분할되어 List<string>으로 만든 후에 서버에 요청을 보내는 방식이므로, 사용 시 해당 사항을 유의해주시기 바란다.
