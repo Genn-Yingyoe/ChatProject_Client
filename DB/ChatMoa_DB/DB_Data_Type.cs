@@ -51,6 +51,7 @@ namespace ChatMoa_DataBaseServer
     {
         //primary key and foregin key from "User_Table"
         [DataMember] internal string Friend_Id;
+        [DataMember] internal string Nickname;
     }
 
     [DataContract]  //Edit
