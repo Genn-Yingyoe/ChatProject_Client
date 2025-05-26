@@ -89,7 +89,7 @@ private static string SerializeJson(object obj)
 | 7      | friend_delete(친구 삭제)    | friend_id   | 성공 1 / 실패 0, 둘 다 친구목록에서 서로 삭제 |
 | 8      | check_notify(알림 확인/수락)| Inform_Id, check_state("1":수락, "0":확인/거절) | 성공 1 / 실패 0  |
 | 9      | delete_notify(알림 삭제)    | Inform_Id   | 읽은 알림만 삭제, 성공 1 / 실패 0 |
-| 10     | read_friend_list(친구목록)  | 없음(빈 리스트) | 성공 시 Friend_List DB 전체체를 직렬화 된 상태로 받음, 실패 0 |
+| 10     | read_friend_list(친구목록)  | 없음(빈 리스트) | 성공 시 Friend_List DB 전체를 직렬화 된 상태로 받음, 실패 0 |
 | 11     | read_all_of_notify(알림 전체 읽기) | 없음(빈 리스트) | 성공 시 Inform_Box DB 전체체를 직렬화 된 상태로 받음, 실패 0 |
 | 12     | read_user_setting(유저 세팅 읽기) | 없음(빈 리스트) | 성공 시 Setting_Info DB 전체를 직렬화 된 상태로 받음, 실패 0 |
 
