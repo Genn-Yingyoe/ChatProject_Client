@@ -223,7 +223,7 @@ internal class Chat_Room_List
     [DataMember] internal int Users_Num;          // invite_state가 true인 멤버만 해당
 }
 ```
--모든 채팅방에 대한 Room_Id와 입장한 유저수를 순서쌍으로 저장
+- 모든 채팅방에 대한 Room_Id와 입장한 유저수를 순서쌍으로 저장
 
 ### Chat_Room__Room_Id__Info
 ```csharp
@@ -237,11 +237,11 @@ internal class Chat_Room__Room_Id__Info
     [DataMember] internal bool invite_state;
 }
 ```
--각 채팅방에 대한 유저들의 정보 저장
+- 각 채팅방에 대한 유저들의 정보 저장
 
--모든 채팅방에 **"000000"의 User_Id를 가지는 관리자**가 포함되어 있음
+- 모든 채팅방에 **"000000"의 User_Id를 가지는 관리자**가 포함되어 있음
 
--관리자는 인원 수에 포함되지 않으며 데이터 처리에 용이하게 하기 위해 추가됨
+- 관리자는 인원 수에 포함되지 않으며 데이터 처리에 용이하게 하기 위해 추가됨
 
 ### Chat_Room__Room_Id___Date
 ```csharp
@@ -255,7 +255,7 @@ internal class Chat_Room__Room_Id___Date
     [DataMember] internal string Msg_Str;
 }
 ```
--각 채팅에 대한 정보를 날짜별로 저장
+- 각 채팅에 대한 정보를 날짜별로 저장
 
 ### _User_Id__Scheduler
 ```csharp
@@ -273,11 +273,11 @@ internal class _User_Id__Scheduler
     [DataMember] internal string Yearly;
 }
 ```
--각 User들의 Schedule 정보 저장
+- 각 User들의 Schedule 정보 저장
 
--Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정
+- Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정
 
--수정이 필요할시 DB 개발자에게 문의
+- 수정이 필요할시 DB 개발자에게 문의
 
 
 ### Chat_Room__Room_Id__Scheduler
@@ -297,7 +297,7 @@ internal class Chat_Room__Room_Id__Scheduler
     [DataMember] internal string Yearly;
 }
 ```
--각 채팅들의 Schedule 정보 저장
+- 각 채팅들의 Schedule 정보 저장
 
 ---
 
