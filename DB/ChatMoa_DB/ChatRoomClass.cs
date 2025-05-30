@@ -12,6 +12,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 
 namespace ChatMoa_DataBaseServer
@@ -370,6 +371,7 @@ namespace ChatMoa_DataBaseServer
 
                 try
                 {
+                    Chat_Room__Room_Id__Info manager_info = await DB_IO.SearchAsync<Chat_Room__Room_Id__Info>(path.Last(), r => r.User_Id == "000000");
                     path.Add(@"\DB\Chat_Room_List.ndjson");
                     using (var src = new StreamReader(path.Last(), Encoding.UTF8))
                     {
@@ -419,14 +421,13 @@ namespace ChatMoa_DataBaseServer
                     list.Add((1, new Chat_Room__Room_Id__Info
                     {
                         User_Id = User,
-                        Read_Msg_Num = 0,
-                        Read_Last_Date = today.Substring(0, 8),
+                        Read_Msg_Num = manager_info.Read_Msg_Num,
+                        Read_Last_Date = manager_info.Read_Last_Date,
                         Sche_List = "",
                         invite_state = true
                     }));
 
                     path.Add(@"\DB\ChatRoom\" + room_id + @"\Chat_Room_" + room_id + "_Info.ndjson");
-                    Chat_Room__Room_Id__Info manager_info = await DB_IO.SearchAsync<Chat_Room__Room_Id__Info>(path.Last(), r => r.User_Id == "000000");
                     manager_info.Read_Msg_Num++;
                     manager_info.Read_Last_Date = today.Substring(0, 8);
                     using (var src = new StreamReader(path.Last(), Encoding.UTF8))
@@ -604,7 +605,7 @@ namespace ChatMoa_DataBaseServer
                 // Sending Msg with SendAckAsync() + "Chat_Room__Room_Id__Info" row Edit +  
                 string room_id = items[1];
                 string info_path = @"\DB\ChatRoom\" + room_id + @"\Chat_Room_" + room_id + "_Info.ndjson";
-
+                //이미 읽었던 기록을 바탕으로 받아온다면 이어서 읽기(Last_read_msg_id != -1) / 기록이 너무 오래되었거나, 새로운 환경에서 읽는 경우라면 가장 마지막 메세지를 기준으로 3일 전부터 읽어오기(-1)
                 try
                 {
                     int last_msg_index = (await DB_IO.SearchAsync<Chat_Room__Room_Id__Info>(info_path, r => r.User_Id == "000000")).Read_Msg_Num;
@@ -612,11 +613,15 @@ namespace ChatMoa_DataBaseServer
                     int read_user_msg_index = user_info.Read_Msg_Num;
                     string read_user_msg_date = user_info.Read_Last_Date.Substring(0, 8);
 
-                    if (int.Parse(items[2]) == -1)          //Last_read_msg_date에서 일주일 전부터 읽기
+                    bool update = false;
+                    int new_last_read_index = -1;
+                    string new_last_read_date = "";
+
+                    if (int.Parse(items[2]) == -1)          //Last_read_msg_date를 포함하여, 2일전까지 읽기
                     {
                         read_user_msg_date = items[3];
-
-                        int i = -7;
+                        List<DateTime> three_days = new List<DateTime>();
+                        int temp = 0;
 
                         DateTime dt = DateTime.ParseExact(
                                 read_user_msg_date,
@@ -624,42 +629,51 @@ namespace ChatMoa_DataBaseServer
                                 CultureInfo.InvariantCulture,
                                 DateTimeStyles.None
                             );
-                        DateTime exist_msg_date = dt.AddDays(i++);
-                        
-                        while(!File.Exists(@"\DB\ChatRoom\" + room_id + @"\" + exist_msg_date.ToString("yyyy") + @"\Chat_Room_"
-                                + room_id + "_" + exist_msg_date.ToString("yyyyMMdd") + ".ndjson") && exist_msg_date.ToString("yyyyMMdd") != read_user_msg_date)
-                        {
-                            exist_msg_date = dt.AddDays(i++);
-                        }
+                        three_days.Add(dt.AddDays(-2));
+                        three_days.Add(dt.AddDays(-1));
+                        three_days.Add(dt);
 
-                        if(!File.Exists(@"\DB\ChatRoom\" + room_id + @"\" + exist_msg_date.ToString("yyyy") + @"\Chat_Room_"
-                                + room_id + "_" + exist_msg_date.ToString("yyyyMMdd") + ".ndjson") && exist_msg_date.ToString("yyyyMMdd") == read_user_msg_date)
+                        foreach (DateTime d in three_days)
                         {
-                            throw new Exception();
-                        }
-                        else
-                        {
-                            using (var src = new StreamReader(@"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
-                                + room_id + "_" + read_user_msg_date + ".ndjson", Encoding.UTF8))
+                            string p = @"\DB\ChatRoom\" + room_id + @"\" + d.ToString("yyyy") + @"\Chat_Room_"
+                                + room_id + "_" + d.ToString("yyyyMMdd") + ".ndjson";
+                            if (File.Exists(p))
                             {
-                                var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id___Date_));
-                                string line;
-                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                new_last_read_date = d.ToString("yyyyMMdd");
+                                send_datas.Add(new_last_read_date);
+                                using (var src = new StreamReader(p, Encoding.UTF8))
                                 {
-                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id___Date_));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                                     {
-                                        var row = (Chat_Room__Room_Id___Date_)ser.ReadObject(ms);
-                                        if (row.Msg_Id != 0)
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                                         {
-                                            read_user_msg_index = row.Msg_Id - 1;
+                                            var row = (Chat_Room__Room_Id___Date_)ser.ReadObject(ms);
+                                            send_datas.Add(line);
+                                            new_last_read_index = row.Msg_Id;
                                         }
-                                        else
-                                        {
-                                            read_user_msg_index = 0;
-                                        }
-                                        break;
                                     }
                                 }
+                            }
+                            else
+                            {
+                                temp++;
+                            }
+                        }
+
+                        if (temp == 3)          //3일치 간 chatting 없음
+                        {
+                            new_last_read_index = last_msg_index;
+                            send_datas.Add("00000000"); 
+                        }
+                        else                    
+                        {
+                            if (user_info.Read_Msg_Num < new_last_read_index)
+                            {
+                                user_info.Read_Msg_Num = new_last_read_index;
+                                user_info.Read_Last_Date = new_last_read_date;
+                                update = true;
                             }
                         }
                     }
@@ -669,89 +683,99 @@ namespace ChatMoa_DataBaseServer
                         {
                             if (read_user_msg_index > int.Parse(items[2]))
                                 read_user_msg_index = int.Parse(items[2]);
+                            else if (last_msg_index == int.Parse(items[2]))
+                            {
+                                new_last_read_index = last_msg_index;
+                                send_datas.Add("00000000");
+                            }
+                            else if (last_msg_index < int.Parse(items[2]))
+                                throw new Exception();
                         }
                         else if (int.Parse(read_user_msg_date) > int.Parse(items[3]))
                         {
                             read_user_msg_date = items[3];
-                            using (var src = new StreamReader(@"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
-                                + room_id + "_" + read_user_msg_date + ".ndjson", Encoding.UTF8))
+                            read_user_msg_index = int.Parse(items[2]);
+                        }
+                    }
+
+                    if (!update)
+                    {
+                        string msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
+                            + room_id + "_" + read_user_msg_date + ".ndjson";
+                        read_user_msg_index++;
+
+                        while (last_msg_index >= read_user_msg_index)
+                        {
+                            if (File.Exists(msg_path))
                             {
-                                var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id___Date_));
-                                string line;
-                                while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                send_datas.Add(read_user_msg_date);
+                                new_last_read_date = read_user_msg_date;
+                                using (var src = new StreamReader(msg_path, Encoding.UTF8))
                                 {
-                                    using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                    var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id___Date_));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                                     {
-                                        var row = (Chat_Room__Room_Id___Date_)ser.ReadObject(ms);
-                                        if (row.Msg_Id != 0)
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                                         {
-                                            read_user_msg_index = row.Msg_Id - 1;
+                                            var row = (Chat_Room__Room_Id___Date_)ser.ReadObject(ms);
+                                            if (row.Msg_Id == read_user_msg_index)
+                                            {
+                                                send_datas.Add(line);
+                                                read_user_msg_index++;
+                                                new_last_read_index = row.Msg_Id;
+                                            }
                                         }
-                                        else
-                                        {
-                                            read_user_msg_index = 0;
-                                        }
-                                        break;
                                     }
+                                }
+                                if (new_last_read_index > user_info.Read_Msg_Num)
+                                {
+                                    update = true;
+                                    user_info.Read_Msg_Num = new_last_read_index;
+                                    user_info.Read_Last_Date = new_last_read_date;
                                 }
                             }
 
-                            if (int.Parse(items[2]) > read_user_msg_index) read_user_msg_index = int.Parse(items[2]);
-                        }
-                    
-                    
-                    }
-
-                    string msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
-                            + room_id + "_" + read_user_msg_date + ".ndjson";
-
-
-                    while (last_msg_index != read_user_msg_index)
-                    {
-                        read_user_msg_index++;
-                        Chat_Room__Room_Id___Date_ new_msg = await DB_IO.SearchAsync<Chat_Room__Room_Id___Date_>(msg_path, r => r.Msg_Id == read_user_msg_index);
-                        while (new_msg == default)
-                        {
                             DateTime dt = DateTime.ParseExact(
-                                read_user_msg_date,
-                                "yyyyMMdd",
-                                CultureInfo.InvariantCulture,
-                                DateTimeStyles.None
-                            );
+                                    read_user_msg_date,
+                                    "yyyyMMdd",
+                                    CultureInfo.InvariantCulture,
+                                    DateTimeStyles.None
+                                );
                             DateTime next = dt.AddDays(1);
                             read_user_msg_date = next.ToString("yyyyMMdd");
 
                             msg_path = @"\DB\ChatRoom\" + room_id + @"\" + read_user_msg_date.Substring(0, 4) + @"\Chat_Room_"
                             + room_id + "_" + read_user_msg_date + ".ndjson";
-                            new_msg = await DB_IO.SearchAsync<Chat_Room__Room_Id___Date_>(msg_path, r => r.Msg_Id == read_user_msg_index);
                         }
+                    }
 
-                        send_datas.Add(DB_IO.SerializeJson(new_msg));
-                    }
-                    path.Add(info_path);
-                    user_info.Read_Msg_Num = read_user_msg_index;
-                    user_info.Read_Last_Date = read_user_msg_date;
-                    using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                    if (update)
                     {
-                        int i = 0;
-                        var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Info));
-                        string line;
-                        while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                        path.Add(info_path);
+                        using (var src = new StreamReader(path.Last(), Encoding.UTF8))
                         {
-                            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                            int i = 0;
+                            var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Info));
+                            string line;
+                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                             {
-                                var row = (Chat_Room__Room_Id__Info)ser.ReadObject(ms);
-                                if (row.User_Id == User)
+                                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                                 {
-                                    edit_index.Add(i);
-                                    break;
+                                    var row = (Chat_Room__Room_Id__Info)ser.ReadObject(ms);
+                                    if (row.User_Id == User)
+                                    {
+                                        edit_index.Add(i);
+                                        break;
+                                    }
                                 }
+                                i++;
                             }
-                            i++;
                         }
+                        list.Add((1, user_info));
                     }
-                    list.Add((1, user_info));
-                    if (last_msg_index == read_user_msg_index)
+                    
+                    if (last_msg_index == new_last_read_index)
                     {
                         send_datas.Add("1");
                         if (edit_index.Count == 0)

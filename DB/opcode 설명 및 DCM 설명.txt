@@ -183,22 +183,22 @@
 			ㄴ Server는 채팅 쓰기 요청 처리를 실패 시 "0" return  /  성공 시 "1" return
 
 		#opcode 37	: read_chat(채팅 읽기)							|	need items = {Room_Id, last_read_msg_id, last_read_msg_date(yyyyMMdd)}
-			ㄴ Room_Id에 해당하는 채팅방에서 안 읽은 채팅을 읽는 opcode이다.
-			ㄴ 해당 opcode는 last_read_msg를 통해 복잡한 매커니즘을 가진다.
-			ㄴ last_read_msg_id는 현재 환경에서 마지막으로 읽어온 msg_id를 전달한다.
-			ㄴ last_read_msg_date 또한 동일하다.
-			ㄴ last_read_msg_id/date를 통해, 현재까지 write된 chat을 순차적으로 받아온다. 이때 data는 "Chat_Room__Room_Id___Date_" type의 변수가 직렬화되어 전달된다.
-			ㄴ 단, 다음과 같은 특수 상황에 경우는 위의 동작과 다르게 Data가 처리되어 Server로부터 전달되며, 인자 또한 특수하게 지정하여 전달해야한다.
-				ㄴ 특수 상황은 다음과 같다 >> 다른 PC에서는 읽었지만, 새로운 PC에서 채팅방에 대한 정보가 없이 시작하는 경우이다.
-				ㄴ 이 경우, last_read_msg_id는 -1을, last_read_msg_date는 현재 날짜를 전달한다.
-				ㄴ 그러면 Server에서는 현재 Client가 가진 Data가 없다고 판단하며, 현재 날짜의 일주일 전부터 chat을 조회한다.
-				ㄴ 이때 일주일 안에 생성된 chat이 존재한다면 그 시점부터 현재 시점까지 읽는다.
-				ㄴ 만약 일주인 안에 생성된 chat이 존재하지 않는다면 "0"을 return하고 데이터 통신을 끝낸다.
-				ㄴ User는 만약 이전에 Chat이 궁금할 경우에 채팅창을 위로 드래그 하면, 일주일 이전의 Chat을 read하는 opcode를 실행시킨다.
-				ㄴ 이 경우는 마지막으로 읽은 날짜를 미리 저장해두어, 해당 날짜에서 7일전의 날짜를 last_read_msg_date로 전달한다.(이때 last_read_msg_id는 계속 -1을 유지한다.)
-				ㄴ 받아온 chat 기록이 없다면 일주일간의 채팅이 없다고 채팅방에 나오게 하며, 받아온 chat 기록이 존재하면 그 chat 부터 채팅방에 띄운다.
-			ㄴ 현재 DB에 저장된 chat을 끝까지 읽어서 Client에 전달했다면 Server는 "1"을 마지막으로 return하고 데이터 통신을 끝낸다.
-			ㄴ 현재 DB에 저장된 chat을 끝까지 읽어오지 못했다면, Server는 "0"을 마지막으로 return 하고 데이터 통신을 끝낸다.
+			ㄴ Room_Id에 해당하는 채팅방에서 채팅을 읽는 opcode이다.
+			ㄴ 내부 처리는 last_read_msg_id의 값으로 크게 2가지 방식으로 나뉘어진다.
+				ㄴ 첫번째는 "last_read_msg_id == -1" 인 경우로 해당 동작은 last_read_msg_date를 포함한 이전 3일 동안의 모든 채팅 기록을 읽는다.(ex. 20250529라면 20250527~20250529에 해당하는 채팅을 읽음)
+				ㄴ 위의 경우는 다음과 같은 상황에서 사용되기 편하다.
+					ㄴ 1. 채팅은 지속적으로 이루어졌지만, 오래동안 이를 읽지 않은 경우
+						ㄴ 갑자기 대량의 데이터를 읽으려고 하면 부하가 올 수 있기에 opcode 39를 통해 마지막 채팅의 날짜를 확인 후, 이를 통해 마지막 날짜를 기준으로 3일동안의 채팅 기록만을 가져온다.
+						ㄴ 위 상황과 비슷하게, Computer 1에서 ChatMoa를 사용하다가, 한동안 Computer2에서 ChatMoa를 사용하는 경우에 Computer1로 접속하면 그동안 쌓인 채팅을 전부 읽기 힘든 경우
+					ㄴ 2. 현재 유저의 컴퓨터에 저장된 채팅 기록의 Msg_Id가 0부터 시작이 아닐 경우
+						ㄴ 즉, 현재 컴퓨터의 정보에 저장된 채팅 기록과 다르게, 이전의 채팅 기록이 존재하는 경우, 해당 처리를 통해 이전 3일치 기록을 읽을 수 있다.
+				ㄴ 두번째는 "last_read_msg_id >= 0", 즉 컴퓨터에 채팅을 읽은 기록이 존재하는 경우이다.
+					ㄴ 해당 경우에는 컴퓨터에 저장된 마지막 채팅 기록(msg_id,date)을 적어주면, 해당 기록 이후의 채팅을 전부 보내준다.
+			ㄴ Server는 Client에게 보낼 채팅 기록을 찾았다면 먼저 해당 채팅의 날짜(yyyyMMdd / 8자리 문자열)을 먼저 보낸다.
+				ㄴ 이후 연속하여 "Chat_Room__Room_Id___Date_" 형식을 직렬화한 string 데이터를 보내며, 해당 방식을 반복한다.
+			ㄴ 단, 처음부터 Server가 보내줄 채팅이 없는 경우(Client가 이미 읽을 수 있는 채팅을 전부 읽었거나, 1번 처리에서 3일동안의 채팅 기록이 없었을 경우), "00000000"을 Client에게 반환한다.
+			ㄴ Chatting Client 개발자는 opcode39와 컴퓨터에 저장된 채팅 기록을 적절히 활용하여 1,2 번 처리 방법 중 알맞은 처리를 Server에게 요청하면 된다.
+			ㄴ Server는 채팅 읽기 요청 처리를 정상적으로 성공 시 마지막으로 "1" return  /  비정상적으로 처리된 경우 "0" return
 			
 		#opcode 38	: read my_chat_room_list(내 채팅방 목록 읽기)	|	need items = {}		//빈 List를 전달 
 			ㄴ 현재 본인이 입장한 채팅방 목록(Room_Id)을 읽어오는 opcode이다.
@@ -423,5 +423,3 @@
 	(7) 그러면 Window Forms 창에서 형식에 맞게 Data를 입력하고서 Button을 누르면 Server측으로 Data가 송신되어 처리 후 Window Forms에서는 MessageBox가 결과를 출력해줄 것이다.
 	(8) 실제 DB에 저장된 Data들이 어떻게 변하고 있는지 확인하려면 DB폴더를 찾아서 살펴보면 된다.(ndjson파일은 메모장으로 열면 된다.)
 	(9) 보통 C드라이브에 DB폴더가 생성된다.
-
-	※ Test_Client(Window Forms)에서 body에 문자열을 입력할 때, '/'를 기준으로 분할되어 List<string>으로 만든 후에 서버에 요청을 보내는 방식이므로, 사용 시 해당 사항을 유의해주시기 바란다.

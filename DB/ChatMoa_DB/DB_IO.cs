@@ -291,7 +291,8 @@ namespace ChatMoa_DataBaseServer
                             if (user != default)
                             {
                                 //login success
-                                send_datas.Add(user.User_Id);
+                                User_Info send_info = new User_Info() { User_Id = user.User_Id, Name = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson",r => r.User_Id == user.User_Id)).Name };
+                                send_datas.Add(SerializeJson(send_info));
                                 send_datas.Add("1");
                             }
                             else
@@ -764,6 +765,31 @@ namespace ChatMoa_DataBaseServer
                             catch (Exception e)
                             {
                                 send_datas = new List<string>() { "0" };
+                            }
+                        }
+                        else if (opcode == 13)  //user_id_search             |   items = (friend_id)
+                        {
+                            string search_id = items[1];
+                            try
+                            {
+                                User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.User_Id == search_id);
+                                _User_Id__Friend_List send_info = new _User_Id__Friend_List();
+                                if (user != default)
+                                {
+                                    //search success
+                                    send_info.Friend_Id = search_id;
+                                    send_info.Nickname = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == search_id)).Nickname ;
+                                    
+                                }
+
+                                send_datas.Add(SerializeJson(send_info));
+                                send_datas.Add("1");
+                                opcode_success = true;
+                                Console.WriteLine("Search 시도 여부: " + send_datas[0]);
+                            }
+                            catch (Exception e)
+                            {
+                                send_datas.Add("0");
                             }
                         }
                         else if (opcode >= 32&&opcode<64)
