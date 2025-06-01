@@ -1,0 +1,11 @@
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\bin\Debug\Login & Signup.exe.config
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\bin\Debug\Login & Signup.exe
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\bin\Debug\Login & Signup.pdb
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login & Signup.csproj.AssemblyReference.cache
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login___Signup.LoginForm.resources
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login___Signup.Properties.Resources.resources
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login___Signup.SignupForm.resources
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login & Signup.csproj.GenerateResource.cache
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login & Signup.csproj.CoreCompileInputs.cache
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login & Signup.exe
+C:\Users\zahar\OneDrive\Desktop\Reference\Project\ChatProject\Login & Signup\Login & Signup\obj\Debug\Login & Signup.pdb
