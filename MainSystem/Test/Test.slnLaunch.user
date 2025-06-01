@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "새 프로필",
+    "Projects": [
+      {
+        "Path": "Test_Client\\Test_Client.csproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "Test_Client"
+      }
+    ]
+  }
+]

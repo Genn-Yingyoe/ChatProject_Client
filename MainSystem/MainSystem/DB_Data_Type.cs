@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatMoa_DataBaseServer
+namespace MainSystem
 {
     /*
      * User_Tabel에는 언제나 000000의 User_Id를 갖는 관리자가 포함됨

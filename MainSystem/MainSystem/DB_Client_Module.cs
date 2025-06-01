@@ -13,7 +13,7 @@ using System.Runtime.Serialization.Json;
 
 //추후 잘못된 opcode에 대해 state_buf를 0으로 반환하도록 수정
 
-namespace ChatMoa_DataBaseServer
+namespace MainSystem
 {
     internal class DCM
     {

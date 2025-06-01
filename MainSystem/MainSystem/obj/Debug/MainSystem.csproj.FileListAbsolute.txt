@@ -10,3 +10,15 @@ C:\Users\admin\Desktop\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSy
 C:\Users\admin\Desktop\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.csproj.CoreCompileInputs.cache
 C:\Users\admin\Desktop\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.exe
 C:\Users\admin\Desktop\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.pdb
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\bin\Debug\MainSystem.exe.config
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\bin\Debug\MainSystem.exe
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\bin\Debug\MainSystem.pdb
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.LoginForm.resources
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.MainForm.resources
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.Properties.Resources.resources
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.SignupForm.resources
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.csproj.GenerateResource.cache
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.exe
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\MainSystem\MainSystem\obj\Debug\MainSystem.pdb

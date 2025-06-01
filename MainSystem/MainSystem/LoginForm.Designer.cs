@@ -130,6 +130,7 @@
             // pbApp
             // 
             this.pbApp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pbApp.Image = ((System.Drawing.Image)(resources.GetObject("pbApp.Image")));
             this.pbApp.ImageLocation = "C:\\Users\\admin\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\bin\\Debug\\main.pn" +
     "g";
             this.pbApp.Location = new System.Drawing.Point(14, 12);
@@ -138,6 +139,7 @@
             this.pbApp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbApp.TabIndex = 4;
             this.pbApp.TabStop = false;
+            this.pbApp.Click += new System.EventHandler(this.pbApp_Click);
             // 
             // LoginForm
             // 

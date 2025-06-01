@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Runtime.InteropServices;
+using MainSystem;
 
 namespace MainSystem
 {
@@ -57,41 +58,47 @@ namespace MainSystem
             signupForm.ShowDialog();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             string inputID = txtID.Text.Trim();
             string inputPW = txtPW.Text.Trim();
 
-            if (!File.Exists(UserDBPath))
-            {
-                MessageBox.Show("UserDB.txt 파일이 없습니다.");
-                return;
-            }
+            var dcm = new DCM();
 
-            var lines = File.ReadAllLines(UserDBPath);
-            foreach (var line in lines)
-            {
-                var parts = line.Split(',');
-                if (parts.Length < 6) continue; // 데이터가 부족한 경우 무시
+            // 서버에 로그인 요청
+            var requestBody = new List<string> { inputID, inputPW };
+            var result = await dcm.db_request_data(0x01, requestBody);  // 예: opcode 0x01 = 로그인
 
-                if (parts[0] == inputID && parts[1] == inputPW) // 여기에 메인 대화창을 띄울 코드를 넣을것
+            bool success = result.Key;
+            int key = result.Value.Item1;
+            List<int> indices = result.Value.Item2;
+
+            if (success)
+            {
+                // 서버 응답에서 첫 번째 문자열을 꺼내기
+                string responseStr = dcm.DeSerializeJson<string>(key, indices[0]);
+
+                if (responseStr == "1")  // 로그인 성공
                 {
-                    MainForm mainForm = new MainForm();
+                    dcm.Login(inputID);  // DCM 인스턴스에 유저 정보 저장
+
+                    MainForm mainForm = new MainForm(dcm);  // dcm 전달
                     mainForm.Show();
                     this.Hide();
 
-                    mainForm.InitializeAfterLogin(parts[2]); // 로그인 후 초기화 호출
-                }
-                else if (parts[0] == inputID && !(parts[1] == inputPW))
-                {
-                    MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+                    mainForm.InitializeAfterLogin(inputID);
                 }
                 else
                 {
-
+                    MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
                 }
             }
+            else
+            {
+                MessageBox.Show("서버와 통신에 실패했습니다.");
+            }
         }
+
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -126,6 +133,11 @@ namespace MainSystem
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbApp_Click(object sender, EventArgs e)
         {
 
         }
