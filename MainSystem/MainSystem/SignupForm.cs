@@ -27,69 +27,67 @@ namespace MainSystem
         {
         }
 
-        private void btnRegister_Click(object sender, EventArgs e)
+        private async void btnRegister_Click(object sender, EventArgs e)
         {
             string newID = txtNewID.Text.Trim();
             string newPW = txtNewPW.Text.Trim();
             string newName = txtName.Text.Trim();
             string newNick = txtNick.Text.Trim();
+            string PWQ = "0";//txtPWQ.Text.Trim();
+            string PWA = txtPWA.Text.Trim();
 
-            if (string.IsNullOrEmpty(newID) || string.IsNullOrEmpty(newPW) || string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newNick))
+            if (string.IsNullOrEmpty(newID) || string.IsNullOrEmpty(newPW) ||
+                string.IsNullOrEmpty(newName) || string.IsNullOrEmpty(newNick))
             {
                 MessageBox.Show("모든 항목을 입력해주세요.");
                 return;
             }
 
-            if (!File.Exists(UserDBPath))
-            {
-                File.Create(UserDBPath).Close();
-            }
+            // TCP 기반 회원가입 요청
+            var dcm = new DCM();
 
-            var lines = File.ReadAllLines(UserDBPath);
-            foreach (var line in lines)
+            var requestBody = new List<string> { newID, newPW, PWQ ,PWA, newName, newNick };
+
+            var result = await dcm.db_request_data(0x01, requestBody);
+
+            bool success = result.Key;
+            int key = result.Value.Item1;
+            List<int> indices = result.Value.Item2;
+
+            if (success)
             {
-                var parts = line.Split(',');
-                if (parts[0] == newID)
+                string responseStr;
+
+             responseStr = GetRawResponse(dcm, key, indices[0]);
+
+                if (responseStr == "1")
                 {
-                    MessageBox.Show("중복된 아이디입니다.");
-                    return;
+                    MessageBox.Show("회원가입 성공!");
+                    this.Close();
                 }
-                if (parts[5] == newNick)
+                else if (responseStr == "0")
                 {
-                    MessageBox.Show("이미 존재하는 닉네임입니다.");
-                    return;
+                    MessageBox.Show("회원가입 실패: 중복된 ID 또는 닉네임입니다.");
+                }
+                else
+                {
+                    MessageBox.Show("알 수 없는 서버 응답: " + responseStr);
                 }
             }
-
-            string newHashTag = GenerateUniqueHashTag(lines);
-            string newCode = GenerateUniqueCode(lines);
-
-            string newUserLine = $"{newID},{newPW},{newHashTag},{newCode},{newName},{newNick}"; //txt파일 schema
-            File.AppendAllText(UserDBPath, newUserLine + Environment.NewLine);
-
-            MessageBox.Show("회원가입 성공!");
-            this.Close();
-        }
-
-        private string GenerateUniqueHashTag(string[] existingUsers)
-        {
-            while (true)
+            else
             {
-                string tag = random.Next(000000, 999999).ToString();
-                if (!existingUsers.Any(u => u.Split(',')[2] == tag))
-                    return tag;
+                MessageBox.Show("서버와 통신에 실패했습니다.");
             }
         }
 
-        private string GenerateUniqueCode(string[] existingUsers)
+        // DCM의 내부 received_data 접근 (private이므로 리플렉션 사용)
+        private string GetRawResponse(DCM dcm, int key, int index)
         {
-            while (true)
-            {
-                string code = random.Next(0x00000000, 0x7FFFFFFF).ToString("X8");
-                if (!existingUsers.Any(u => u.Split(',')[3] == code))
-                    return code;
-            }
+            var field = typeof(DCM).GetField("received_data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var data = field?.GetValue(dcm) as Dictionary<int, List<string>>;
+            return data?[key][index];
         }
+
 
         private void txtNewID_TextChanged(object sender, EventArgs e)
         {

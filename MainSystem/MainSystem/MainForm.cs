@@ -15,6 +15,12 @@ namespace MainSystem
             InitializeComponent();
         }
 
+            internal MainForm(DCM received)
+            {
+                var dcm = received;
+                InitializeComponent();
+            }
+
         public void InitializeAfterLogin(string code)
         {
             string loggedInCode = code;

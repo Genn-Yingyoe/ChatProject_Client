@@ -65,9 +65,8 @@ namespace MainSystem
 
             var dcm = new DCM();
 
-            // 서버에 로그인 요청
             var requestBody = new List<string> { inputID, inputPW };
-            var result = await dcm.db_request_data(0x01, requestBody);  // 예: opcode 0x01 = 로그인
+            var result = await dcm.db_request_data(0x02, requestBody); // 로그인 부분
 
             bool success = result.Key;
             int key = result.Value.Item1;
@@ -75,22 +74,22 @@ namespace MainSystem
 
             if (success)
             {
-                // 서버 응답에서 첫 번째 문자열을 꺼내기
-                string responseStr = dcm.DeSerializeJson<string>(key, indices[0]);
+                string responseStr;
 
-                if (responseStr == "1")  // 로그인 성공
+                responseStr = GetRawResponse(dcm, key, indices[0]);
+
+                if (responseStr == "0")
                 {
-                    dcm.Login(inputID);  // DCM 인스턴스에 유저 정보 저장
-
-                    MainForm mainForm = new MainForm(dcm);  // dcm 전달
+                    MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
+                    
+                }
+                else
+                {
+                    MainForm mainForm = new MainForm(dcm);
                     mainForm.Show();
                     this.Hide();
 
                     mainForm.InitializeAfterLogin(inputID);
-                }
-                else
-                {
-                    MessageBox.Show("로그인 실패. 아이디 또는 비밀번호를 확인하세요.");
                 }
             }
             else
@@ -98,6 +97,15 @@ namespace MainSystem
                 MessageBox.Show("서버와 통신에 실패했습니다.");
             }
         }
+
+        private string GetRawResponse(DCM dcm, int key, int index)
+        {
+            var field = typeof(DCM).GetField("received_data", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var data = field?.GetValue(dcm) as Dictionary<int, List<string>>;
+            return data?[key][index];
+        }
+
+
 
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -125,21 +133,6 @@ namespace MainSystem
 
                 btnLogin.PerformClick();
             }
-        }
-
-        private void txtPW_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pbApp_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
