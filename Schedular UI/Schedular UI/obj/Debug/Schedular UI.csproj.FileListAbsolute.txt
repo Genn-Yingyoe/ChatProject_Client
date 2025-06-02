@@ -1,6 +1,0 @@
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular UI.csproj.AssemblyReference.cache
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular UI.csproj.SuggestedBindingRedirects.cache
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular_UI.CalendarForm.resources
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular_UI.Properties.Resources.resources
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular UI.csproj.GenerateResource.cache
-C:\Users\user\Desktop\응소실\Schedular UI\Schedular UI\obj\Debug\Schedular UI.csproj.CoreCompileInputs.cache
