@@ -75,14 +75,17 @@ namespace MainSystem
             notificationTimer.Start();
         }
 
-        // LoginForm에서 호출되는 초기화 메서드
+        // LoginForm에서 호출되는 초기화 메서드 - 수정됨
         public void InitializeAfterLogin(string userId, string userName)
         {
             currentUserId = userId;
             currentUserName = userName;
 
-            // UI 업데이트
-            this.Text = $"ChatMoa - {userName}";
+            // 사용자 닉네임도 저장 (ChatForm에서 사용)
+            LoadUserNickname();
+
+            // UI 업데이트 - User ID도 함께 표시
+            this.Text = $"ChatMoa - {userName}({userId})";
 
             // 알림 타이머 시작
             InitializeNotificationTimer();
@@ -91,13 +94,60 @@ namespace MainSystem
             LoadUserDataFromServer();
         }
 
+        // 사용자 닉네임 로드
+        private async void LoadUserNickname()
+        {
+            try
+            {
+                using (var client = new TcpClient())
+                {
+                    client.ReceiveTimeout = 3000;
+                    client.SendTimeout = 3000;
+
+                    await client.ConnectAsync("127.0.0.1", 5000);
+                    NetworkStream ns = client.GetStream();
+
+                    // opcode 13: user_id_search로 자신의 닉네임 조회
+                    byte opcode = 13;
+                    List<string> items = new List<string> { currentUserId };
+
+                    await SendPacketAsync(ns, currentUserId, opcode, items);
+                    var responses = await ReadAllResponsesAsync(ns);
+
+                    if (responses.Count >= 2 && responses[1] == "1")
+                    {
+                        var userInfo = DeserializeFriendInfo(responses[0]);
+                        if (!string.IsNullOrEmpty(userInfo.Nickname))
+                        {
+                            currentUserNickname = userInfo.Nickname;
+                            // 닉네임 로드 후 타이틀 업데이트
+                            this.Text = $"ChatMoa - {currentUserNickname}({currentUserId})";
+                        }
+                        else
+                        {
+                            currentUserNickname = currentUserName; // 기본값
+                        }
+                    }
+                    else
+                    {
+                        currentUserNickname = currentUserName; // 기본값
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                currentUserNickname = currentUserName; // 오류 시 기본값
+            }
+        }
+
         // 이전 버전과의 호환성을 위한 오버로드
         public void InitializeAfterLogin(string code)
         {
             currentUserId = code;
             currentUserName = "사용자";
+            currentUserNickname = "사용자";
 
-            this.Text = $"ChatMoa - {currentUserName}";
+            this.Text = $"ChatMoa - {currentUserName}({currentUserId})";
 
             // 알림 타이머 시작
             InitializeNotificationTimer();
@@ -485,7 +535,7 @@ namespace MainSystem
             }
         }
 
-        // 채팅방 열기
+        // 채팅방 열기 - 수정됨: 닉네임도 전달
         private void OpenChatRoom(string roomId)
         {
             // 이미 열린 채팅방이 있는지 확인
@@ -499,9 +549,10 @@ namespace MainSystem
                 }
             }
 
-            // 새 채팅방 열기
+            // 새 채팅방 열기 - 닉네임도 함께 전달
             ChatForm newChatForm = new ChatForm();
-            newChatForm.InitializeChat(currentUserId, currentUserName, roomId);
+            string displayName = !string.IsNullOrEmpty(currentUserNickname) ? currentUserNickname : currentUserName;
+            newChatForm.InitializeChat(currentUserId, displayName, roomId);
             newChatForm.Show();
         }
 
@@ -660,7 +711,26 @@ namespace MainSystem
                     {
                         for (int i = 0; i < responses.Count - 1; i++)
                         {
-                            chatRoomList.Add(responses[i]);
+                            string roomData = responses[i];
+
+                            // 구분자가 있는 경우 제거 (서버가 아직 구분자를 보내는 경우 대비)
+                            if (roomData.Contains("|"))
+                            {
+                                string[] parts = roomData.Split('|');
+                                if (parts.Length > 0)
+                                {
+                                    string roomId = parts[0];
+                                    if (!string.IsNullOrEmpty(roomId))
+                                    {
+                                        chatRoomList.Add(roomId);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // 순수한 Room ID인 경우
+                                chatRoomList.Add(roomData);
+                            }
                         }
                     }
                 }
@@ -805,7 +875,7 @@ namespace MainSystem
                 using (Graphics g = Graphics.FromImage(roomIcon))
                 {
                     g.Clear(Color.FromArgb(41, 47, 102));
-                    g.DrawString("💬", new Font("Segoe UI Emoji", 20), Brushes.White, new PointF(5, 5));
+                    g.DrawString("채팅", new Font("맑은 고딕", 12), Brushes.White, new PointF(8, 15));
                 }
                 pic.Image = roomIcon;
 
@@ -994,10 +1064,8 @@ namespace MainSystem
                             DisplayChatRoomList();
                         }
 
-                        // 채팅방 열기
-                        ChatForm chatForm = new ChatForm();
-                        chatForm.InitializeChat(currentUserId, currentUserName, roomId);
-                        chatForm.Show();
+                        // 채팅방 열기 - 수정된 OpenChatRoom 사용
+                        OpenChatRoom(roomId);
 
                         MessageBox.Show($"채팅방이 생성되었습니다.\nRoom ID: {roomId}", "성공",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1063,7 +1131,7 @@ namespace MainSystem
         }
     }
 
-    // 데이터 구조들
+    // 모든 데이터 구조들을 MainForm.cs에 통합
     [DataContract]
     internal class FriendInfo
     {
@@ -1080,5 +1148,16 @@ namespace MainSystem
         [DataMember] internal string Inform_Str;
         [DataMember] internal List<string> need_items;
         [DataMember] internal bool Inform_Checked;
+    }
+
+    // ChatForm에서 사용하는 데이터 클래스도 여기에 추가
+    [DataContract]
+    internal class ChatMessage
+    {
+        [DataMember] internal int Msg_Id;
+        [DataMember] internal string User_Id;
+        [DataMember] internal int Msg_Kind;
+        [DataMember] internal string Date;
+        [DataMember] internal string Msg_Str;
     }
 }
