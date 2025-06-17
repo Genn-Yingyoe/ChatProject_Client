@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarApp", "CalendarApp\CalendarApp.csproj", "{D8A71634-DFB4-460E-A817-C942FB43949F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMoa_DataBaseServer", "ChatMoa_DataBaseServer\ChatMoa_DataBaseServer.csproj", "{05F369CC-9845-4FB6-8192-60563F1EF9D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarApp", "CalendarApp\CalendarApp.csproj", "{37358936-4871-471C-9EE8-F5CA9CEF6CC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8A71634-DFB4-460E-A817-C942FB43949F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8A71634-DFB4-460E-A817-C942FB43949F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8A71634-DFB4-460E-A817-C942FB43949F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8A71634-DFB4-460E-A817-C942FB43949F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05F369CC-9845-4FB6-8192-60563F1EF9D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05F369CC-9845-4FB6-8192-60563F1EF9D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05F369CC-9845-4FB6-8192-60563F1EF9D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05F369CC-9845-4FB6-8192-60563F1EF9D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37358936-4871-471C-9EE8-F5CA9CEF6CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37358936-4871-471C-9EE8-F5CA9CEF6CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37358936-4871-471C-9EE8-F5CA9CEF6CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37358936-4871-471C-9EE8-F5CA9CEF6CC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4406CEFF-565E-4054-9D22-71860F98AA34}
+		SolutionGuid = {3BF741BB-109D-4781-9C96-2BA5822E6A64}
 	EndGlobalSection
 EndGlobal
