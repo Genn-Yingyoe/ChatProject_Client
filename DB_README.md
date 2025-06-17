@@ -92,7 +92,7 @@ private static string SerializeJson(object obj)
 | 10     | read_friend_list(친구목록)  | 없음(빈 리스트) | 성공 시 Friend_List DB 전체를 직렬화 된 상태로 받음, 실패 0 |
 | 11     | read_all_of_notify(알림 전체 읽기) | 없음(빈 리스트) | 성공 시 Inform_Box DB 전체를 직렬화 된 상태로 받음, 실패 0 |
 | 12     | read_user_setting(유저 세팅 읽기) | 없음(빈 리스트) | 성공 시 Setting_Info DB 전체를 직렬화 된 상태로 받음, 실패 0 |
-| 13     | user_id_search(유저 존재유무 검색) | Friend_Id |  User 존재 시 User_ID와 Friend_List 를 직렬화 된 상태로 받음 / User 존재 x 시 두 값 모두 null로 받음, 성공 1 / 실패 0 | 
+| 13     | user_id_search(유저 존재유무 검색) | Friend_Id |  User 존재 시 User_ID_Friend_List 를 직렬화 된 상태로 받음 / User 존재 x 시 null 2개로 받음, 성공 1 / 실패 0 | 
 
 ---
 
