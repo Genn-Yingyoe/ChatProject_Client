@@ -29,42 +29,42 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.btnNewChat = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnChat = new System.Windows.Forms.Button();
+            this.btnInv = new System.Windows.Forms.Button();
             this.flpMain = new System.Windows.Forms.FlowLayoutPanel();
             this.rdbFriend = new System.Windows.Forms.RadioButton();
             this.rdbChatroom = new System.Windows.Forms.RadioButton();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnCal = new System.Windows.Forms.Button();
+            this.btnCon = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnNewChat
+            // btnChat
             // 
-            this.btnNewChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnChat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNewChat.Location = new System.Drawing.Point(47, 10);
-            this.btnNewChat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnNewChat.Name = "btnNewChat";
-            this.btnNewChat.Size = new System.Drawing.Size(43, 33);
-            this.btnNewChat.TabIndex = 0;
-            this.btnNewChat.Text = "NewChat";
-            this.btnNewChat.UseVisualStyleBackColor = true;
-            this.btnNewChat.Click += new System.EventHandler(this.btn1_Click);
+            this.btnChat.Location = new System.Drawing.Point(54, 12);
+            this.btnChat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnChat.Name = "btnChat";
+            this.btnChat.Size = new System.Drawing.Size(49, 41);
+            this.btnChat.TabIndex = 0;
+            this.btnChat.Text = "NewChat";
+            this.btnChat.UseVisualStyleBackColor = true;
+            this.btnChat.Click += new System.EventHandler(this.btn1_Click);
             // 
-            // button2
+            // btnInv
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnInv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(95, 10);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(66, 33);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Friend Invitation";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnInv.Location = new System.Drawing.Point(109, 12);
+            this.btnInv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnInv.Name = "btnInv";
+            this.btnInv.Size = new System.Drawing.Size(75, 41);
+            this.btnInv.TabIndex = 1;
+            this.btnInv.Text = "Friend Invitation";
+            this.btnInv.UseVisualStyleBackColor = true;
+            this.btnInv.Click += new System.EventHandler(this.button2_Click);
             // 
             // flpMain
             // 
@@ -72,10 +72,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpMain.AutoScroll = true;
-            this.flpMain.Location = new System.Drawing.Point(3, 116);
+            this.flpMain.Location = new System.Drawing.Point(3, 145);
             this.flpMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flpMain.Name = "flpMain";
-            this.flpMain.Size = new System.Drawing.Size(293, 243);
+            this.flpMain.Size = new System.Drawing.Size(335, 304);
             this.flpMain.TabIndex = 2;
             this.flpMain.Paint += new System.Windows.Forms.PaintEventHandler(this.flpMain_Paint);
             // 
@@ -86,10 +86,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbFriend.AutoSize = true;
             this.rdbFriend.Checked = true;
-            this.rdbFriend.Location = new System.Drawing.Point(66, 67);
+            this.rdbFriend.Location = new System.Drawing.Point(75, 84);
             this.rdbFriend.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbFriend.Name = "rdbFriend";
-            this.rdbFriend.Size = new System.Drawing.Size(47, 16);
+            this.rdbFriend.Size = new System.Drawing.Size(58, 19);
             this.rdbFriend.TabIndex = 3;
             this.rdbFriend.TabStop = true;
             this.rdbFriend.Text = "친구";
@@ -103,51 +103,51 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbChatroom.AutoCheck = false;
             this.rdbChatroom.AutoSize = true;
-            this.rdbChatroom.Location = new System.Drawing.Point(167, 67);
+            this.rdbChatroom.Location = new System.Drawing.Point(191, 84);
             this.rdbChatroom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rdbChatroom.Name = "rdbChatroom";
-            this.rdbChatroom.Size = new System.Drawing.Size(59, 16);
+            this.rdbChatroom.Size = new System.Drawing.Size(73, 19);
             this.rdbChatroom.TabIndex = 4;
             this.rdbChatroom.Text = "채팅방";
             this.rdbChatroom.UseVisualStyleBackColor = true;
             this.rdbChatroom.CheckedChanged += new System.EventHandler(this.rdbChatroom_CheckedChanged);
             // 
-            // button3
+            // btnCal
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnCal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(167, 10);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(71, 33);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Calendar";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnCal.Location = new System.Drawing.Point(191, 12);
+            this.btnCal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCal.Name = "btnCal";
+            this.btnCal.Size = new System.Drawing.Size(81, 41);
+            this.btnCal.TabIndex = 5;
+            this.btnCal.Text = "Calendar";
+            this.btnCal.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnCon
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Location = new System.Drawing.Point(243, 10);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(52, 33);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Config";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnCon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCon.Location = new System.Drawing.Point(278, 12);
+            this.btnCon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnCon.Name = "btnCon";
+            this.btnCon.Size = new System.Drawing.Size(59, 41);
+            this.btnCon.TabIndex = 6;
+            this.btnCon.Text = "Config";
+            this.btnCon.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 362);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.ClientSize = new System.Drawing.Size(342, 452);
+            this.Controls.Add(this.btnCon);
+            this.Controls.Add(this.btnCal);
             this.Controls.Add(this.rdbChatroom);
             this.Controls.Add(this.rdbFriend);
             this.Controls.Add(this.flpMain);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.btnNewChat);
+            this.Controls.Add(this.btnInv);
+            this.Controls.Add(this.btnChat);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
@@ -161,13 +161,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnNewChat;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnChat;
+        private System.Windows.Forms.Button btnInv;
         private System.Windows.Forms.FlowLayoutPanel flpMain;
         private System.Windows.Forms.RadioButton rdbFriend;
         private System.Windows.Forms.RadioButton rdbChatroom;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnCal;
+        private System.Windows.Forms.Button btnCon;
     }
 }
 

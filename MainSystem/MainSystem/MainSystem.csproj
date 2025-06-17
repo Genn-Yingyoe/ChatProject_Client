@@ -49,6 +49,20 @@
   <ItemGroup>
     <Compile Include="DB_Client_Module.cs" />
     <Compile Include="DB_Data_Type.cs" />
+    <Compile Include="InviteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InviteForm.Designer.cs">
+      <DependentUpon>InviteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocalTemp.cs">
+      <DependentUpon>LocalTemp.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="LocalTemp.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LocalTemp.xsd</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +83,9 @@
     <Compile Include="SignupForm.Designer.cs">
       <DependentUpon>SignupForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="InviteForm.resx">
+      <DependentUpon>InviteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +105,17 @@
     <EmbeddedResource Include="SignupForm.resx">
       <DependentUpon>SignupForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="LocalTemp.xsc">
+      <DependentUpon>LocalTemp.xsd</DependentUpon>
+    </None>
+    <None Include="LocalTemp.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LocalTemp.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="LocalTemp.xss">
+      <DependentUpon>LocalTemp.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -29,7 +29,7 @@ namespace MainSystem
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            // 친구를 추가해요.
         }
 
         private void rdbFriend_CheckedChanged(object sender, EventArgs e)

@@ -3,13 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test_Client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Data_Type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{649E3556-9AA1-40AA-8910-507226E4B50E}|..\\Test\\Test_Client\\Test_Client.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test_client\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{649E3556-9AA1-40AA-8910-507226E4B50E}|..\\Test\\Test_Client\\Test_Client.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test_client\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{649E3556-9AA1-40AA-8910-507226E4B50E}|..\\Test\\Test_Client\\Test_Client.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test_client\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Data_Type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,7 +19,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,13 +27,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "DB_Data_Type.cs",
               "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Data_Type.cs",
               "RelativeDocumentMoniker": "..\\Test\\Test\\DB_Data_Type.cs",
               "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Data_Type.cs",
               "RelativeToolTip": "..\\Test\\Test\\DB_Data_Type.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAYwHwAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAYwIYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T11:36:41.638Z",
               "EditorCaption": ""
@@ -46,14 +46,14 @@
               "RelativeDocumentMoniker": "..\\Test\\Test_Client\\Form1.cs",
               "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test_Client\\Form1.cs",
               "RelativeToolTip": "..\\Test\\Test_Client\\Form1.cs",
-              "ViewState": "AgIAAKQAAAAAAAAAAAAQwLAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAAALAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-02T11:34:35.678Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Form1.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test_Client\\Form1.cs",
               "RelativeDocumentMoniker": "..\\Test\\Test_Client\\Form1.cs",
