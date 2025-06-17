@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -184,7 +184,9 @@ namespace ChatMoa_DataBaseServer
 
                         for (int i = 0; i < bode_num; i++)
                         {
-                            int b = ns.ReadByte();
+                            byte[] tmp = new byte[sizeof(int)];
+                            await ReadExact(ns, tmp, sizeof(int));
+                            int b = BitConverter.ToInt32(tmp, 0);
                             if (b == -1) throw new IOException("EOF");
                             body_lengths[i] = b;
                         }
@@ -876,10 +878,11 @@ namespace ChatMoa_DataBaseServer
 
                                     await ns.WriteAsync(state_buf, 0, 1)
                                         .ConfigureAwait(false);
-
+                                            ///////////////////////////////////
                                     int len = datas_buf[i].Length;
-                                    byte[] len_buf = new byte[1] { (byte)len };
-                                    await ns.WriteAsync(len_buf, 0, 1)
+                                    byte[] len_buf = BitConverter.GetBytes(len);
+
+                                    await ns.WriteAsync(len_buf, 0, sizeof(int))
                                         .ConfigureAwait(false);
 
                                     await ns.WriteAsync(datas_buf[i], 0, len)
