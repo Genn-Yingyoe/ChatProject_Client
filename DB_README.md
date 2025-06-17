@@ -105,7 +105,7 @@ private static string SerializeJson(object obj)
 | 34     | exist_chat_room(채팅방 나가기) | Room_Id            | 성공 1, 실패 0 |
 | 35     | enter_chat_room(채팅방 입장)  | Room_Id            | 성공 1, 실패 0 |
 | 36     | write_chat(채팅 쓰기)         | Room_Id, chat_category, chat_str | 관리자 메세지는 category "0" Client 개발자 사용금지, 성공 1, 실패 0 |
-| 37     | read_chat(채팅 읽기)          | ~~Room_Id, last_read_msg_id, last_read_msg_date(yyyyMMdd)~~ | *수정 예정* |
+| 37     | read_chat(채팅 읽기)          | Room_Id, last_read_msg_id, last_read_msg_date(yyyyMMdd) | 읽지 않은 3일 이내의 메세지 반환, 날짜, 내용 순으로 모든 메세지를 전송할 때 까지 반복, 정상적으로 처리 후 1 return, 비정상일 경우 0 return  |
 | 38     | read_my_chat_room_list(내 채팅방 목록) | 없음(빈 리스트)    | 성공 시 본인이 입장한 Room_Id(string/0개 이상), 1 순서대로 두 번 return, 실패 0 |
 | 39     | read_chat_room_users(채팅방 멤버 읽기) | Room_Id | 성공 시 Chat_Room_Info DB 전체를 직렬화 된 상태로 받음, 실패 0 |
 
