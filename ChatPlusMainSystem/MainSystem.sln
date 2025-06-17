@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainSystem", "MainSystem\MainSystem.csproj", "{DE8A428F-71EB-47A6-970F-2EE30C027386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMoa_DataBaseServer", "ChatMoa_DataBaseServer\ChatMoa_DataBaseServer.csproj", "{4D849BE1-C4C0-4906-AE86-9F36C498A9C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE8A428F-71EB-47A6-970F-2EE30C027386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8A428F-71EB-47A6-970F-2EE30C027386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8A428F-71EB-47A6-970F-2EE30C027386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8A428F-71EB-47A6-970F-2EE30C027386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D849BE1-C4C0-4906-AE86-9F36C498A9C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D849BE1-C4C0-4906-AE86-9F36C498A9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D849BE1-C4C0-4906-AE86-9F36C498A9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D849BE1-C4C0-4906-AE86-9F36C498A9C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {544A78EB-4613-4656-A484-FBB86300C143}
+	EndGlobalSection
+EndGlobal
