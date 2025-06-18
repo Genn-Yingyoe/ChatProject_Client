@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,8 +41,8 @@ namespace ChatMoa_DataBaseServer
     internal class DB_IO
     {
         private const int Port = 5000;            // 열 포트 번호
-        private const int HeaderSize = 1+6+1;               // [0] = opcode, [1..6] = User_Id(string, Big-Endian), [7] = num of request contents
-                                                            // private readonly TcpListener _listener;
+        private const int HeaderSize = 1 + 6 + 1;               // [0] = opcode, [1..6] = User_Id(string, Big-Endian), [7] = num of request contents
+                                                                // private readonly TcpListener _listener;
         private readonly ConcurrentDictionary<TcpClient, bool> _clients = new ConcurrentDictionary<TcpClient, bool>();
         private static string[] used_User_Id = new string[100];
         private static int used_User_Id_Index = 0;
@@ -91,7 +91,7 @@ namespace ChatMoa_DataBaseServer
                     };
                     setup1 = await SafeBatchAppendAsync(temp);
                 }
-                
+
 
                 fileName = @"\DB\User_Info.ndjson";
                 if (!File.Exists(fileName))
@@ -114,7 +114,7 @@ namespace ChatMoa_DataBaseServer
                     };
                     setup2 = await SafeBatchAppendAsync(temp);
                 }
-                
+
 
                 if (!(setup1 && setup2))
                     Console.WriteLine("DBsetup Fail: need to reload");
@@ -125,7 +125,7 @@ namespace ChatMoa_DataBaseServer
             var ser = new DataContractJsonSerializer(typeof(User_Table));
             bool exist = false;
 
-            foreach(string s in used_User_Id)
+            foreach (string s in used_User_Id)
             {
                 if (s == user_id)
                     return true;
@@ -140,7 +140,7 @@ namespace ChatMoa_DataBaseServer
                     using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                     {
                         var row = (User_Table)ser.ReadObject(ms);
-                        if (row.User_Id == user_id) 
+                        if (row.User_Id == user_id)
                             exist = true;
                     }
                 }
@@ -153,7 +153,7 @@ namespace ChatMoa_DataBaseServer
                 return true;
             }
 
-            return exist;                                
+            return exist;
         }
 
 
@@ -198,7 +198,7 @@ namespace ChatMoa_DataBaseServer
                             body[i] = Encoding.UTF8.GetString(buf);
                             Console.WriteLine(body[i]);
                         }
-                        
+
                         bool exist_user_id = await ExistUserAsync(user_id);
 
                         if (!exist_user_id)
@@ -229,7 +229,7 @@ namespace ChatMoa_DataBaseServer
                             //"User_Table.ndjson" user Add + "User_Info" user Add
                             // + "_User_Id__Inform_Box" and "_User_Id__Friend_List" and "_User_Id__Setting_Info" empty file Add
                             string new_user_id = await Create_User_Id();
-                            if(await SearchAsync<User_Table>(@"\DB\User_Table.ndjson",r=>r.Id == items[1]) != default)
+                            if (await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.Id == items[1]) != default)
                             {
                                 //duplication id
                                 opcode_success = true;
@@ -287,11 +287,11 @@ namespace ChatMoa_DataBaseServer
                         }
                         else if (opcode == 2)       //try login         |   items = (User_id(not use),Id,Ps)        | test success
                         {
-                            User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson",r => r.Id == items[1] && r.Password == items[2]);
+                            User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.Id == items[1] && r.Password == items[2]);
                             if (user != default)
                             {
                                 //login success
-                                User_Info send_info = new User_Info() { User_Id = user.User_Id, Name = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson",r => r.User_Id == user.User_Id)).Name };
+                                User_Info send_info = new User_Info() { User_Id = user.User_Id, Name = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user.User_Id)).Name };
                                 send_datas.Add(SerializeJson(send_info));
                                 send_datas.Add("1");
                             }
@@ -308,7 +308,7 @@ namespace ChatMoa_DataBaseServer
                         {
                             //if info same, "User_Table" Password Edit
                             User_Table user = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.Id == items[1]);
-                            if(user == default)
+                            if (user == default)
                             {
                                 //not found id
                                 opcode_success = true;
@@ -317,7 +317,7 @@ namespace ChatMoa_DataBaseServer
                             }
                             else
                             {
-                                if(user.Ps_Question_Index == Int32.Parse(items[2]) && user.Ps_Answer == items[3])
+                                if (user.Ps_Question_Index == Int32.Parse(items[2]) && user.Ps_Answer == items[3])
                                 {
                                     //Ps_question success
                                     user.Password = items[4];
@@ -341,7 +341,7 @@ namespace ChatMoa_DataBaseServer
                                             i++;
                                         }
                                     }
-                                    list.Add((1,user));
+                                    list.Add((1, user));
                                     send_datas.Add("1");
                                 }
                                 else
@@ -356,7 +356,7 @@ namespace ChatMoa_DataBaseServer
                         else if (opcode == 4)       //change Nickname   |   items = (User_id, Nickname)     | test success
                         {
                             //
-                            User_Info user = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson",r => r.User_Id == user_id);
+                            User_Info user = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user_id);
                             user.Nickname = items[1];
                             path.Add(@"\DB\User_Info.ndjson");
                             using (var src = new StreamReader(path.Last(), Encoding.UTF8))
@@ -383,7 +383,7 @@ namespace ChatMoa_DataBaseServer
                         }
                         else if (opcode == 5)       //change setting    |   items = (User_id, Info_id_1, Info_str_1, Info_id_2, Info_str_2, ... , Info_id_n, Info_str_n)        | test success
                         {
-                            for(int i = 1; i <= items.Count/2; i++)
+                            for (int i = 1; i <= items.Count / 2; i++)
                             {
                                 _User_Id__Setting_Info setting_info = new _User_Id__Setting_Info
                                 {
@@ -417,11 +417,11 @@ namespace ChatMoa_DataBaseServer
                         }
                         else if (opcode == 6)       //friend request    |   items = (User_id, friend_Id)        | test success
                         {
-                            
-                            string friend = items[1];
-                            User_Table friend_info= await SearchAsync<User_Table>(@"\DB\User_Table.ndjson",r=>r.User_Id == friend);
 
-                            if(friend_info != default)
+                            string friend = items[1];
+                            User_Table friend_info = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.User_Id == friend);
+
+                            if (friend_info != default)
                             {
                                 path.Add(@"\DB\Users\" + friend_info.User_Id + @"\" + friend_info.User_Id + "_Inform_Box.ndjson");
                                 list.Add((0, new _User_Id__Inform_Box
@@ -441,7 +441,7 @@ namespace ChatMoa_DataBaseServer
                                 Console.WriteLine("존재하지 않는 User_ID입니다");
                                 send_datas.Add("0");
                             }
-                            
+
                         }
                         else if (opcode == 7)       //friend delete     |   items = (User_id, friend_Id)        | test success
                         {
@@ -449,7 +449,7 @@ namespace ChatMoa_DataBaseServer
                             User_Table friend_info = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.User_Id == friend);
                             User_Table my_info = await SearchAsync<User_Table>(@"\DB\User_Table.ndjson", r => r.User_Id == user_id);
 
-                            if((friend_info == default) || (my_info == default))
+                            if ((friend_info == default) || (my_info == default))
                             {
                                 Console.WriteLine("Read Error");
                                 send_datas.Add("0");
@@ -477,7 +477,7 @@ namespace ChatMoa_DataBaseServer
                                 }
                             }
                             list.Add((2, null));
-                            
+
                             path.Add(@"\DB\Users\" + friend_info.User_Id + @"\" + friend_info.User_Id + "_Friend_List.ndjson");
                             using (var src = new StreamReader(path.Last(), Encoding.UTF8))
                             {
@@ -539,13 +539,13 @@ namespace ChatMoa_DataBaseServer
                                     User_Info my_info = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user_id);
 
                                     path.Add(@"\DB\Users\" + user_id + @"\" + user_id + "_Friend_List.ndjson");
-                                    list.Add((0,new _User_Id__Friend_List() { Friend_Id = friend, Nickname = friend_info.Nickname}));
+                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = friend, Nickname = friend_info.Nickname }));
 
                                     path.Add(@"\DB\Users\" + friend + @"\" + friend + "_Friend_List.ndjson");
-                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = user_id, Nickname = my_info.Nickname}));
+                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = user_id, Nickname = my_info.Nickname }));
 
                                 }
-                                else if(user_inform_box.Inform_Kind == "invite")
+                                else if (user_inform_box.Inform_Kind == "invite")
                                 {
                                     string room_id = user_inform_box.need_items.First();
                                     List<string> new_items = new List<string>();
@@ -694,11 +694,12 @@ namespace ChatMoa_DataBaseServer
                                     else
                                         send_datas = f_list;
                                 }
-                            } catch (Exception e)
+                            }
+                            catch (Exception e)
                             {
                                 send_datas = new List<string>() { "0" };
                             }
-                            
+
                         }
                         else if (opcode == 11)  //read all of notify        |   items = (User_id)     
                         {
@@ -778,8 +779,8 @@ namespace ChatMoa_DataBaseServer
                                 {
                                     //search success
                                     send_info.Friend_Id = search_id;
-                                    send_info.Nickname = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == search_id)).Nickname ;
-                                    
+                                    send_info.Nickname = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == search_id)).Nickname;
+
                                 }
 
                                 send_datas.Add(SerializeJson(send_info));
@@ -792,7 +793,7 @@ namespace ChatMoa_DataBaseServer
                                 send_datas.Add("0");
                             }
                         }
-                        else if (opcode >= 32&&opcode<64)
+                        else if (opcode >= 32 && opcode < 64)
                         {
                             opcode_success = await ChatRoomClass.ChatHandlerAsync(ns, opcode, items, send_datas);
                         }
@@ -804,7 +805,7 @@ namespace ChatMoa_DataBaseServer
                         {
                             // 향후 업데이트로 opcode가 추가된다면 추가로 코딩
                         }
-                        Console.WriteLine("list: "+ list.Count);
+                        Console.WriteLine("list: " + list.Count);
                         var Add_temp = new List<(object, string)>();
                         List<string> Edit_str = new List<string>();
                         List<object> Edit_obj = new List<object>();
@@ -862,7 +863,7 @@ namespace ChatMoa_DataBaseServer
                             }
                         }
 
-                        
+
                         try
                         {
                             if (opcode_success)
@@ -919,8 +920,8 @@ namespace ChatMoa_DataBaseServer
                                 .ConfigureAwait(false);
                             Console.WriteLine("요청 처리 실패");
                             throw new Exception();
-                        }                        
-                    }   
+                        }
+                    }
                 }
             }
             catch (Exception e) { /* 연결 종료 */ }
@@ -967,13 +968,13 @@ namespace ChatMoa_DataBaseServer
 
         public static async Task<string> Create_User_Id()      //complete
         {
-            string result="";
+            string result = "";
             bool exist = true;
             Random rand = new Random();
 
             while (exist)
             {
-                result = rand.Next(0, 1000000).ToString().PadLeft(6,'0');
+                result = rand.Next(0, 1000000).ToString().PadLeft(6, '0');
                 exist = await ExistUserAsync(result);
             }
 
@@ -985,7 +986,7 @@ namespace ChatMoa_DataBaseServer
             // path, temp, backup 미리 구성
             Dictionary<string, ItemInfo> bak_map = new Dictionary<string, ItemInfo>();
             Dictionary<string, List<object>> items_map = new Dictionary<string, List<object>>();
-            
+
             foreach (var x in objList)
             {
                 List<object> temp = null;
@@ -1034,7 +1035,7 @@ namespace ChatMoa_DataBaseServer
                 {
                     Console.Error.WriteLine($"temp 실패: {ex.Message}");
                     CleanupTemps(items);
-                    return false;                        
+                    return false;
                 }
             }
 
@@ -1047,7 +1048,7 @@ namespace ChatMoa_DataBaseServer
                     File.Replace(it.Temp, it.Path, it.Backup, true);
                     replaced.Add(it);                   // 교체 성공 목록
                 }
-                return true;                           
+                return true;
             }
             catch (Exception ex)
             {
@@ -1063,7 +1064,7 @@ namespace ChatMoa_DataBaseServer
 
         internal static async Task<bool> SafeBatchEditAsync(List<string> paths, List<object> obj, List<int> index)
         {
-            Dictionary<string,ItemInfo> bak_map = new Dictionary<string, ItemInfo>();
+            Dictionary<string, ItemInfo> bak_map = new Dictionary<string, ItemInfo>();
             Dictionary<string, List<(object, int)>> items_map = new Dictionary<string, List<(object, int)>>();
             int k = 0;
             foreach (var p in paths)
@@ -1074,7 +1075,7 @@ namespace ChatMoa_DataBaseServer
 
                 if (!items_map.TryGetValue(p, out temp))
                 {
-                    bak_map.Add(p,new ItemInfo
+                    bak_map.Add(p, new ItemInfo
                     {
                         Path = p,
                         Temp = Path.Combine(dir, Guid.NewGuid() + ".tmp"),
@@ -1096,8 +1097,8 @@ namespace ChatMoa_DataBaseServer
 
             foreach (var x in bak_map)
                 items.Add(x.Value);
-            
-            foreach(var x in items_map)
+
+            foreach (var x in items_map)
             {
                 try
                 {
@@ -1132,7 +1133,7 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
-        internal static async Task<bool> SafeBatchDeleteAsync(List<string> paths, List<int> index)    
+        internal static async Task<bool> SafeBatchDeleteAsync(List<string> paths, List<int> index)
         {
             Dictionary<string, ItemInfo> bak_map = new Dictionary<string, ItemInfo>();
             Dictionary<string, List<int>> items_map = new Dictionary<string, List<int>>();
@@ -1172,19 +1173,19 @@ namespace ChatMoa_DataBaseServer
 
             foreach (var x in items_map)
             {
-                try 
-                { 
-                    await WriteTempDeleteAsync(x.Key, x.Value, bak_map[x.Key]).ConfigureAwait(false); 
+                try
+                {
+                    await WriteTempDeleteAsync(x.Key, x.Value, bak_map[x.Key]).ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    CleanupTemps(items); 
-                    return false; 
-                }         
+                    CleanupTemps(items);
+                    return false;
+                }
             }
 
-            
+
             var replaced = new List<ItemInfo>();
             try
             {
@@ -1193,7 +1194,7 @@ namespace ChatMoa_DataBaseServer
                     File.Replace(it.Temp, it.Path, it.Backup, true);
                     replaced.Add(it);
                 }
-                return true;                                      
+                return true;
             }
             catch
             {
@@ -1216,7 +1217,7 @@ namespace ChatMoa_DataBaseServer
 
         private static async Task WriteTempAsync(string path, List<object> items, ItemInfo bak_item)
         {
-            Console.WriteLine("Add: "+ bak_item.Path);
+            Console.WriteLine("Add: " + bak_item.Path);
             using (var dest = new StreamWriter(bak_item.Temp, false, Encoding.UTF8))
             {
                 if (File.Exists(bak_item.Path))
@@ -1225,7 +1226,7 @@ namespace ChatMoa_DataBaseServer
                         await dest.WriteAsync(await src.ReadToEndAsync());
                 }
 
-                foreach(var it in items)
+                foreach (var it in items)
                     await dest.WriteLineAsync(SerializeJson(it));
             }
         }
@@ -1235,7 +1236,7 @@ namespace ChatMoa_DataBaseServer
             items.Sort((a, b) => a.Item2.CompareTo(b.Item2));
 
             if (!File.Exists(bak_item.Path)) return;
-            items.Add((null,-1));       // 주어진 Edit이 끝났어도 overflow로 인한 나머지 부분에 대한 복사를 막기 위해
+            items.Add((null, -1));       // 주어진 Edit이 끝났어도 overflow로 인한 나머지 부분에 대한 복사를 막기 위해
 
             int solved = 0;
 
@@ -1249,7 +1250,7 @@ namespace ChatMoa_DataBaseServer
                 while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
                 {
                     Console.WriteLine("index: " + i + " / " + line);
-                    if (i == items[solved].Item2) 
+                    if (i == items[solved].Item2)
                     {
                         Console.WriteLine("Edit 중");
                         await dest.WriteLineAsync(SerializeJson(items[solved].Item1))
@@ -1292,7 +1293,7 @@ namespace ChatMoa_DataBaseServer
 
         private static void Rollback(List<ItemInfo> list)
         {
-            
+
             foreach (var it in list.ToList())            // 이미 교체된 것만 역순이면 더 안전
             {
                 for (int i = 0; i < 5 && list.Count() != 0; i++)
@@ -1324,10 +1325,10 @@ namespace ChatMoa_DataBaseServer
                     }
                 }
             }
-                
+
         }
 
-        internal static async Task<T> SearchAsync<T>(string path, Func<T, bool> predicate)    
+        internal static async Task<T> SearchAsync<T>(string path, Func<T, bool> predicate)
         {
             if (!File.Exists(path)) return default;  // null
 
@@ -1336,17 +1337,17 @@ namespace ChatMoa_DataBaseServer
             using (var reader = new StreamReader(path, Encoding.UTF8))
             {
                 string line;
-                while ((line = await reader.ReadLineAsync().ConfigureAwait(false))!= null)
+                while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) != null)
                 {
                     using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                     {
                         var obj = (T)ser.ReadObject(ms);
                         if (predicate(obj))
-                            return obj;         
+                            return obj;
                     }
                 }
             }
-            return default;                        
+            return default;
         }
 
         internal static async Task<Int32> LastInformId(string path)
@@ -1354,7 +1355,7 @@ namespace ChatMoa_DataBaseServer
             Int32 ans = -1;
             var ser = new DataContractJsonSerializer(typeof(_User_Id__Inform_Box));
 
-            
+
             using (var reader = new StreamReader(path, Encoding.UTF8))
             {
                 string line;

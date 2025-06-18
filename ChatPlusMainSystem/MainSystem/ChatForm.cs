@@ -22,6 +22,9 @@ namespace MainSystem
         private Timer refreshTimer;
         private bool isLoading = false;
 
+        // 닉네임 캐시 (User_Id -> Nickname)
+        private Dictionary<string, string> nicknameCache = new Dictionary<string, string>();
+
         // Room ID에 접근할 수 있는 공개 속성
         public string RoomId => roomId;
 
@@ -84,6 +87,66 @@ namespace MainSystem
             LoadInitialMessages();
         }
 
+        // 닉네임 가져오기 및 캐시
+        private async Task<string> GetUserNicknameAsync(string userId)
+        {
+            // 관리자 메시지는 "시스템"으로 표시
+            if (userId == "000000")
+            {
+                return "시스템";
+            }
+
+            // 자신의 메시지는 캐시하지 않고 바로 반환
+            if (userId == currentUserId)
+            {
+                return currentUserName;
+            }
+
+            // 캐시에서 먼저 확인
+            if (nicknameCache.ContainsKey(userId))
+            {
+                return nicknameCache[userId];
+            }
+
+            // 서버에서 닉네임 조회
+            try
+            {
+                using (var client = new TcpClient())
+                {
+                    client.ReceiveTimeout = 3000;
+                    client.SendTimeout = 3000;
+
+                    await client.ConnectAsync("127.0.0.1", 5000);
+                    NetworkStream ns = client.GetStream();
+
+                    // opcode 13: user_id_search
+                    byte opcode = 13;
+                    List<string> items = new List<string> { userId };
+
+                    await SendPacketAsync(ns, currentUserId, opcode, items);
+                    var responses = await ReadAllResponsesAsync(ns);
+
+                    if (responses.Count >= 2 && responses[1] == "1")
+                    {
+                        var friendInfo = DeserializeFriendInfo(responses[0]);
+                        if (!string.IsNullOrEmpty(friendInfo.Friend_Id))
+                        {
+                            // 캐시에 저장
+                            nicknameCache[userId] = friendInfo.Nickname;
+                            return friendInfo.Nickname;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"닉네임 조회 오류: {ex.Message}");
+            }
+
+            // 실패 시 User ID 반환 (기본값)
+            return $"User {userId}";
+        }
+
         private async void LoadInitialMessages()
         {
             if (isLoading) return;
@@ -108,7 +171,7 @@ namespace MainSystem
                     await SendPacketAsync(ns, currentUserId, opcode, items);
                     var responses = await ReadAllResponsesAsync(ns);
 
-                    ProcessChatMessages(responses);
+                    await ProcessChatMessages(responses);
                 }
             }
             catch (Exception ex)
@@ -146,7 +209,7 @@ namespace MainSystem
                     await SendPacketAsync(ns, currentUserId, opcode, items);
                     var responses = await ReadAllResponsesAsync(ns);
 
-                    ProcessChatMessages(responses);
+                    await ProcessChatMessages(responses);
                 }
             }
             catch (Exception ex)
@@ -160,7 +223,7 @@ namespace MainSystem
             }
         }
 
-        private void ProcessChatMessages(List<string> responses)
+        private async Task ProcessChatMessages(List<string> responses)
         {
             if (responses.Count == 0) return;
 
@@ -188,7 +251,7 @@ namespace MainSystem
                 try
                 {
                     var chatMessage = DeserializeChatMessage(response);
-                    DisplayChatMessage(chatMessage, currentDate);
+                    await DisplayChatMessage(chatMessage, currentDate);
 
                     // 마지막 읽은 메시지 정보 업데이트
                     if (chatMessage.Msg_Id > lastReadMsgId)
@@ -210,7 +273,7 @@ namespace MainSystem
             }
         }
 
-        private void DisplayChatMessage(ChatMessage message, string date)
+        private async Task DisplayChatMessage(ChatMessage message, string date)
         {
             // 중복 메시지 체크 (이미 표시된 메시지인지 확인)
             foreach (Control control in flpChatList.Controls)
@@ -300,10 +363,12 @@ namespace MainSystem
                 }
                 else
                 {
-                    // 상대방 메시지 (왼쪽 정렬)
+                    // 상대방 메시지 (왼쪽 정렬) - 닉네임 표시
+                    string nickname = await GetUserNicknameAsync(message.User_Id);
+
                     Label lblSender = new Label
                     {
-                        Text = $"User {message.User_Id}",
+                        Text = nickname, // User ID 대신 닉네임 표시
                         Font = new Font("맑은 고딕", 8),
                         ForeColor = Color.Gray,
                         AutoSize = true,
@@ -352,7 +417,18 @@ namespace MainSystem
                 }
             }
 
-            flpChatList.Controls.Add(messagePanel);
+            // UI 스레드에서 실행
+            if (flpChatList.InvokeRequired)
+            {
+                flpChatList.Invoke((MethodInvoker)delegate
+                {
+                    flpChatList.Controls.Add(messagePanel);
+                });
+            }
+            else
+            {
+                flpChatList.Controls.Add(messagePanel);
+            }
         }
 
         // 초대 버튼 클릭 이벤트
@@ -536,6 +612,16 @@ namespace MainSystem
             }
         }
 
+        // FriendInfo 역직렬화
+        private FriendInfo DeserializeFriendInfo(string json)
+        {
+            var ser = new DataContractJsonSerializer(typeof(FriendInfo));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                return (FriendInfo)ser.ReadObject(ms);
+            }
+        }
+
         private void ChatForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             refreshTimer?.Stop();
@@ -550,16 +636,5 @@ namespace MainSystem
                 panel.Width = flpChatList.ClientSize.Width - 20;
             }
         }
-    }
-
-    // 채팅 메시지 데이터 구조
-    [DataContract]
-    internal class ChatMessage
-    {
-        [DataMember] internal int Msg_Id;
-        [DataMember] internal string User_Id;
-        [DataMember] internal int Msg_Kind;
-        [DataMember] internal string Date;
-        [DataMember] internal string Msg_Str;
     }
 }

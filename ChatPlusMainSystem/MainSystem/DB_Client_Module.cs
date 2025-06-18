@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,7 +107,8 @@ namespace ChatMoa_DataBaseServer
                 }
                 else
                     throw new Exception("Error");
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 //error
                 return null;
@@ -173,6 +174,6 @@ namespace ChatMoa_DataBaseServer
             this.received_data = new Dictionary<int, List<string>>();
         }
 
-        private string my_User_Id(){ return this.user_id; }
+        private string my_User_Id() { return this.user_id; }
     }
 }
