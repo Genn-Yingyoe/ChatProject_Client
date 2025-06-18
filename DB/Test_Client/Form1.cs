@@ -98,6 +98,45 @@ namespace Test_Client
 
             List<int> result = new List<int>();
 
+            if(opcode == 15)
+            {
+                try
+                {
+                    byte[] lenBuf = await ReadExact(ns, 4);
+                    if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+                    uint i_len = BitConverter.ToUInt32(lenBuf, 0);
+
+                    byte[] i_body = await ReadExact(ns, (int)i_len);
+
+                    string path = bodyStr[2];
+                    File.WriteAllBytes(path, i_body);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            else if(opcode == 16)
+            {
+                string dir = bodyStr[2];
+
+                try
+                {
+                    byte[] img = System.IO.File.ReadAllBytes(dir);
+
+                    byte[] lenBuf = BitConverter.GetBytes((uint)img.Length);
+                    if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+
+                    await ns.WriteAsync(lenBuf, 0, 4);   // 헤더
+                    await ns.WriteAsync(img, 0, img.Length); // 바디
+                    Console.WriteLine($"송신 완료 ({img.Length} B)");
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            
             try
             {
                 var receive = await ReadAckAsync(ns, num);
@@ -183,6 +222,18 @@ namespace Test_Client
                     Clear_receive_data(space_num);
                 }
             }
+        }
+        private static async Task<byte[]> ReadExact(Stream s, int len)
+        {
+            byte[] buf = new byte[len];
+            int read = 0;
+            while (read < len)
+            {
+                int n = await s.ReadAsync(buf, read, len - read);
+                if (n == 0) throw new IOException("remote closed");
+                read += n;
+            }
+            return buf;
         }
 
         private void Form1_Load(object sender, EventArgs e)
