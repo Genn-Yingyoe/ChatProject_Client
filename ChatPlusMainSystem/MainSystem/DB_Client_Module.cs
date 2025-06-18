@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,18 +37,15 @@ namespace ChatMoa_DataBaseServer
             using (var client = new TcpClient())
             {
                 await client.ConnectAsync("223.194.44.94", 5000);   // 서버 IP·포트
+                NetworkStream ns = client.GetStream();
 
-                using (NetworkStream ns = client.GetStream())
-                {
-                    n = received_data.Count;
+                n = received_data.Count;
 
-                    while (received_data.ContainsKey(n)) n++;
+                while (received_data.ContainsKey(n)) n++;
 
-                    received_data[n] = new List<string>();
+                received_data[n] = new List<string>();
 
-                    received_data_index = await SendAsync(ns, n, opcode, items);
-                }
-
+                received_data_index = await SendAsync(ns, n, opcode, items);
             }
 
             if (received_data_index != null)
@@ -114,8 +111,7 @@ namespace ChatMoa_DataBaseServer
                 }
                 else
                     throw new Exception("Error");
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 //error
                 return null;
@@ -136,7 +132,7 @@ namespace ChatMoa_DataBaseServer
                 n = await ns.ReadAsync(receive_buf_len, 0, sizeof(int)).ConfigureAwait(false);
                 int item_len = BitConverter.ToInt32(receive_buf_len, 0);
                 receive_buf = new byte[item_len];
-                n = await ns.ReadAsync(receive_buf, 0, item_len).ConfigureAwait(false);
+                n = await ns.ReadAsync(receive_buf, 0, receive_buf_len[0]).ConfigureAwait(false);
 
                 received_data[num].Add(Encoding.UTF8.GetString(receive_buf));           // login 등 성공여부만을 전달받는 경우에는 >> "1" : 성공 | "0" : 실패
                 result = received_data[num].Count - 1;

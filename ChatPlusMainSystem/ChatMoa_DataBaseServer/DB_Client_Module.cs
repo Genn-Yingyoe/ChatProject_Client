@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -64,7 +64,7 @@ namespace ChatMoa_DataBaseServer
             Encoding utf8 = Encoding.UTF8;
             byte[][] data = parts.Select(p => utf8.GetBytes(p)).ToArray();
 
-            int len = 1 + 6 + 1 + (parts.Count * 1);        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
+            int len = 1 + 6 + 1 + (parts.Count * sizeof(int));        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
             len += data.Sum(b => b.Length);
 
 
@@ -79,7 +79,11 @@ namespace ChatMoa_DataBaseServer
             packet[pos++] = (byte)parts.Count;
 
             foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
+            {
+                byte[] tmp = BitConverter.GetBytes(b.Length);
+                Buffer.BlockCopy(tmp, 0, packet, pos, sizeof(int));
+                pos += sizeof(int);
+            }
 
             foreach (var b in data)
             {
@@ -119,14 +123,15 @@ namespace ChatMoa_DataBaseServer
         private async Task<(int, int)> ReadAckAsync(NetworkStream ns, int num)          // item1: 0 == error | 1 == success + end | 2 == success + additional execution      || item2: receive_data_index
         {
             byte[] state_buf = new byte[1];
-            byte[] receive_buf_len = new byte[1];
+            byte[] receive_buf_len = new byte[sizeof(int)];
             byte[] receive_buf;
             int result = -1;
             int n = await ns.ReadAsync(state_buf, 0, 1).ConfigureAwait(false);
             if (state_buf[0] != 0 && n != 0)
             {
-                n = await ns.ReadAsync(receive_buf_len, 0, 1).ConfigureAwait(false);
-                receive_buf = new byte[receive_buf_len[0]];
+                n = await ns.ReadAsync(receive_buf_len, 0, sizeof(int)).ConfigureAwait(false);
+                int item_len = BitConverter.ToInt32(receive_buf_len, 0);
+                receive_buf = new byte[item_len];
                 n = await ns.ReadAsync(receive_buf, 0, receive_buf_len[0]).ConfigureAwait(false);
 
                 received_data[num].Add(Encoding.UTF8.GetString(receive_buf));           // login 등 성공여부만을 전달받는 경우에는 >> "1" : 성공 | "0" : 실패

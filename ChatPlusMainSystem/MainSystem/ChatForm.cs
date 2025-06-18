@@ -4,11 +4,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using ChatMoa_DataBaseServer;
+using System.Text;
 
 namespace MainSystem
 {
@@ -21,6 +21,9 @@ namespace MainSystem
         private string lastReadDate = "";
         private Timer refreshTimer;
         private bool isLoading = false;
+
+        // 닉네임 캐시 (User_Id -> Nickname)
+        private Dictionary<string, string> nicknameCache = new Dictionary<string, string>();
 
         // Room ID에 접근할 수 있는 공개 속성
         public string RoomId => roomId;
@@ -84,6 +87,66 @@ namespace MainSystem
             LoadInitialMessages();
         }
 
+        // 닉네임 가져오기 및 캐시 - DCM 사용하도록 수정
+        private async Task<string> GetUserNicknameAsync(string userId)
+        {
+            // 관리자 메시지는 "시스템"으로 표시
+            if (userId == "000000")
+            {
+                return "시스템";
+            }
+
+            // 자신의 메시지는 캐시하지 않고 바로 반환
+            if (userId == currentUserId)
+            {
+                return currentUserName;
+            }
+
+            // 캐시에서 먼저 확인
+            if (nicknameCache.ContainsKey(userId))
+            {
+                return nicknameCache[userId];
+            }
+
+            // DCM을 사용하여 서버에서 닉네임 조회
+            try
+            {
+                // opcode 13: user_id_search
+                List<string> items = new List<string> { userId };
+                var result = await LoginForm.GlobalDCM.db_request_data(13, items);
+
+                if (result.Key && result.Value.Item2.Count >= 2)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
+                    {
+                        var friendInfo = LoginForm.DeserializeGlobalDCMJson<FriendInfo>(key, indexes[0]);
+                        if (!string.IsNullOrEmpty(friendInfo.Friend_Id))
+                        {
+                            // 캐시에 저장
+                            nicknameCache[userId] = friendInfo.Nickname;
+                            LoginForm.ClearGlobalDCMReceivedData(key);
+                            return friendInfo.Nickname;
+                        }
+                    }
+
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"닉네임 조회 오류: {ex.Message}");
+            }
+
+            // 실패 시 User ID 반환 (기본값)
+            return $"User {userId}";
+        }
+
+        // LoadInitialMessages 메서드 - DCM 사용하도록 수정
         private async void LoadInitialMessages()
         {
             if (isLoading) return;
@@ -91,24 +154,30 @@ namespace MainSystem
 
             try
             {
-                using (var client = new TcpClient())
+                // opcode 37: 채팅 읽기 (초기 로드: 최근 3일치)
+                List<string> items = new List<string>
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    roomId,
+                    "-1", // 초기 로드
+                    DateTime.Now.ToString("yyyyMMdd") // 오늘 날짜
+                };
 
-                    // opcode 37: 채팅 읽기 (초기 로드: 최근 3일치)
-                    byte opcode = 37;
-                    List<string> items = new List<string>
+                var result = await LoginForm.GlobalDCM.db_request_data(37, items);
+
+                if (result.Key)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    List<string> responses = new List<string>();
+
+                    for (int i = 0; i < indexes.Count; i++)
                     {
-                        roomId,
-                        "-1", // 초기 로드
-                        DateTime.Now.ToString("yyyyMMdd") // 오늘 날짜
-                    };
+                        responses.Add(LoginForm.GetGlobalDCMResponseData(key, indexes[i]));
+                    }
 
-                    await SendPacketAsync(ns, currentUserId, opcode, items);
-                    var responses = await ReadAllResponsesAsync(ns);
-
-                    ProcessChatMessages(responses);
+                    await ProcessChatMessages(responses);
+                    LoginForm.ClearGlobalDCMReceivedData(key);
                 }
             }
             catch (Exception ex)
@@ -122,6 +191,7 @@ namespace MainSystem
             }
         }
 
+        // LoadNewMessages 메서드 - DCM 사용하도록 수정
         private async Task LoadNewMessages()
         {
             if (isLoading || lastReadMsgId == -1) return;
@@ -129,24 +199,30 @@ namespace MainSystem
 
             try
             {
-                using (var client = new TcpClient())
+                // opcode 37: 채팅 읽기 (이어서 읽기)
+                List<string> items = new List<string>
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    roomId,
+                    lastReadMsgId.ToString(),
+                    lastReadDate
+                };
 
-                    // opcode 37: 채팅 읽기 (이어서 읽기)
-                    byte opcode = 37;
-                    List<string> items = new List<string>
+                var result = await LoginForm.GlobalDCM.db_request_data(37, items);
+
+                if (result.Key)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    List<string> responses = new List<string>();
+
+                    for (int i = 0; i < indexes.Count; i++)
                     {
-                        roomId,
-                        lastReadMsgId.ToString(),
-                        lastReadDate
-                    };
+                        responses.Add(LoginForm.GetGlobalDCMResponseData(key, indexes[i]));
+                    }
 
-                    await SendPacketAsync(ns, currentUserId, opcode, items);
-                    var responses = await ReadAllResponsesAsync(ns);
-
-                    ProcessChatMessages(responses);
+                    await ProcessChatMessages(responses);
+                    LoginForm.ClearGlobalDCMReceivedData(key);
                 }
             }
             catch (Exception ex)
@@ -160,7 +236,7 @@ namespace MainSystem
             }
         }
 
-        private void ProcessChatMessages(List<string> responses)
+        private async Task ProcessChatMessages(List<string> responses)
         {
             if (responses.Count == 0) return;
 
@@ -188,7 +264,7 @@ namespace MainSystem
                 try
                 {
                     var chatMessage = DeserializeChatMessage(response);
-                    DisplayChatMessage(chatMessage, currentDate);
+                    await DisplayChatMessage(chatMessage, currentDate);
 
                     // 마지막 읽은 메시지 정보 업데이트
                     if (chatMessage.Msg_Id > lastReadMsgId)
@@ -210,7 +286,7 @@ namespace MainSystem
             }
         }
 
-        private void DisplayChatMessage(ChatMessage message, string date)
+        private async Task DisplayChatMessage(ChatMessage message, string date)
         {
             // 중복 메시지 체크 (이미 표시된 메시지인지 확인)
             foreach (Control control in flpChatList.Controls)
@@ -300,10 +376,12 @@ namespace MainSystem
                 }
                 else
                 {
-                    // 상대방 메시지 (왼쪽 정렬)
+                    // 상대방 메시지 (왼쪽 정렬) - 닉네임 표시
+                    string nickname = await GetUserNicknameAsync(message.User_Id);
+
                     Label lblSender = new Label
                     {
-                        Text = $"User {message.User_Id}",
+                        Text = nickname, // User ID 대신 닉네임 표시
                         Font = new Font("맑은 고딕", 8),
                         ForeColor = Color.Gray,
                         AutoSize = true,
@@ -352,7 +430,18 @@ namespace MainSystem
                 }
             }
 
-            flpChatList.Controls.Add(messagePanel);
+            // UI 스레드에서 실행
+            if (flpChatList.InvokeRequired)
+            {
+                flpChatList.Invoke((MethodInvoker)delegate
+                {
+                    flpChatList.Controls.Add(messagePanel);
+                });
+            }
+            else
+            {
+                flpChatList.Controls.Add(messagePanel);
+            }
         }
 
         // 초대 버튼 클릭 이벤트
@@ -366,28 +455,28 @@ namespace MainSystem
             }
         }
 
-        // 채팅방에 사용자 초대
+        // 채팅방에 사용자 초대 - DCM 사용하도록 수정
         private async Task InviteUserToChatRoom(string userIdToInvite)
         {
             try
             {
-                using (var client = new TcpClient())
+                // opcode 33: 채팅방 초대
+                List<string> items = new List<string>
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    roomId,
+                    userIdToInvite
+                };
 
-                    // opcode 33: 채팅방 초대
-                    byte opcode = 33;
-                    List<string> items = new List<string>
-                    {
-                        roomId,
-                        userIdToInvite
-                    };
+                var result = await LoginForm.GlobalDCM.db_request_data(33, items);
 
-                    await SendPacketAsync(ns, currentUserId, opcode, items);
-                    var responses = await ReadAllResponsesAsync(ns);
+                if (result.Key && result.Value.Item2.Count > 0)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
 
-                    if (responses.Count > 0 && responses.Last() == "1")
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
                     {
                         MessageBox.Show($"사용자 {userIdToInvite}를 채팅방에 초대했습니다!", "성공",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -400,6 +489,13 @@ namespace MainSystem
                         MessageBox.Show("사용자 초대에 실패했습니다.\n존재하지 않는 사용자 ID이거나 서버 오류일 수 있습니다.", "오류",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+                else
+                {
+                    MessageBox.Show("사용자 초대에 실패했습니다.\n존재하지 않는 사용자 ID이거나 서버 오류일 수 있습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -423,6 +519,7 @@ namespace MainSystem
             }
         }
 
+        // SendMessage 메서드 - DCM 사용하도록 수정
         private async Task SendMessage()
         {
             string message = txtMessage.Text.Trim();
@@ -430,24 +527,24 @@ namespace MainSystem
 
             try
             {
-                using (var client = new TcpClient())
+                // opcode 36: 채팅 쓰기
+                List<string> items = new List<string>
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    roomId,
+                    "1", // 일반 채팅
+                    message
+                };
 
-                    // opcode 36: 채팅 쓰기
-                    byte opcode = 36;
-                    List<string> items = new List<string>
-                    {
-                        roomId,
-                        "1", // 일반 채팅
-                        message
-                    };
+                var result = await LoginForm.GlobalDCM.db_request_data(36, items);
 
-                    await SendPacketAsync(ns, currentUserId, opcode, items);
-                    var responses = await ReadAllResponsesAsync(ns);
+                if (result.Key && result.Value.Item2.Count > 0)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
 
-                    if (responses.Count > 0 && responses.Last() == "1")
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
                     {
                         txtMessage.Clear();
                         // 메시지 전송 후 새 메시지 로드
@@ -458,6 +555,13 @@ namespace MainSystem
                         MessageBox.Show("메시지 전송에 실패했습니다.", "오류",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+                else
+                {
+                    MessageBox.Show("메시지 전송에 실패했습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -467,65 +571,6 @@ namespace MainSystem
             }
         }
 
-        // 패킷 전송 메서드
-        private async Task SendPacketAsync(NetworkStream ns, string userId, byte opcode, List<string> items)
-        {
-            byte[] userBytes = Encoding.ASCII.GetBytes(userId.PadLeft(6, '0'));
-            Encoding utf8 = Encoding.UTF8;
-            byte[][] data = items.Select(p => utf8.GetBytes(p)).ToArray();
-
-            int len = 1 + 6 + 1 + (items.Count * 1);
-            len += data.Sum(b => b.Length);
-
-            byte[] packet = new byte[len];
-            int pos = 0;
-
-            packet[pos++] = opcode;
-            Buffer.BlockCopy(userBytes, 0, packet, pos, 6);
-            pos += 6;
-            packet[pos++] = (byte)items.Count;
-
-            foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
-
-            foreach (var b in data)
-            {
-                Buffer.BlockCopy(b, 0, packet, pos, b.Length);
-                pos += b.Length;
-            }
-
-            await ns.WriteAsync(packet, 0, packet.Length);
-        }
-
-        // 응답 수신 메서드
-        private async Task<List<string>> ReadAllResponsesAsync(NetworkStream ns)
-        {
-            List<string> responses = new List<string>();
-
-            while (true)
-            {
-                byte[] stateBuf = new byte[1];
-                int n = await ns.ReadAsync(stateBuf, 0, 1);
-
-                if (n == 0 || stateBuf[0] == 0)
-                    break;
-
-                byte[] lenBuf = new byte[1];
-                await ns.ReadAsync(lenBuf, 0, 1);
-
-                byte[] dataBuf = new byte[lenBuf[0]];
-                await ns.ReadAsync(dataBuf, 0, lenBuf[0]);
-
-                string data = Encoding.UTF8.GetString(dataBuf);
-                responses.Add(data);
-
-                if (stateBuf[0] == 1)
-                    break;
-            }
-
-            return responses;
-        }
-
         // ChatMessage 역직렬화
         private ChatMessage DeserializeChatMessage(string json)
         {
@@ -533,6 +578,16 @@ namespace MainSystem
             using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
                 return (ChatMessage)ser.ReadObject(ms);
+            }
+        }
+
+        // FriendInfo 역직렬화
+        private FriendInfo DeserializeFriendInfo(string json)
+        {
+            var ser = new DataContractJsonSerializer(typeof(FriendInfo));
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                return (FriendInfo)ser.ReadObject(ms);
             }
         }
 
@@ -550,16 +605,23 @@ namespace MainSystem
                 panel.Width = flpChatList.ClientSize.Width - 20;
             }
         }
-    }
 
-    // 채팅 메시지 데이터 구조
-    [DataContract]
-    internal class ChatMessage
-    {
-        [DataMember] internal int Msg_Id;
-        [DataMember] internal string User_Id;
-        [DataMember] internal int Msg_Kind;
-        [DataMember] internal string Date;
-        [DataMember] internal string Msg_Str;
+        // 로컬 데이터 클래스들
+        [DataContract]
+        private class ChatMessage
+        {
+            [DataMember] internal int Msg_Id;
+            [DataMember] internal string User_Id;
+            [DataMember] internal int Msg_Kind;
+            [DataMember] internal string Date;
+            [DataMember] internal string Msg_Str;
+        }
+
+        [DataContract]
+        private class FriendInfo
+        {
+            [DataMember] internal string Friend_Id;
+            [DataMember] internal string Nickname;
+        }
     }
 }
