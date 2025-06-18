@@ -1,42 +1,46 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\",
+  "WorkspaceRootPath": "D:\\Desktop\\ChatProject_Client\\MainSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\localtemp.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\localtemp.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}"
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|d:\\desktop\\chatproject_client\\mainsystem\\mainsystem\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\localtemp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\localtemp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\inviteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\inviteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|d:\\desktop\\chatproject_client\\mainsystem\\mainsystem\\localtemp.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\localtemp.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\localtemp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\localtemp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\inviteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\inviteform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\signupform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,32 +50,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "DB_Client_Module.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\DB_Client_Module.cs",
+              "RelativeDocumentMoniker": "MainSystem\\DB_Client_Module.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\DB_Client_Module.cs",
+              "RelativeToolTip": "MainSystem\\DB_Client_Module.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T06:15:55.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "LocalTemp.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LocalTemp.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LocalTemp.cs",
               "RelativeDocumentMoniker": "MainSystem\\LocalTemp.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LocalTemp.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LocalTemp.cs",
               "RelativeToolTip": "MainSystem\\LocalTemp.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-17T04:42:23.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "LocalTemp.xsd",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LocalTemp.xsd",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LocalTemp.xsd",
               "RelativeDocumentMoniker": "MainSystem\\LocalTemp.xsd",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LocalTemp.xsd",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LocalTemp.xsd",
               "RelativeToolTip": "MainSystem\\LocalTemp.xsd",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
               "WhenOpened": "2025-06-17T04:41:44.636Z",
@@ -79,82 +111,81 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "InviteForm.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\InviteForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\InviteForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\InviteForm.cs",
               "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\InviteForm.cs [\uB514\uC790\uC778]",
-              "RelativeToolTip": "MainSystem\\InviteForm.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-17T04:27:01.923Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LoginForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LoginForm.cs",
-              "RelativeDocumentMoniker": "MainSystem\\LoginForm.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LoginForm.cs [Design]",
-              "RelativeToolTip": "MainSystem\\LoginForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T03:29:21.869Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-06-17T04:27:01.923Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "LoginForm.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LoginForm.cs",
+              "Title": "LoginForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LoginForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\LoginForm.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\LoginForm.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LoginForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\LoginForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-17T03:29:21.869Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LoginForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\LoginForm.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\LoginForm.cs",
               "RelativeToolTip": "MainSystem\\LoginForm.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAswFQAAAARAAAAAAAAAA==",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-17T03:29:25.508Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "SignupForm.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\SignupForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\SignupForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\SignupForm.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\SignupForm.cs [\uB514\uC790\uC778]",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\SignupForm.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "MainSystem\\SignupForm.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T03:24:39.262Z"
+              "WhenOpened": "2025-05-17T03:24:39.262Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "SignupForm.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\SignupForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\SignupForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\SignupForm.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\SignupForm.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\SignupForm.cs",
               "RelativeToolTip": "MainSystem\\SignupForm.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAADkAAAANAAAAAAAAAA==",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T03:25:56.096Z"
+              "WhenOpened": "2025-05-17T03:25:56.096Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "MainForm.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\MainForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\MainForm.cs",
               "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainForm.cs [\uB514\uC790\uC778]",
-              "RelativeToolTip": "MainSystem\\MainForm.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-24T04:31:48.16Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainForm.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\MainForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\MainForm.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\MainSystem\\MainForm.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\MainSystem\\MainForm.cs",
               "RelativeToolTip": "MainSystem\\MainForm.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

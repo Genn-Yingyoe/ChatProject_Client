@@ -1,21 +1,25 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\",
+  "WorkspaceRootPath": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|solutionrelative:test\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2A8CA314-BAA0-4476-ADCF-2E4A5CCF107C}|Test_Client\\Test_Client.csproj|d:\\desktop\\chatproject_client\\mainsystem\\test\\test_client\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A8CA314-BAA0-4476-ADCF-2E4A5CCF107C}|Test_Client\\Test_Client.csproj|solutionrelative:test_client\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|solutionrelative:test\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|solutionrelative:test\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2A8CA314-BAA0-4476-ADCF-2E4A5CCF107C}|Test_Client\\Test_Client.csproj|c:\\users\\zahar\\onedrive\\desktop\\reference\\project\\chatproject\\mainsystem\\test\\test_client\\test_client.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|d:\\desktop\\chatproject_client\\mainsystem\\test\\test\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|solutionrelative:test\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|d:\\desktop\\chatproject_client\\mainsystem\\test\\test\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7CB7F57-ACB1-4AE5-AA01-E9C46DF7C637}|Test\\Test.csproj|solutionrelative:test\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A8CA314-BAA0-4476-ADCF-2E4A5CCF107C}|Test_Client\\Test_Client.csproj|d:\\desktop\\chatproject_client\\mainsystem\\test\\test_client\\test_client.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{2A8CA314-BAA0-4476-ADCF-2E4A5CCF107C}|Test_Client\\Test_Client.csproj|solutionrelative:test_client\\test_client.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -26,32 +30,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Test_Client.csproj",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test_Client\\Test_Client.csproj",
-              "RelativeDocumentMoniker": "Test_Client\\Test_Client.csproj",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test_Client\\Test_Client.csproj",
-              "RelativeToolTip": "Test_Client\\Test_Client.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-01T13:27:57.036Z",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test_Client\\Form1.cs",
+              "RelativeDocumentMoniker": "Test_Client\\Form1.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test_Client\\Form1.cs",
+              "RelativeToolTip": "Test_Client\\Form1.cs",
+              "ViewState": "AQIAAFMAAAAAAAAAAAAQwCgAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-18T06:13:24.302Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "Test_Client.csproj",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test_Client\\Test_Client.csproj",
+              "RelativeDocumentMoniker": "Test_Client\\Test_Client.csproj",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test_Client\\Test_Client.csproj",
+              "RelativeToolTip": "Test_Client\\Test_Client.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-06-01T13:27:57.036Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.cs [\uB514\uC790\uC778]",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\Form1.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\Form1.cs",
               "RelativeDocumentMoniker": "Test\\Form1.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\Form1.cs [\uB514\uC790\uC778]",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\Form1.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "Test\\Form1.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-01T13:25:26.296Z",
@@ -59,29 +91,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "DB_IO.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_IO.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\DB_IO.cs",
               "RelativeDocumentMoniker": "Test\\DB_IO.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_IO.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\DB_IO.cs",
               "RelativeToolTip": "Test\\DB_IO.cs",
-              "ViewState": "AgIAAPIDAAAAAAAAAAAAAPsDAAAAAAAAAAAAAA==",
+              "ViewState": "AQIAAKAAAAAAAAAAAAAUwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T13:07:33.656Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-01T13:07:33.656Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DB_Client_Module.cs",
-              "DocumentMoniker": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Client_Module.cs",
+              "DocumentMoniker": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\DB_Client_Module.cs",
               "RelativeDocumentMoniker": "Test\\DB_Client_Module.cs",
-              "ToolTip": "C:\\Users\\zahar\\OneDrive\\Desktop\\Reference\\Project\\ChatProject\\MainSystem\\Test\\Test\\DB_Client_Module.cs",
+              "ToolTip": "D:\\Desktop\\ChatProject_Client\\MainSystem\\Test\\Test\\DB_Client_Module.cs",
               "RelativeToolTip": "Test\\DB_Client_Module.cs",
-              "ViewState": "AgIAAIsAAAAAAAAAAAAywJkAAAA3AAAAAAAAAA==",
+              "ViewState": "AQIAABEAAAAAAAAAAAAwwCYAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T13:07:11.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-01T13:07:11.927Z"
             }
           ]
         }

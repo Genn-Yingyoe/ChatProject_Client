@@ -36,7 +36,7 @@ namespace Test
 
             using (var client = new TcpClient())
             {
-                await client.ConnectAsync("127.0.0.1", 5000);   // 서버 IP·포트
+                await client.ConnectAsync("223.194.94.44", 5000);   // 서버 IP·포트
                 NetworkStream ns = client.GetStream();
 
                 n = received_data.Count;

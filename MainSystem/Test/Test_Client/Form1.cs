@@ -14,6 +14,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection.Emit;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Test_Client
 {
@@ -39,16 +40,19 @@ namespace Test_Client
 
             using (var client = new TcpClient())
             {
-                await client.ConnectAsync("127.0.0.1", 5000);   // 서버 IP·포트
-                NetworkStream ns = client.GetStream();
+                await client.ConnectAsync("223.194.44.94", 5000);   // 서버 IP·포트
 
-                n = received_data.Count;
+                using (NetworkStream ns = client.GetStream())
+                {
+                    n = received_data.Count;
 
-                while (received_data.ContainsKey(n)) n++;
+                    while (received_data.ContainsKey(n)) n++;
 
-                received_data[n] = new List<string>();
+                    received_data[n] = new List<string>();
 
-                received_data_index = await SendAsync(ns, n, opcode, items);
+                    received_data_index = await SendAsync(ns, n, opcode, items);
+                }
+
             }
 
             if (received_data_index != null)
@@ -67,7 +71,7 @@ namespace Test_Client
             Encoding utf8 = Encoding.UTF8;
             byte[][] data = parts.Select(p => utf8.GetBytes(p)).ToArray();
 
-            int len = 1 + 6 + 1 + (parts.Count * 1);        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
+            int len = 1 + 6 + 1 + (parts.Count * sizeof(int));        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
             len += data.Sum(b => b.Length);
 
 
@@ -82,7 +86,11 @@ namespace Test_Client
             packet[pos++] = (byte)parts.Count;
 
             foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
+            {
+                byte[] tmp = BitConverter.GetBytes(b.Length);
+                Buffer.BlockCopy(tmp, 0, packet, pos, sizeof(int));
+                pos += sizeof(int);
+            }
 
             foreach (var b in data)
             {
@@ -123,15 +131,16 @@ namespace Test_Client
         private async Task<(int, int)> ReadAckAsync(NetworkStream ns, int num)          // item1: 0 == error | 1 == success + end | 2 == success + additional execution      || item2: receive_data_index
         {
             byte[] state_buf = new byte[1];
-            byte[] receive_buf_len = new byte[1];
+            byte[] receive_buf_len = new byte[sizeof(int)];
             byte[] receive_buf;
             int result = -1;
             int n = await ns.ReadAsync(state_buf, 0, 1).ConfigureAwait(false);
             if (state_buf[0] != 0 && n != 0)
             {
-                n = await ns.ReadAsync(receive_buf_len, 0, 1).ConfigureAwait(false);
-                receive_buf = new byte[receive_buf_len[0]];
-                n = await ns.ReadAsync(receive_buf, 0, receive_buf_len[0]).ConfigureAwait(false);
+                n = await ns.ReadAsync(receive_buf_len, 0, sizeof(int)).ConfigureAwait(false);
+                int item_len = BitConverter.ToInt32(receive_buf_len, 0);
+                receive_buf = new byte[item_len];
+                n = await ns.ReadAsync(receive_buf, 0, item_len).ConfigureAwait(false);
 
                 received_data[num].Add(Encoding.UTF8.GetString(receive_buf));           // login 등 성공여부만을 전달받는 경우에는 >> "1" : 성공 | "0" : 실패
                 result = received_data[num].Count - 1;
@@ -142,16 +151,16 @@ namespace Test_Client
 
         private bool Clear_receive_data(int num) { return received_data.Remove(num); }
 
-        List<byte> except_opcode = new List<byte>() { 0,1,2,3 };
+        List<byte> except_opcode = new List<byte>() { 0, 1, 2, 3 };
         private async void button1_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text.ToString().Trim()!=null && textBox2.Text.ToString().Trim() != null && textBox3.Text.ToString().Trim() != null)
+            if (textBox1.Text.ToString().Trim() != null && textBox2.Text.ToString().Trim() != null && textBox3.Text.ToString().Trim() != null)
             {
                 List<string> items = new List<string>();
                 byte.TryParse(textBox2.Text.ToString().Trim(), out byte opcode);
                 if (!except_opcode.Contains(opcode))
                     user_id = textBox1.Text.ToString().Trim().PadLeft(6, '0');
-                    
+
                 string[] parts = textBox3.Text.ToString().Trim().Split('/');
 
                 foreach (string s in parts)

@@ -153,7 +153,7 @@ namespace MainSystem
             {
                 using (var client = new TcpClient())
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
+                    await client.ConnectAsync("223.194.44.94", 5000);
                     NetworkStream ns = client.GetStream();
 
                     // 요청 데이터 준비
