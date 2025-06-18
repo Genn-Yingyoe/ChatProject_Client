@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +29,7 @@ namespace ChatMoa_DataBaseServer
                 path = @"\DB\Users\" + User + @"\" + User + "_Scheduler.ndjson";
             else
                 path = @"\DB\ChatRoom\" + items[1] + @"\Chat_Room_" + items[1] + "_Scheduler.ndjson";
-            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly }   | test success
+            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date }   | test success
             {
                 //"_User_Id__Scheduler" schedule Add
                 mode = 0;
@@ -43,7 +43,8 @@ namespace ChatMoa_DataBaseServer
                     Daily = items[5],
                     Weekly = items[6],
                     Monthly = items[7],
-                    Yearly = items[8]
+                    Yearly = items[8],
+                    Alert_Date = items[9]
                 });
                 send_datas.Add("1");
             }
@@ -52,7 +53,7 @@ namespace ChatMoa_DataBaseServer
                 //"_User_Id__Scheduler" schedule Edit
                 mode = 1;
                 int sche_id = Int32.Parse(items[1]);
-                result.Add (new _User_Id__Scheduler
+                result.Add(new _User_Id__Scheduler
                 {
                     Sche_Id = sche_id,
                     Category = items[2],
@@ -62,7 +63,8 @@ namespace ChatMoa_DataBaseServer
                     Daily = items[6],
                     Weekly = items[7],
                     Monthly = items[8],
-                    Yearly = items[9]
+                    Yearly = items[9],
+                    Alert_Date = items[10]
                 });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
@@ -154,7 +156,8 @@ namespace ChatMoa_DataBaseServer
                     Daily = items[6],
                     Weekly = items[7],
                     Monthly = items[8],
-                    Yearly = items[9]           
+                    Yearly = items[9],
+                    Alert_Date = items[10]
                 });
                 send_datas.Add("1");
             }
@@ -174,7 +177,8 @@ namespace ChatMoa_DataBaseServer
                     Daily = items[7],
                     Weekly = items[8],
                     Monthly = items[9],
-                    Yearly = items[10]
+                    Yearly = items[10],
+                    Alert_Date = items[11]
                 });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
