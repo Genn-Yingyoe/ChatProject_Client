@@ -101,10 +101,11 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;     
+        [DataMember] internal string Weekly;     
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+        [DataMember] internal string Alert_Date;
     }
 
     [DataContract]  //Add, Edit, Del
@@ -118,10 +119,11 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;     
+        [DataMember] internal string Weekly;     
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+        [DataMember] internal string Alert_Date;
     }
 
     [DataContract]  //Edit
