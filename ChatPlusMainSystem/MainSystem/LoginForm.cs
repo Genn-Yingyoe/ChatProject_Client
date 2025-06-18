@@ -9,9 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Reflection;
+using ChatMoa_DataBaseServer;  // DCM 네임스페이스 추가
 
 namespace MainSystem
 {
@@ -36,11 +37,13 @@ namespace MainSystem
         public static string LoggedInUserId = "";
         public static string LoggedInUserName = "";
         public static string LoggedInUserNickname = "";
+        internal static DCM GlobalDCM;  // internal로 변경하여 DCM과 액세스 가능성 일치
 
         public LoginForm()
         {
             InitializeComponent();
             InitializeForm();
+            GlobalDCM = new DCM();  // DCM 인스턴스 생성
         }
 
         private void InitializeForm()
@@ -104,8 +107,8 @@ namespace MainSystem
                 btnSignup.Enabled = false;
                 btnLogin.Text = "로그인 중...";
 
-                // 서버에 로그인 요청
-                var loginResult = await LoginToServer(inputID, inputPW);
+                // DCM을 사용하여 로그인 요청
+                var loginResult = await LoginToServerWithDCM(inputID, inputPW);
 
                 if (loginResult.success)
                 {
@@ -116,6 +119,9 @@ namespace MainSystem
                     // 전역 변수에 사용자 정보 저장
                     LoggedInUserId = loginResult.userId;
                     LoggedInUserName = loginResult.userName;
+
+                    // DCM에 사용자 ID 설정 (리플렉션 사용)
+                    SetDCMUserId(GlobalDCM, loginResult.userId);
 
                     // 메인 폼으로 이동
                     MainForm mainForm = new MainForm();
@@ -146,37 +152,46 @@ namespace MainSystem
             }
         }
 
-        // 서버에 로그인 요청
-        private async Task<(bool success, string userId, string userName)> LoginToServer(string id, string password)
+        // DCM을 사용한 로그인 메서드
+        private async Task<(bool success, string userId, string userName)> LoginToServerWithDCM(string id, string password)
         {
             try
             {
-                using (var client = new TcpClient())
+                // 임시 DCM 인스턴스로 로그인 요청 (아직 user_id가 없으므로)
+                DCM tempDcm = new DCM();
+                SetDCMUserId(tempDcm, "000000");  // 임시 ID
+
+                // opcode 2: 로그인
+                List<string> items = new List<string> { id, password };
+                var result = await tempDcm.db_request_data(2, items);
+
+                if (result.Key && result.Value.Item2.Count > 0)
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
 
-                    // 요청 데이터 준비
-                    string tempUserId = "000000"; // 로그인 시에는 임시 ID 사용
-                    byte opcode = 2; // 로그인 opcode
-                    List<string> items = new List<string> { id, password };
+                    // 마지막 응답이 성공("1")인지 확인
+                    string lastResponse = GetDCMResponseData(tempDcm, key, indexes.Last());
 
-                    // 패킷 전송
-                    await SendPacketAsync(ns, tempUserId, opcode, items);
-
-                    // 응답 수신
-                    var responses = await ReadAllResponsesAsync(ns);
-
-                    if (responses.Count >= 2 && responses[1] == "1") // 로그인 성공
+                    if (lastResponse == "1" && indexes.Count >= 2)
                     {
                         // 첫 번째 응답은 User_Info 데이터
-                        var userInfo = DeserializeUserInfo(responses[0]);
+                        var userInfo = DeserializeDCMJson<UserInfo>(tempDcm, key, indexes[0]);
+
+                        // 정리
+                        ClearDCMReceivedData(tempDcm, key);
+
                         return (true, userInfo.User_Id, userInfo.Name);
                     }
                     else
                     {
+                        ClearDCMReceivedData(tempDcm, key);
                         return (false, "", "");
                     }
+                }
+                else
+                {
+                    return (false, "", "");
                 }
             }
             catch (Exception ex)
@@ -186,80 +201,146 @@ namespace MainSystem
             }
         }
 
-        // User_Info 역직렬화
-        private UserInfo DeserializeUserInfo(string json)
+        // DCM의 private 메서드들에 접근하기 위한 리플렉션 헬퍼 메서드들
+        private void SetDCMUserId(DCM dcm, string userId)
         {
-            var ser = new DataContractJsonSerializer(typeof(UserInfo));
-            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            try
             {
-                return (UserInfo)ser.ReadObject(ms);
+                var loginMethod = dcm.GetType().GetMethod("Login",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                loginMethod?.Invoke(dcm, new object[] { userId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM Login 설정 오류: {ex.Message}");
             }
         }
 
-        // 패킷 전송 메서드
-        private async Task SendPacketAsync(NetworkStream ns, string userId, byte opcode, List<string> items)
+        private string GetDCMResponseData(DCM dcm, int key, int index)
         {
-            byte[] userBytes = Encoding.ASCII.GetBytes(userId.PadLeft(6, '0'));
-            Encoding utf8 = Encoding.UTF8;
-            byte[][] data = items.Select(p => utf8.GetBytes(p)).ToArray();
-
-            int len = 1 + 6 + 1 + (items.Count * 1);
-            len += data.Sum(b => b.Length);
-
-            byte[] packet = new byte[len];
-            int pos = 0;
-
-            // opcode
-            packet[pos++] = opcode;
-
-            // user ID (6 bytes)
-            Buffer.BlockCopy(userBytes, 0, packet, pos, 6);
-            pos += 6;
-
-            // items count
-            packet[pos++] = (byte)items.Count;
-
-            // 각 item의 길이
-            foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
-
-            // 실제 데이터
-            foreach (var b in data)
+            try
             {
-                Buffer.BlockCopy(b, 0, packet, pos, b.Length);
-                pos += b.Length;
+                var receivedDataField = dcm.GetType().GetField("received_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+
+                if (receivedDataField != null)
+                {
+                    var receivedData = receivedDataField.GetValue(dcm) as Dictionary<int, List<string>>;
+                    if (receivedData != null && receivedData.ContainsKey(key))
+                    {
+                        var dataList = receivedData[key];
+                        if (index < dataList.Count)
+                        {
+                            return dataList[index];
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM 응답 데이터 조회 오류: {ex.Message}");
             }
 
-            await ns.WriteAsync(packet, 0, packet.Length);
+            return "0"; // 기본값: 실패
         }
 
-        // 모든 응답 수신 메서드
-        private async Task<List<string>> ReadAllResponsesAsync(NetworkStream ns)
+        private void ClearDCMReceivedData(DCM dcm, int key)
         {
-            List<string> responses = new List<string>();
-
-            while (true)
+            try
             {
-                byte[] stateBuf = new byte[1];
-                int n = await ns.ReadAsync(stateBuf, 0, 1);
+                var clearMethod = dcm.GetType().GetMethod("Clear_receive_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                clearMethod?.Invoke(dcm, new object[] { key });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM 데이터 정리 오류: {ex.Message}");
+            }
+        }
 
-                if (n == 0 || stateBuf[0] == 0) // 에러 또는 연결 종료
-                    break;
+        private T DeserializeDCMJson<T>(DCM dcm, int key, int index)
+        {
+            try
+            {
+                var deserializeMethod = dcm.GetType().GetMethod("DeSerializeJson",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
 
-                byte[] lenBuf = new byte[1];
-                await ns.ReadAsync(lenBuf, 0, 1);
-
-                byte[] dataBuf = new byte[lenBuf[0]];
-                await ns.ReadAsync(dataBuf, 0, lenBuf[0]);
-
-                string data = Encoding.UTF8.GetString(dataBuf);
-                responses.Add(data);
-
-                if (stateBuf[0] == 1) // 마지막 데이터
-                    break;
+                if (deserializeMethod != null)
+                {
+                    var genericMethod = deserializeMethod.MakeGenericMethod(typeof(T));
+                    return (T)genericMethod.Invoke(dcm, new object[] { key, index });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM JSON 역직렬화 오류: {ex.Message}");
             }
 
-            return responses;
+            return default(T);
+        }
+
+        // 전역 DCM 헬퍼 메서드들 - 다른 폼에서 사용
+        public static string GetGlobalDCMResponseData(int key, int index)
+        {
+            try
+            {
+                var receivedDataField = GlobalDCM.GetType().GetField("received_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+
+                if (receivedDataField != null)
+                {
+                    var receivedData = receivedDataField.GetValue(GlobalDCM) as Dictionary<int, List<string>>;
+                    if (receivedData != null && receivedData.ContainsKey(key))
+                    {
+                        var dataList = receivedData[key];
+                        if (index < dataList.Count)
+                        {
+                            return dataList[index];
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"전역 DCM 응답 데이터 조회 오류: {ex.Message}");
+            }
+
+            return "0";
+        }
+
+        public static void ClearGlobalDCMReceivedData(int key)
+        {
+            try
+            {
+                var clearMethod = GlobalDCM.GetType().GetMethod("Clear_receive_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                clearMethod?.Invoke(GlobalDCM, new object[] { key });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"전역 DCM 데이터 정리 오류: {ex.Message}");
+            }
+        }
+
+        public static T DeserializeGlobalDCMJson<T>(int key, int index)
+        {
+            try
+            {
+                var deserializeMethod = GlobalDCM.GetType().GetMethod("DeSerializeJson",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+
+                if (deserializeMethod != null)
+                {
+                    var genericMethod = deserializeMethod.MakeGenericMethod(typeof(T));
+                    return (T)genericMethod.Invoke(GlobalDCM, new object[] { key, index });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"전역 DCM JSON 역직렬화 오류: {ex.Message}");
+            }
+
+            return default(T);
         }
 
         private void btnSignup_Click(object sender, EventArgs e)

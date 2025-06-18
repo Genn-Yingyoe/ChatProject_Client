@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 using ChatMoa_DataBaseServer;
 
 namespace MainSystem
@@ -213,62 +214,24 @@ namespace MainSystem
                 btnRegister.Enabled = false;
                 btnRegister.Text = "Processing...";
 
-                // 서버에 회원가입 요청
-                // opcode 1: register(회원가입)
-                // need items = {id, ps, ps_question_index, ps_question_answer, name, nickname}
-                List<string> items = new List<string>
+                // DCM을 사용하여 서버에 회원가입 요청
+                bool success = await RegisterWithDCM(newID, newPW, psQuestionIndex, psAnswer, newName, newNick);
+
+                if (success)
                 {
-                    newID,
-                    newPW,
-                    psQuestionIndex.ToString(),
-                    psAnswer,
-                    newName,
-                    newNick
-                };
+                    MessageBox.Show("회원가입이 성공적으로 완료되었습니다!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // 서버에 요청 전송
-                var result = await dcm.db_request_data(1, items);
-
-                // 결과 처리
-                if (result.Key) // 서버 응답을 받은 경우
-                {
-                    int key = result.Value.Item1;
-                    List<int> indexes = result.Value.Item2;
-
-                    // 응답 데이터 확인
-                    if (indexes.Count > 0)
-                    {
-                        // 서버로부터 받은 응답 확인
-                        string response = GetResponseData(key, indexes.Last());
-
-                        if (response == "1")
-                        {
-                            MessageBox.Show("회원가입이 성공적으로 완료되었습니다!", "Success",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            // DCM의 received_data 정리
-                            ClearReceivedData(key);
-
-                            // 폼 닫기
-                            this.DialogResult = DialogResult.OK;
-                            this.Close();
-                        }
-                        else if (response == "0")
-                        {
-                            MessageBox.Show("이미 존재하는 아이디입니다.", "Registration Failed",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            label1.Text = "중복된 ID";
-                            label1.ForeColor = Color.Red;
-
-                            // DCM의 received_data 정리
-                            ClearReceivedData(key);
-                        }
-                    }
+                    // 폼 닫기
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.", "Connection Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("이미 존재하는 아이디입니다.", "Registration Failed",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    label1.Text = "중복된 ID";
+                    label1.ForeColor = Color.Red;
                 }
             }
             catch (Exception ex)
@@ -284,14 +247,71 @@ namespace MainSystem
             }
         }
 
-        // DCM의 received_data에서 데이터를 가져오는 헬퍼 메서드
-        private string GetResponseData(int key, int index)
+        // DCM을 사용한 회원가입 메서드 - 리플렉션 사용
+        private async Task<bool> RegisterWithDCM(string id, string password, int questionIndex, string answer, string name, string nickname)
         {
             try
             {
-                var dcmType = dcm.GetType();
-                var receivedDataField = dcmType.GetField("received_data",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                // 임시 DCM으로 회원가입 요청
+                DCM tempDcm = new DCM();
+                SetDCMUserId(tempDcm, "000000"); // 임시 ID
+
+                // opcode 1: register(회원가입)
+                // need items = {id, ps, ps_question_index, ps_question_answer, name, nickname}
+                List<string> items = new List<string>
+                {
+                    id,
+                    password,
+                    questionIndex.ToString(),
+                    answer,
+                    name,
+                    nickname
+                };
+
+                var result = await tempDcm.db_request_data(1, items);
+
+                if (result.Key && result.Value.Item2.Count > 0)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    // 마지막 응답 확인
+                    string response = GetDCMResponseData(tempDcm, key, indexes.Last());
+                    ClearDCMReceivedData(tempDcm, key);
+
+                    return response == "1"; // "1"이면 성공, "0"이면 실패
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"회원가입 오류: {ex.Message}");
+                throw;
+            }
+        }
+
+        // DCM의 private 메서드들에 접근하기 위한 리플렉션 헬퍼 메서드들
+        private void SetDCMUserId(DCM dcm, string userId)
+        {
+            try
+            {
+                var loginMethod = dcm.GetType().GetMethod("Login",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                loginMethod?.Invoke(dcm, new object[] { userId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM Login 설정 오류: {ex.Message}");
+            }
+        }
+
+        private string GetDCMResponseData(DCM dcm, int key, int index)
+        {
+            try
+            {
+                var receivedDataField = dcm.GetType().GetField("received_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
 
                 if (receivedDataField != null)
                 {
@@ -306,26 +326,26 @@ namespace MainSystem
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM 응답 데이터 조회 오류: {ex.Message}");
+            }
 
             return "0"; // 기본값: 실패
         }
 
-        // DCM의 received_data를 정리하는 헬퍼 메서드
-        private void ClearReceivedData(int key)
+        private void ClearDCMReceivedData(DCM dcm, int key)
         {
             try
             {
-                var dcmType = dcm.GetType();
-                var clearMethod = dcmType.GetMethod("Clear_receive_data",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-                if (clearMethod != null)
-                {
-                    clearMethod.Invoke(dcm, new object[] { key });
-                }
+                var clearMethod = dcm.GetType().GetMethod("Clear_receive_data",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                clearMethod?.Invoke(dcm, new object[] { key });
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DCM 데이터 정리 오류: {ex.Message}");
+            }
         }
 
         private void txtNewID_TextChanged(object sender, EventArgs e)

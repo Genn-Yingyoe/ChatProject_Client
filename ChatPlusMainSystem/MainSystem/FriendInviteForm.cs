@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.IO;
+using ChatMoa_DataBaseServer;
 
 namespace MainSystem
 {
@@ -188,34 +191,37 @@ namespace MainSystem
             }
         }
 
+        // SearchUser 메서드 - DCM 사용하도록 수정
         private async Task<(bool found, string userId, string nickname)> SearchUser(string friendId)
         {
             try
             {
-                using (var client = new TcpClient())
+                // opcode 13: user_id_search
+                List<string> items = new List<string> { friendId };
+                var result = await LoginForm.GlobalDCM.db_request_data(13, items);
+
+                if (result.Key && result.Value.Item2.Count >= 2)
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
 
-                    // opcode 13: user_id_search
-                    byte opcode = 13;
-                    List<string> items = new List<string> { friendId };
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
 
-                    await SendPacketAsync(ns, CurrentUserId, opcode, items);
-                    var responses = await ReadAllResponsesAsync(ns);
-
-                    if (responses.Count >= 2 && responses[1] == "1")
+                    if (lastResponse == "1")
                     {
                         // 첫 번째 응답은 친구 정보
-                        var friendInfo = DeserializeFriendInfo(responses[0]);
+                        var friendInfo = LoginForm.DeserializeGlobalDCMJson<FriendInfo>(key, indexes[0]);
                         if (!string.IsNullOrEmpty(friendInfo.Friend_Id))
                         {
+                            LoginForm.ClearGlobalDCMReceivedData(key);
                             return (true, friendInfo.Friend_Id, friendInfo.Nickname);
                         }
                     }
 
-                    return (false, "", "");
+                    LoginForm.ClearGlobalDCMReceivedData(key);
                 }
+
+                return (false, "", "");
             }
             catch
             {
@@ -271,24 +277,27 @@ namespace MainSystem
             }
         }
 
+        // SendFriendRequest 메서드 - DCM 사용하도록 수정
         private async Task<bool> SendFriendRequest(string friendId)
         {
             try
             {
-                using (var client = new TcpClient())
+                // opcode 6: friend_request
+                List<string> items = new List<string> { friendId };
+                var result = await LoginForm.GlobalDCM.db_request_data(6, items);
+
+                if (result.Key && result.Value.Item2.Count > 0)
                 {
-                    await client.ConnectAsync("127.0.0.1", 5000);
-                    NetworkStream ns = client.GetStream();
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
 
-                    // opcode 6: friend_request
-                    byte opcode = 6;
-                    List<string> items = new List<string> { friendId };
-
-                    await SendPacketAsync(ns, CurrentUserId, opcode, items);
-                    var response = await ReadResponseAsync(ns);
+                    string response = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+                    LoginForm.ClearGlobalDCMReceivedData(key);
 
                     return response == "1";
                 }
+
+                return false;
             }
             catch
             {
@@ -296,99 +305,12 @@ namespace MainSystem
             }
         }
 
-        // 패킷 전송 및 수신 메서드들
-        private async Task SendPacketAsync(NetworkStream ns, string userId, byte opcode, List<string> items)
+        // FriendInfo 데이터 구조
+        [DataContract]
+        private class FriendInfo
         {
-            byte[] userBytes = Encoding.ASCII.GetBytes(userId.PadLeft(6, '0'));
-            Encoding utf8 = Encoding.UTF8;
-            byte[][] data = items.Select(p => utf8.GetBytes(p)).ToArray();
-
-            int len = 1 + 6 + 1 + (items.Count * 1);
-            len += data.Sum(b => b.Length);
-
-            byte[] packet = new byte[len];
-            int pos = 0;
-
-            packet[pos++] = opcode;
-            Buffer.BlockCopy(userBytes, 0, packet, pos, 6);
-            pos += 6;
-            packet[pos++] = (byte)items.Count;
-
-            foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
-
-            foreach (var b in data)
-            {
-                Buffer.BlockCopy(b, 0, packet, pos, b.Length);
-                pos += b.Length;
-            }
-
-            await ns.WriteAsync(packet, 0, packet.Length);
-        }
-
-        private async Task<string> ReadResponseAsync(NetworkStream ns)
-        {
-            List<string> responses = new List<string>();
-
-            while (true)
-            {
-                byte[] stateBuf = new byte[1];
-                int n = await ns.ReadAsync(stateBuf, 0, 1);
-
-                if (n == 0 || stateBuf[0] == 0)
-                    break;
-
-                byte[] lenBuf = new byte[1];
-                await ns.ReadAsync(lenBuf, 0, 1);
-
-                byte[] dataBuf = new byte[lenBuf[0]];
-                await ns.ReadAsync(dataBuf, 0, lenBuf[0]);
-
-                string data = Encoding.UTF8.GetString(dataBuf);
-                responses.Add(data);
-
-                if (stateBuf[0] == 1)
-                    break;
-            }
-
-            return responses.Count > 0 ? responses.Last() : "0";
-        }
-
-        private async Task<List<string>> ReadAllResponsesAsync(NetworkStream ns)
-        {
-            List<string> responses = new List<string>();
-
-            while (true)
-            {
-                byte[] stateBuf = new byte[1];
-                int n = await ns.ReadAsync(stateBuf, 0, 1);
-
-                if (n == 0 || stateBuf[0] == 0)
-                    break;
-
-                byte[] lenBuf = new byte[1];
-                await ns.ReadAsync(lenBuf, 0, 1);
-
-                byte[] dataBuf = new byte[lenBuf[0]];
-                await ns.ReadAsync(dataBuf, 0, lenBuf[0]);
-
-                string data = Encoding.UTF8.GetString(dataBuf);
-                responses.Add(data);
-
-                if (stateBuf[0] == 1)
-                    break;
-            }
-
-            return responses;
-        }
-
-        private FriendInfo DeserializeFriendInfo(string json)
-        {
-            var ser = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(FriendInfo));
-            using (var ms = new System.IO.MemoryStream(Encoding.UTF8.GetBytes(json)))
-            {
-                return (FriendInfo)ser.ReadObject(ms);
-            }
+            [DataMember] internal string Friend_Id;
+            [DataMember] internal string Nickname;
         }
     }
 }
