@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,7 +29,6 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string User_Id;
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
-        [DataMember] internal string Profile_Image_Path;
         [DataMember] internal List<string> Chat_Room_List;
         [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
@@ -123,6 +122,14 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Weekly;     //temp
         [DataMember] internal string Monthly;     //temp
         [DataMember] internal string Yearly;     //temp
+    }
+
+    [DataContract]  //Edit
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
     }
 
     // Request Data parsing method
