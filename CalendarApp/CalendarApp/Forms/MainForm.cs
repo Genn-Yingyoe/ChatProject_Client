@@ -21,10 +21,9 @@ namespace CalendarApp
         private CustomCalendar customCalendar;
         private List<Schedule> schedules = new List<Schedule>();
         private System.Windows.Forms.Timer alertTimer;
-        private ImageList imageListIcons;
 
         private DCM dcm;
-        private string currentUserId; // 현재 로그인된 사용자의 ID를 저장할 변수
+        private string currentUserId;
 
         public MainForm()
         {
@@ -371,7 +370,7 @@ namespace CalendarApp
                 txtScheduleContent.Visible = false;
             }
         }
-
+        
         private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
             bool isChecked = chkSelectAll.Checked;
@@ -381,8 +380,8 @@ namespace CalendarApp
                 item.Checked = isChecked;
             }
         }
-
-        /*private void btnTempLogin_Click(object sender, EventArgs e)
+        /*
+        private void btnTempLogin_Click(object sender, EventArgs e)
         {
             // 테스트할 임시 사용자 ID
             string tempUserId = "000000";

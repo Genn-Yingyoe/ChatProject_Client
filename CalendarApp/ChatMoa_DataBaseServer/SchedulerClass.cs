@@ -7,14 +7,15 @@ using System.Runtime.Serialization.Json;
 using ChatMoa_DataBaseServer;
 using System.IO;
 using System.Runtime.Serialization;
+//using System.Windows.Forms;
 using System.CodeDom;
 using System.Net.Sockets;
 
 namespace ChatMoa_DataBaseServer
 {
-    public class SchedulerClass
+    internal class SchedulerClass
     {
-        public static async Task<bool> SchedulerHandlerAsync(NetworkStream ns, byte opcode, List<string> items, List<string> send_datas)
+        internal static async Task<bool> SchedulerHandlerAsync(NetworkStream ns, byte opcode, List<string> items, List<string> send_datas)
         {
             bool ans = false;
             string User = items[0];
@@ -28,7 +29,7 @@ namespace ChatMoa_DataBaseServer
                 path = @"\DB\Users\" + User + @"\" + User + "_Scheduler.ndjson";
             else
                 path = @"\DB\ChatRoom\" + items[1] + @"\Chat_Room_" + items[1] + "_Scheduler.ndjson";
-            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly }   | test success
+            if (opcode == 64)            //user schedule add         |   items = { User_id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date }   | test success
             {
                 //"_User_Id__Scheduler" schedule Add
                 mode = 0;
@@ -43,11 +44,11 @@ namespace ChatMoa_DataBaseServer
                     Weekly = items[6],
                     Monthly = items[7],
                     Yearly = items[8],
-
+                    Alert_Date = items[9]
                 });
                 send_datas.Add("1");
             }
-            else if (opcode == 65)       //user schedule edit        |   items = { User_id, _User_Id__Scheduler.* }      | test success
+            else if(opcode == 65)       //user schedule edit        |   items = { User_id, _User_Id__Scheduler.* }      | test success
             {
                 //"_User_Id__Scheduler" schedule Edit
                 mode = 1;
@@ -59,11 +60,11 @@ namespace ChatMoa_DataBaseServer
                     Begin_Date = items[3],
                     Finish_Date = items[4],
                     Sche_Str = items[5],
-                    Daily = items[6],                       
-                    Weekly = items[7],                      
-                    Monthly = items[8],                    
-                    Yearly = items[9],                     
-
+                    Daily = items[6],
+                    Weekly = items[7],
+                    Monthly = items[8],
+                    Yearly = items[9],
+                    Alert_Date = items[10]
                 });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
@@ -122,7 +123,7 @@ namespace ChatMoa_DataBaseServer
                     }
                     else
                     {
-                        using (var src = new StreamReader(path, Encoding.UTF8))
+                        using (var src = new StreamReader(path, Encoding.UTF8))     
                         {
                             string line;
                             while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
@@ -144,7 +145,7 @@ namespace ChatMoa_DataBaseServer
             {
                 //"Chat_Room__Room_Id__Scheduler" schedule Add          
                 mode = 0;
-                result.Add(new Chat_Room__Room_Id__Scheduler
+                result.Add( new Chat_Room__Room_Id__Scheduler
                 {
                     Sche_Id = await LastScheId(path, 1) + 1,
                     User_Id = User,
@@ -152,10 +153,11 @@ namespace ChatMoa_DataBaseServer
                     Begin_Date = items[3],
                     Finish_Date = items[4],
                     Sche_Str = items[5],
-                    Daily = items[6],                     
-                    Weekly = items[7],                    
-                    Monthly = items[8],                     
-                    Yearly = items[9],                      
+                    Daily = items[6],
+                    Weekly = items[7],
+                    Monthly = items[8],
+                    Yearly = items[9],
+                    Alert_Date = items[10]
                 });
                 send_datas.Add("1");
             }
@@ -164,7 +166,7 @@ namespace ChatMoa_DataBaseServer
                 //"Chat_Room__Room_Id__Scheduler" schedule Edit
                 mode = 1;
                 int sche_id = Int32.Parse(items[2]);
-                result.Add(new Chat_Room__Room_Id__Scheduler
+                result.Add( new Chat_Room__Room_Id__Scheduler
                 {
                     Sche_Id = sche_id,
                     User_Id = User,
@@ -172,10 +174,11 @@ namespace ChatMoa_DataBaseServer
                     Begin_Date = items[4],
                     Finish_Date = items[5],
                     Sche_Str = items[6],
-                    Daily = items[7],                       
-                    Weekly = items[8],                       
-                    Monthly = items[9],                     
-                    Yearly = items[10],                      
+                    Daily = items[7],
+                    Weekly = items[8],
+                    Monthly = items[9],
+                    Yearly = items[10],
+                    Alert_Date = items[11]
                 });
                 using (var src = new StreamReader(path, Encoding.UTF8))
                 {
@@ -258,9 +261,9 @@ namespace ChatMoa_DataBaseServer
             }
 
 
-            if (mode == 0)
+            if(mode == 0)
             {
-
+                
                 IEnumerable<(object, string)> temp = new List<(object, string)>
                 {
                     (result[0], path)
@@ -283,51 +286,37 @@ namespace ChatMoa_DataBaseServer
             else
             {
                 // error
-                Console.WriteLine(User + ": Scheduler Error");
+                Console.WriteLine(User+": Scheduler Error");
             }
-
+            
             return ans;
         }
 
         private static async Task<Int32> LastScheId(string path, int mode)
         {
             Int32 ans = -1;
+            bool exist = false;
 
-            try
+            string dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            if (!File.Exists(path))
             {
-                string dir = Path.GetDirectoryName(path);
-                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-                // 더 안전한 파일 생성 방식: 파일이 없으면 만들고 즉시 닫습니다.
-                if (!File.Exists(path))
+                using (File.Create(path))
                 {
-                    File.WriteAllText(path, "", Encoding.UTF8);
                 }
+            }
 
-                // --- 파일 접근 충돌을 해결하기 위한 재시도 로직 ---
-                string[] lines = null;
-                for (int i = 0; i < 3; i++) // 최대 3번까지 재시도
+            if (mode == 0)           //User_Scheduler
+            {
+                var ser = new DataContractJsonSerializer(typeof(_User_Id__Scheduler));
+
+
+                using (var reader = new StreamReader(path, Encoding.UTF8))
                 {
-                    try
+                    string line;
+                    while ((line = await reader.ReadLineAsync()) != null && !exist)
                     {
-                        lines = File.ReadAllLines(path, Encoding.UTF8);
-                        break; // 파일 읽기 성공 시 루프 탈출
-                    }
-                    catch (IOException) // 파일이 사용 중일 경우
-                    {
-                        if (i == 2) throw; // 3번 모두 실패하면 오류 발생시킴
-                        await Task.Delay(100); // 0.1초 대기 후 다시 시도
-                    }
-                }
-
-                if (lines == null) return -1;
-
-                if (mode == 0) // User_Scheduler
-                {
-                    var ser = new DataContractJsonSerializer(typeof(_User_Id__Scheduler));
-                    foreach (var line in lines)
-                    {
-                        if (string.IsNullOrWhiteSpace(line)) continue;
+                        // NDJSON → 객체 역직렬화
                         using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                         {
                             var row = (_User_Id__Scheduler)ser.ReadObject(ms);
@@ -336,12 +325,18 @@ namespace ChatMoa_DataBaseServer
                         }
                     }
                 }
-                else if (mode == 1) // Chat_Room_Scheduler
+            }
+            else if(mode == 1)      //Chat_Room_Scheduler
+            {
+                var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Scheduler));
+
+
+                using (var reader = new StreamReader(path, Encoding.UTF8))
                 {
-                    var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Scheduler));
-                    foreach (var line in lines)
+                    string line;
+                    while ((line = await reader.ReadLineAsync()) != null && !exist)
                     {
-                        if (string.IsNullOrWhiteSpace(line)) continue;
+                        // NDJSON → 객체 역직렬화
                         using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
                         {
                             var row = (Chat_Room__Room_Id__Scheduler)ser.ReadObject(ms);
@@ -351,11 +346,11 @@ namespace ChatMoa_DataBaseServer
                     }
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"[CRITICAL ERROR] in LastScheId for path {path}: {ex.ToString()}");
-                return -1;
+                //error
             }
+
             return ans;
         }
     }

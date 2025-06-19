@@ -12,7 +12,7 @@ namespace ChatMoa_DataBaseServer
      * 관리자는 각 채팅방에 포함되며, 채팅방의 헤더 역할을 함
      */
     [DataContract]  //Add
-    internal class User_Table
+    internal class User_Table           
     {
         //length size = 6 | primary key
         [DataMember] internal string User_Id;
@@ -23,7 +23,7 @@ namespace ChatMoa_DataBaseServer
     }
 
     [DataContract]  //Add, Edit
-    internal class User_Info
+    internal class User_Info            
     {
         // primary key and foregin key from "User_Table"
         [DataMember] internal string User_Id;
@@ -90,7 +90,7 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string User_Id;
         [DataMember] internal int Msg_Kind;         // 0 == manager chat | 1 == user chat
         [DataMember] internal string Date;
-        [DataMember] internal string Msg_Str;
+        [DataMember] internal string Msg_Str; 
     }
 
     [DataContract]  //Add, Edit, Del
@@ -102,10 +102,11 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;     
+        [DataMember] internal string Weekly;     
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+        [DataMember] internal string Alert_Date;
     }
 
     [DataContract]  //Add, Edit, Del
@@ -119,11 +120,13 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;     
+        [DataMember] internal string Weekly;     
+        [DataMember] internal string Monthly;     
+        [DataMember] internal string Yearly;     
+        [DataMember] internal string Alert_Date;
     }
+
 
     // Request Data parsing method
     // byte[0] == opcode                                | kind of request

@@ -13,7 +13,6 @@ using System.Runtime.Serialization.Json;
 
 namespace ChatMoa_DataBaseServer
 {
-    // internal -> public 으로 변경
     public class DCM
     {
         private string user_id;
@@ -25,7 +24,6 @@ namespace ChatMoa_DataBaseServer
             received_data = new Dictionary<int, List<string>>();
         }
 
-        // internal -> public 으로 변경
         public async Task<KeyValuePair<bool, (int, List<int>)>> db_request_data(byte opcode, List<string> items)
         {
             bool success = false;
@@ -34,7 +32,6 @@ namespace ChatMoa_DataBaseServer
 
             using (var client = new TcpClient())
             {
-                // IP 주소는 실제 서버 환경에 맞게 변경해야 할 수 있습니다.
                 await client.ConnectAsync("127.0.0.1", 5000);
                 NetworkStream ns = client.GetStream();
 
@@ -129,7 +126,6 @@ namespace ChatMoa_DataBaseServer
             return (state_buf[0], result);
         }
 
-        // private -> public 으로 변경
         public bool Clear_receive_data(int num)
         {
             if (received_data.ContainsKey(num))
@@ -139,7 +135,6 @@ namespace ChatMoa_DataBaseServer
             return false;
         }
 
-        // private -> public 으로 변경
         public T DeSerializeJson<T>(int num, int index)
         {
             var ser = new DataContractJsonSerializer(typeof(T));
@@ -152,7 +147,6 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
-        // private -> public 으로 변경
         public static string SerializeJson(object obj)
         {
             var ser = new DataContractJsonSerializer(obj.GetType());
@@ -163,20 +157,17 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
-        // private -> public 으로 변경
         public void Login(string user_id)
         {
             this.user_id = user_id;
         }
 
-        // private -> public 으로 변경
         public void Logout()
         {
             this.user_id = "";
             this.received_data.Clear();
         }
 
-        // private -> public 으로 변경
         public string my_User_Id()
         {
             return this.user_id;
