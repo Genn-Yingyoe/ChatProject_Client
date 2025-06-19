@@ -1,4 +1,4 @@
-﻿0. 기본적인 Data 이동 구조
+0. 기본적인 Data 이동 구조
 
 	- 기본적으로 1개 이상의 Client(채팅 프로그램 | User) - 1개의 Server(서버 프로그램 | Server) 통신 구조를 가진다.
 	- 모든 Data 이동은 Client로부터 시작되고, Server의 전송으로 마무리 된다.
@@ -140,13 +140,6 @@
 			ㄴ 정상적으로 처리 중이라면, 나의 Setting_Info에 저장된 모든 Data(세팅 정보)를 Client에 보내어 received_data에 저장한다.
 			ㄴ Server는 정상적으로 요청이 완료되었다면, 마지막으로 "1"을 return  /  비정상적으로 완료되었다면 "0"을 return 하고 Data 통신을 마무리한다.
 
-		#opcode 13	: user_id_search(유저 존재유무 검색)				|	need items = {Friend_Id}
-			ㄴ 검색하고자 하는 id를 가진 유저의 존재유무를 확인하는 opcode이다.
-			ㄴ Server에서 정상적으로 요청이 처리 중이라면, 해당 Id를 가진 User가 존재 유무에 따라 보내지는 data가 달라진다.
-				ㄴ User가 존재한다면, 해당 유저의 데이터만 갖는 "_User_Id__Friend_List" Type의 변수가 직렬화된채로 전달된다.
-				ㄴ User가 존재하지 않는다면, "_User_Id__Friend_List" Type의 변수의 내부 member data들 전부 null 상태로 직렬화되어 전달된다.
-			ㄴ Server는 정상적으로 요청이 완료되었다면, 마지막으로 "1"을 return  /  비정상적으로 완료되었다면 "0"을 return 하고 Data 통신을 마무리한다.
-
 		--------------------------------------------------------------------------------------------------------------------------------
 
 		[Chat]
@@ -221,11 +214,11 @@
 
 		[Scheduler]
 
-		#opcode 64	: user_sche_add(유저 스케쥴 추가)				|	need items = {Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+		#opcode 64	: user_sche_add(유저 스케쥴 추가)				|	need items = {Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date}
 			ㄴ 본인의 Scheulder DB에 스케쥴을 추가하는 opcode이다.
 			ㄴ Server는 유저 스케쥴 추가 요청 실패 시 "0" return  /  성공 시 "1" return
 
-		#opcode 65	: user_sche_edit(유저 스케쥴 수정)				|	need items = {Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+		#opcode 65	: user_sche_edit(유저 스케쥴 수정)				|	need items = {Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date}
 			ㄴ 본인의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 수정하는 opcode이다.
 			ㄴ Server는 유저 스케쥴 수정 요청 실패 시 "0" return  /  성공 시 "1" return
 
@@ -238,11 +231,11 @@
 			ㄴ Server는 저장된 스케쥴을 "_User_Id__Scheduler" Type의 변수가 직렬화된 String형태의 Data로 return 한다.
 			ㄴ 모든 스케쥴에 대한 Data 전달이 정상적으로 끝났다면 "1"을 return  /  비정상적으로 끝났다면 "0"을 return 
 
-		#opcode 68	: chatroom_sche_add(채팅방 스케쥴 추가)			|	need items = {Room_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+		#opcode 68	: chatroom_sche_add(채팅방 스케쥴 추가)			|	need items = {Room_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date}
 			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에 스케쥴을 추가하는 opcode이다.
 			ㄴ Server는 채팅방 스케쥴 추가 요청 실패 시 "0" return  /  성공 시 "1" return
 
-		#opcode 69	: chatroom_sche_edit(채팅방 스케쥴 수정)		|	need items = {Room_Id, Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly}
+		#opcode 69	: chatroom_sche_edit(채팅방 스케쥴 수정)		|	need items = {Room_Id, Sche_Id, Category, Begin_Date, Finish_Date, Sche_Str, Daily, Weekly, Monthly, Yearly, Alert_Date}
 			ㄴ Room_Id에 해당하는 채팅방의 Scheulder DB에서 Sche_Id에 해당하는 스케쥴을 수정하는 opcode이다.
 			ㄴ Server는 채팅방 스케쥴 수정 요청 실패 시 "0" return  /  성공 시 "1" return
 
@@ -304,7 +297,6 @@
         [DataMember] internal string User_Id;			// primary key and foregin key from <User_Id of "User_Table">
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
-        [DataMember] internal string Profile_Image_Path;
         [DataMember] internal List<string> Chat_Room_List;
         [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
@@ -395,7 +387,8 @@
         [DataMember] internal string Daily;     
         [DataMember] internal string Weekly;     
         [DataMember] internal string Monthly;     
-        [DataMember] internal string Yearly;     
+        [DataMember] internal string Yearly;   
+		[DataMember] internal string Alert_Date;
     }
 		ㄴ 각 User들의 스케쥴에 대한 정보를 저장하는 DB의 Data 형식이다.
 		ㄴ Daily, Weekly, Monthly, Yearly 등은 사용하기 편하게 string 형태의 Data로 지정해놓았다. 수정이 필요할시 DB 개발자에게 말해주면 된다.
@@ -415,9 +408,20 @@
         [DataMember] internal string Weekly;   
         [DataMember] internal string Monthly;     
         [DataMember] internal string Yearly;     
+		[DataMember] internal string Alert_Date;
     }	
 		ㄴ 각 채팅방들의 스케쥴에 대한 정보를 저장하는 DB의 Data 형식이다.
 
+
+
+	[DataContract]  
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
+    }
+		ㄴ 유저 프로필 또는 채팅방 배경의 이미지 정보를 저장하는 DB의 Data 형식이다.
 
 4. DB 및 Test_Clinet 사용법(1대 PC로 2개 프로그램 돌리는 경우)
 

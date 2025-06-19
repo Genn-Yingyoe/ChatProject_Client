@@ -104,7 +104,6 @@ namespace ChatMoa_DataBaseServer
                         User_Id = "000000",
                         Name = "관리자",
                         Nickname = "관리자",
-                        Profile_Image_Path = "",
                         Chat_Room_List = new List<string>(),
                         Waiting_Chat_Room_List = new List<string>(),
                     };
@@ -253,7 +252,6 @@ namespace ChatMoa_DataBaseServer
                                 make_user_info.User_Id = new_user_id;
                                 make_user_info.Name = items[5];
                                 make_user_info.Nickname = items[6];
-                                make_user_info.Profile_Image_Path = "";
                                 make_user_info.Chat_Room_List = new List<string>();
                                 make_user_info.Waiting_Chat_Room_List = new List<string>();
                                 path.Add(@"\DB\User_Info.ndjson");
@@ -275,6 +273,14 @@ namespace ChatMoa_DataBaseServer
                                     {
                                     }
                                 }
+                                dir = Path.GetDirectoryName(@"\DB\Users\" + new_user_id + @"\Image_Info.ndjson");
+                                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                                if (!File.Exists(@"\DB\Users\" + new_user_id + @"\Image_Info.ndjson"))
+                                {
+                                    using (File.Create(@"\DB\Users\" + new_user_id + @"\Image_Info.ndjson"))
+                                    {
+                                    }
+                                }
 
                                 _User_Id__Setting_Info make_user_setting_info1 = new _User_Id__Setting_Info()
                                 {
@@ -283,6 +289,14 @@ namespace ChatMoa_DataBaseServer
                                 };
                                 path.Add(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Setting_Info.ndjson");
                                 list.Add((0, make_user_setting_info1));
+
+                                Image_Info make_image_info = new Image_Info()
+                                {
+                                    Changed_User_Id = new_user_id,
+                                    Changed_Date = "00000000000000"
+                                };
+                                path.Add(@"\DB\Users\" + new_user_id + @"\Image_Info.ndjson");
+                                list.Add((0, make_image_info));
 
                                 send_datas.Add("1");
                             }
@@ -788,6 +802,112 @@ namespace ChatMoa_DataBaseServer
                                 send_datas.Add("1");
                                 opcode_success = true;
                                 Console.WriteLine("Search 시도 여부: " + send_datas[0]);
+                            }
+                            catch (Exception e)
+                            {
+                                send_datas.Add("0");
+                            }
+                        }
+                        else if (opcode == 14)  //last_changed_image_date   |   items = (kind, id)      |   kind == 0 >> user & id is user_id / kind == 1 >> chatroom && id is room_id 
+                        {
+                            string dir = @"\DB\";
+                            if (items[1] == "0") dir += @"Users\";
+                            else if (items[1] == "1") dir += @"ChatRoom\";
+
+                            dir += items[2] + @"\Image_Info.ndjson";
+
+                            try
+                            {
+                                string last_date = (await SearchAsync<Image_Info>(dir, r => true)).Changed_Date;
+
+                                send_datas.Add(last_date);
+                                send_datas.Add("1");
+                                opcode_success = true;
+                                Console.WriteLine("imame_date search 시도 여부: " + send_datas[0]);
+                            }
+                            catch (Exception e)
+                            {
+                                send_datas.Add("0");
+                            }
+                        }
+                        else if(opcode == 15)   //update_image              |   items = (kind, id, path)      |   kind == 0 >> user & id is user_id / kind == 1 >> chatroom && id is room_id 
+                        {
+                            string dir = @"\DB\";
+                            if (items[1] == "0") dir += @"Users\";
+                            else if (items[1] == "1") dir += @"ChatRoom\";
+
+                            string info_path = dir + items[2] + @"\Image_Info.ndjson";
+
+                            dir += items[2] + @"\Image.jpg";
+
+                            try
+                            {
+                                string last_date = (await SearchAsync<Image_Info>(info_path, r => true)).Changed_Date;
+
+                                try
+                                {
+                                    byte[] img = System.IO.File.ReadAllBytes(dir);
+
+                                    byte[] lenBuf = BitConverter.GetBytes((uint)img.Length);
+                                    if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+                                    
+                                    await ns.WriteAsync(lenBuf, 0, 4);   // 헤더
+                                    await ns.WriteAsync(img, 0, img.Length); // 바디
+                                    Console.WriteLine($"송신 완료 ({img.Length} B)");
+                                    opcode_success = true;
+                                    send_datas.Add(last_date);
+                                }
+                                catch (Exception e)
+                                {
+                                    send_datas.Add("0");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                send_datas.Add("0");
+                            }
+                        }
+                        else if(opcode == 16)   //upload_image          |   items = (kind, id, path)
+                        {
+                            string dir = @"\DB\";
+                            if (items[1] == "0") dir += @"Users\";
+                            else if (items[1] == "1") dir += @"ChatRoom\";
+
+                            string info_path = dir + items[2] + @"\Image_Info.ndjson";
+
+                            dir += items[2] + @"\Image.jpg";
+
+                            try
+                            {
+                                string new_date = DateTime.Now.ToString("yyyyMMddHHmmss");
+                                byte[] lenBuf = await ReadExact(ns, 4);
+                                if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+                                uint i_len = BitConverter.ToUInt32(lenBuf, 0);
+
+                                byte[] i_body = await ReadExact(ns, (int)i_len);
+
+                                File.WriteAllBytes(dir, i_body);
+
+                                Image_Info image_info = await SearchAsync<Image_Info>(info_path, r => true);
+                                image_info.Changed_Date = new_date;
+                                path.Add(info_path);
+                                using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                {
+                                    int i = 0;
+                                    var ser = new DataContractJsonSerializer(typeof(Image_Info));
+                                    string line;
+                                    while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                    {
+                                        using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                        {
+                                            var row = (Image_Info)ser.ReadObject(ms);
+                                            edit_index.Add(i);
+                                        }
+                                    }
+                                }
+                                list.Add((1, image_info));
+                                opcode_success = true;
+                                send_datas.Add(new_date);
                             }
                             catch (Exception e)
                             {
@@ -1351,7 +1471,18 @@ namespace ChatMoa_DataBaseServer
             }
             return default;                        
         }
-
+        private static async Task<byte[]> ReadExact(Stream s, int len)
+        {
+            byte[] buf = new byte[len];
+            int read = 0;
+            while (read < len)
+            {
+                int n = await s.ReadAsync(buf, read, len - read);
+                if (n == 0) throw new IOException("remote closed");
+                read += n;
+            }
+            return buf;
+        }
         internal static async Task<Int32> LastInformId(string path)
         {
             Int32 ans = -1;
