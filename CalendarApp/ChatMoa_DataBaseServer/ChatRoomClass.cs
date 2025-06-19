@@ -162,6 +162,23 @@ namespace ChatMoa_DataBaseServer
                         {
                         }
                     }
+                    dir = Path.GetDirectoryName(@"\DB\ChatRoom\" + new_room_id + @"\Image_Info.ndjson");
+                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    if (!File.Exists(@"\DB\ChatRoom\" + new_room_id + @"\Image_Info.ndjson"))
+                    {
+                        using (File.Create(@"\DB\ChatRoom\" + new_room_id + @"\Image_Info.ndjson"))
+                        {
+                        }
+                    }
+
+                    Image_Info make_image_info = new Image_Info()
+                    {
+                        Changed_User_Id = User,
+                        Changed_Date = "00000000000000"
+                    };
+                    path.Add(@"\DB\ChatRoom\" + new_room_id + @"\Image_Info.ndjson");
+                    list.Add((0, make_image_info));
+
                     send_datas.Add(new_room_id);
                     send_datas.Add("1");
                 }

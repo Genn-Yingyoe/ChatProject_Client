@@ -29,7 +29,6 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string User_Id;
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
-        [DataMember] internal string Profile_Image_Path;
         [DataMember] internal List<string> Chat_Room_List;
         [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
@@ -127,6 +126,13 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Alert_Date;
     }
 
+    [DataContract]  //Edit
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
+    }
 
     // Request Data parsing method
     // byte[0] == opcode                                | kind of request

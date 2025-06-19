@@ -73,7 +73,7 @@
             // Category
             // 
             this.Category.Text = "카테고리";
-            this.Category.Width = 100;
+            this.Category.Width = 80;
             // 
             // Title
             // 

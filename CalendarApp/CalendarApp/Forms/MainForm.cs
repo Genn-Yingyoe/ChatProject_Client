@@ -54,6 +54,8 @@ namespace CalendarApp
             txtScheduleContent.Text = "";
             txtScheduleContent.Visible = false;
 
+            chkSelectAll.Checked = false;
+
             DateTime selectedDate = e.SelectedDate;
             ShowSchedulesForDate(selectedDate);
         }
@@ -149,8 +151,6 @@ namespace CalendarApp
                 nextAlert.IsAlerted = true;
 
                 ShowAlert(nextAlert);
-
-                Debug.WriteLine($"알림 받은 일정: {nextAlert.Title} - IsAlerted: {nextAlert.IsAlerted}");
             }
         }
 
@@ -182,9 +182,7 @@ namespace CalendarApp
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-
             schedule.IsAlerted = true;
-            Debug.WriteLine($"알림 받은 일정(ShowAlert): {schedule.Title}, IsAlerted={schedule.IsAlerted}");
         }
 
         public void AddSchedule(Schedule newSchedule)
@@ -380,16 +378,6 @@ namespace CalendarApp
                 item.Checked = isChecked;
             }
         }
-        /*
-        private void btnTempLogin_Click(object sender, EventArgs e)
-        {
-            // 테스트할 임시 사용자 ID
-            string tempUserId = "000000";
-
-            UserLoggedIn(tempUserId);
-
-            ((Button)sender).Enabled = false;
-        }
 
         public async void UserLoggedIn(string userId)
         {
@@ -399,6 +387,16 @@ namespace CalendarApp
 
             MessageBox.Show($"{userId} 사용자로 로그인되었습니다. 스케줄을 불러옵니다.");
             await LoadSchedulesFromServer();
+        }
+
+        /*private void btnTempLogin_Click(object sender, EventArgs e)
+        {
+            // 테스트할 임시 사용자 ID
+            string tempUserId = "000000";
+
+            UserLoggedIn(tempUserId);
+
+            ((Button)sender).Enabled = false;
         }
 
         public void UserLoggedOut()

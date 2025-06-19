@@ -12,7 +12,7 @@ namespace ChatMoa_DataBaseServer
      * 관리자는 각 채팅방에 포함되며, 채팅방의 헤더 역할을 함
      */
     [DataContract]  //Add
-    internal class User_Table           
+    internal class User_Table
     {
         //length size = 6 | primary key
         [DataMember] internal string User_Id;
@@ -23,13 +23,12 @@ namespace ChatMoa_DataBaseServer
     }
 
     [DataContract]  //Add, Edit
-    internal class User_Info            
+    internal class User_Info
     {
         // primary key and foregin key from "User_Table"
         [DataMember] internal string User_Id;
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
-        [DataMember] internal string Profile_Image_Path;
         [DataMember] internal List<string> Chat_Room_List;
         [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
@@ -90,7 +89,7 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string User_Id;
         [DataMember] internal int Msg_Kind;         // 0 == manager chat | 1 == user chat
         [DataMember] internal string Date;
-        [DataMember] internal string Msg_Str; 
+        [DataMember] internal string Msg_Str;
     }
 
     [DataContract]  //Add, Edit, Del
@@ -102,10 +101,10 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     
-        [DataMember] internal string Weekly;     
-        [DataMember] internal string Monthly;     
-        [DataMember] internal string Yearly;     
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
         [DataMember] internal string Alert_Date;
     }
 
@@ -120,13 +119,20 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     
-        [DataMember] internal string Weekly;     
-        [DataMember] internal string Monthly;     
-        [DataMember] internal string Yearly;     
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
         [DataMember] internal string Alert_Date;
     }
 
+    [DataContract]  //Edit
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
+    }
 
     // Request Data parsing method
     // byte[0] == opcode                                | kind of request
