@@ -35,7 +35,6 @@
             this.comboBoxAlert = new System.Windows.Forms.ComboBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.checkBoxImportant = new System.Windows.Forms.CheckBox();
             this.radioBtnRepeatDaily = new System.Windows.Forms.RadioButton();
             this.radioBtnRepeatWeekly = new System.Windows.Forms.RadioButton();
             this.radioBtnRepeatMonthly = new System.Windows.Forms.RadioButton();
@@ -133,16 +132,6 @@
             this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // checkBoxImportant
-            // 
-            this.checkBoxImportant.AutoSize = true;
-            this.checkBoxImportant.Location = new System.Drawing.Point(24, 66);
-            this.checkBoxImportant.Name = "checkBoxImportant";
-            this.checkBoxImportant.Size = new System.Drawing.Size(69, 19);
-            this.checkBoxImportant.TabIndex = 8;
-            this.checkBoxImportant.Text = "중요 !";
-            this.checkBoxImportant.UseVisualStyleBackColor = true;
             // 
             // radioBtnRepeatDaily
             // 
@@ -431,6 +420,7 @@
             // 
             // EventForm
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 753);
@@ -449,7 +439,6 @@
             this.Controls.Add(this.radioBtnRepeatMonthly);
             this.Controls.Add(this.radioBtnRepeatWeekly);
             this.Controls.Add(this.radioBtnRepeatDaily);
-            this.Controls.Add(this.checkBoxImportant);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.comboBoxAlert);
@@ -478,7 +467,6 @@
         private System.Windows.Forms.ComboBox comboBoxAlert;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.CheckBox checkBoxImportant;
         private System.Windows.Forms.RadioButton radioBtnRepeatDaily;
         private System.Windows.Forms.RadioButton radioBtnRepeatWeekly;
         private System.Windows.Forms.RadioButton radioBtnRepeatMonthly;

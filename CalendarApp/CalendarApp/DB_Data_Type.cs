@@ -29,7 +29,6 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string User_Id;
         [DataMember] internal string Name;
         [DataMember] internal string Nickname;
-        [DataMember] internal string Profile_Image_Path;
         [DataMember] internal List<string> Chat_Room_List;
         [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
@@ -102,10 +101,11 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
+        [DataMember] internal string Alert_Date;
     }
 
     [DataContract]  //Add, Edit, Del
@@ -119,10 +119,19 @@ namespace ChatMoa_DataBaseServer
         [DataMember] internal string Begin_Date;
         [DataMember] internal string Finish_Date;
         [DataMember] internal string Sche_Str;
-        [DataMember] internal string Daily;     //temp
-        [DataMember] internal string Weekly;     //temp
-        [DataMember] internal string Monthly;     //temp
-        [DataMember] internal string Yearly;     //temp
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
+        [DataMember] internal string Alert_Date;
+    }
+
+    [DataContract]  //Edit
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
     }
 
     // Request Data parsing method

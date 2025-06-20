@@ -31,7 +31,6 @@
             this.btnDeleteSchedule = new System.Windows.Forms.Button();
             this.btnAddSchedule = new System.Windows.Forms.Button();
             this.listViewSchedules = new System.Windows.Forms.ListView();
-            this.IsCompleted = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.txtScheduleContent = new System.Windows.Forms.TextBox();
@@ -59,7 +58,6 @@
             // listViewSchedules
             // 
             this.listViewSchedules.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.IsCompleted,
             this.Category,
             this.Title});
             this.listViewSchedules.FullRowSelect = true;
@@ -71,11 +69,6 @@
             this.listViewSchedules.UseCompatibleStateImageBehavior = false;
             this.listViewSchedules.View = System.Windows.Forms.View.Details;
             this.listViewSchedules.SelectedIndexChanged += new System.EventHandler(this.listViewSchedules_SelectedIndexChanged);
-            // 
-            // IsCompleted
-            // 
-            this.IsCompleted.Text = "완료";
-            this.IsCompleted.Width = 50;
             // 
             // Category
             // 
@@ -131,7 +124,6 @@
         private System.Windows.Forms.Button btnDeleteSchedule;
         private System.Windows.Forms.Button btnAddSchedule;
         private System.Windows.Forms.ListView listViewSchedules;
-        private System.Windows.Forms.ColumnHeader IsCompleted;
         private System.Windows.Forms.ColumnHeader Category;
         private System.Windows.Forms.ColumnHeader Title;
         private System.Windows.Forms.TextBox txtScheduleContent;

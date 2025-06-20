@@ -16,7 +16,6 @@ public static class ScheduleMapper
         clientSchedule.ServerId = serverSchedule.Sche_Id;
         clientSchedule.Category = serverSchedule.Category;
 
-        // 제목, 내용 분리
         string delimiter = "[CONTENT]";
         if (serverSchedule.Sche_Str != null && serverSchedule.Sche_Str.Contains(delimiter))
         {
@@ -29,8 +28,13 @@ public static class ScheduleMapper
             clientSchedule.Title = serverSchedule.Sche_Str ?? "";
             clientSchedule.Content = "";
         }
-
-        // 서버의 Daily, Weekly 등의 필드를 읽어 클라이언트의 반복 옵션으로 변환
+        // 일정 알림
+        if (!string.IsNullOrEmpty(serverSchedule.Alert_Date))
+        {
+            DateTime.TryParse(serverSchedule.Alert_Date, out DateTime alertTime);
+            clientSchedule.AlertDateTime = alertTime;
+        }
+        // 일정 반복
         clientSchedule.RepeatOption = RepeatType.None;
         if (!string.IsNullOrEmpty(serverSchedule.Daily))
         {
@@ -59,18 +63,16 @@ public static class ScheduleMapper
             }
         }
 
-        // 반복 옵션이 있을 경우, Begin/Finish_Date를 반복 기간으로 해석
         if (clientSchedule.RepeatOption != RepeatType.None)
         {
             DateTime.TryParse(serverSchedule.Begin_Date, out DateTime repeatStartDate);
             DateTime.TryParse(serverSchedule.Finish_Date, out DateTime repeatEndDate);
             clientSchedule.RepeatStartDate = repeatStartDate;
             clientSchedule.RepeatEndDate = repeatEndDate;
-            // 반복 일정의 실제 시작/종료 시간은 시작일의 시간 부분을 따름
             clientSchedule.StartDate = repeatStartDate;
             clientSchedule.EndDate = repeatStartDate;
         }
-        else // 반복이 아닐 경우, 일반 일정의 시작/종료일로 해석
+        else
         {
             DateTime.TryParse(serverSchedule.Begin_Date, out DateTime startDate);
             DateTime.TryParse(serverSchedule.Finish_Date, out DateTime endDate);
@@ -81,12 +83,11 @@ public static class ScheduleMapper
         return clientSchedule;
     }
 
-    /// 클라이언트 데이터 -> 서버 요청 데이터로 변환
+    // 클라이언트 데이터 -> 서버 요청 데이터로 변환
     internal static List<string> ToServerRequestItems(Schedule clientSchedule)
     {
         string combinedString = $"{clientSchedule.Title}[CONTENT]{clientSchedule.Content}";
 
-        // 반복 옵션에 따라 Daily, Weekly 등의 필드 값을 설정
         string daily = "", weekly = "", monthly = "", yearly = "";
         switch (clientSchedule.RepeatOption)
         {
@@ -96,7 +97,6 @@ public static class ScheduleMapper
             case RepeatType.Yearly: yearly = $"{clientSchedule.RepeatMonth}-{clientSchedule.RepeatDay}"; break;
         }
 
-        // 반복일 경우 Begin/Finish_Date에 반복 기간을, 아닐 경우 일정 기간을 저장
         string beginDate, finishDate;
         if (clientSchedule.RepeatOption != RepeatType.None)
         {
@@ -109,7 +109,9 @@ public static class ScheduleMapper
             finishDate = clientSchedule.EndDate.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        // 서버가 요구하는 순서(8개)에 맞춰 items 리스트 생성
+        // 알림 시간이 설정되지 않았으면 빈 문자열을 보냄
+        string alertDateString = (clientSchedule.AlertDateTime == DateTime.MinValue) ? "" : clientSchedule.AlertDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
         var items = new List<string>
         {
             clientSchedule.Category ?? "개인",
@@ -119,19 +121,16 @@ public static class ScheduleMapper
             daily,
             weekly,
             monthly,
-            yearly
+            yearly,
+            alertDateString
         };
 
         return items;
     }
 
-    // 서버의 채팅방 스케줄 데이터를 클라이언트의 Schedule 객체로 변환
     internal static Schedule ToClientSharedSchedule(Chat_Room__Room_Id__Scheduler serverSchedule)
     {
         if (serverSchedule == null) return null;
-
-        // Chat_Room__Room_Id__Scheduler의 필드를 _User_Id__Scheduler 임시 객체로 복사합니다.
-        // 서버에 실제로 존재하는 필드만 사용합니다.
         var tempPersonalSchedule = new _User_Id__Scheduler
         {
             Sche_Id = serverSchedule.Sche_Id,
@@ -142,10 +141,9 @@ public static class ScheduleMapper
             Daily = serverSchedule.Daily,
             Weekly = serverSchedule.Weekly,
             Monthly = serverSchedule.Monthly,
-            Yearly = serverSchedule.Yearly
+            Yearly = serverSchedule.Yearly,
+            Alert_Date = serverSchedule.Alert_Date
         };
-
-        // 이제 개인 일정을 변환하는 ToClientSchedule 메서드를 재사용하여 최종 클라이언트 객체를 만듭니다.
         return ToClientSchedule(tempPersonalSchedule);
     }
 }

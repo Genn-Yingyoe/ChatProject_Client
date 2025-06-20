@@ -21,10 +21,9 @@ namespace CalendarApp
         private CustomCalendar customCalendar;
         private List<Schedule> schedules = new List<Schedule>();
         private System.Windows.Forms.Timer alertTimer;
-        private ImageList imageListIcons;
 
         private DCM dcm;
-        private string currentUserId; // 현재 로그인된 사용자의 ID를 저장할 변수
+        private string currentUserId;
 
         public MainForm()
         {
@@ -54,6 +53,8 @@ namespace CalendarApp
         {
             txtScheduleContent.Text = "";
             txtScheduleContent.Visible = false;
+
+            chkSelectAll.Checked = false;
 
             DateTime selectedDate = e.SelectedDate;
             ShowSchedulesForDate(selectedDate);
@@ -150,8 +151,6 @@ namespace CalendarApp
                 nextAlert.IsAlerted = true;
 
                 ShowAlert(nextAlert);
-
-                Debug.WriteLine($"알림 받은 일정: {nextAlert.Title} - IsAlerted: {nextAlert.IsAlerted}");
             }
         }
 
@@ -183,9 +182,7 @@ namespace CalendarApp
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-
             schedule.IsAlerted = true;
-            Debug.WriteLine($"알림 받은 일정(ShowAlert): {schedule.Title}, IsAlerted={schedule.IsAlerted}");
         }
 
         public void AddSchedule(Schedule newSchedule)
@@ -371,7 +368,7 @@ namespace CalendarApp
                 txtScheduleContent.Visible = false;
             }
         }
-
+        
         private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
         {
             bool isChecked = chkSelectAll.Checked;
@@ -382,16 +379,6 @@ namespace CalendarApp
             }
         }
 
-        /*private void btnTempLogin_Click(object sender, EventArgs e)
-        {
-            // 테스트할 임시 사용자 ID
-            string tempUserId = "000000";
-
-            UserLoggedIn(tempUserId);
-
-            ((Button)sender).Enabled = false;
-        }
-
         public async void UserLoggedIn(string userId)
         {
             this.currentUserId = userId;
@@ -400,6 +387,16 @@ namespace CalendarApp
 
             MessageBox.Show($"{userId} 사용자로 로그인되었습니다. 스케줄을 불러옵니다.");
             await LoadSchedulesFromServer();
+        }
+
+        /*private void btnTempLogin_Click(object sender, EventArgs e)
+        {
+            // 테스트할 임시 사용자 ID
+            string tempUserId = "000000";
+
+            UserLoggedIn(tempUserId);
+
+            ((Button)sender).Enabled = false;
         }
 
         public void UserLoggedOut()

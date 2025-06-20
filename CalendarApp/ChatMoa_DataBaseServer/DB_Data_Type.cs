@@ -11,108 +11,127 @@ namespace ChatMoa_DataBaseServer
      * User_Tabel에는 언제나 000000의 User_Id를 갖는 관리자가 포함됨
      * 관리자는 각 채팅방에 포함되며, 채팅방의 헤더 역할을 함
      */
-    [DataContract]
-    public class User_Table
+    [DataContract]  //Add
+    internal class User_Table
     {
-        [DataMember] public string User_Id { get; set; }
-        [DataMember] public string Id { get; set; }
-        [DataMember] public string Password { get; set; }
-        [DataMember] public int Ps_Question_Index { get; set; }
-        [DataMember] public string Ps_Answer { get; set; }
+        //length size = 6 | primary key
+        [DataMember] internal string User_Id;
+        [DataMember] internal string Id;
+        [DataMember] internal string Password;
+        [DataMember] internal int Ps_Question_Index;
+        [DataMember] internal string Ps_Answer;
     }
 
-    [DataContract]
-    public class User_Info
+    [DataContract]  //Add, Edit
+    internal class User_Info
     {
-        [DataMember] public string User_Id { get; set; }
-        [DataMember] public string Name { get; set; }
-        [DataMember] public string Nickname { get; set; }
-        [DataMember] public string Profile_Image_Path { get; set; }
-        [DataMember] public List<string> Chat_Room_List { get; set; }
-        [DataMember] public List<string> Waiting_Chat_Room_List { get; set; }
+        // primary key and foregin key from "User_Table"
+        [DataMember] internal string User_Id;
+        [DataMember] internal string Name;
+        [DataMember] internal string Nickname;
+        [DataMember] internal List<string> Chat_Room_List;
+        [DataMember] internal List<string> Waiting_Chat_Room_List;
     }
 
-    [DataContract]
-    public class _User_Id__Inform_Box
+    [DataContract]  //Add, Del
+    internal class _User_Id__Inform_Box
     {
-        [DataMember] public int Inform_Id { get; set; }
-        [DataMember] public string Inform_Kind { get; set; }
-        [DataMember] public string Inform_Date { get; set; }
-        [DataMember] public string Inform_Str { get; set; }
-        [DataMember] public List<string> need_items { get; set; }
-        [DataMember] public bool Inform_Checked { get; set; }
+        //primary key
+        [DataMember] internal int Inform_Id;
+        [DataMember] internal string Inform_Kind;
+        [DataMember] internal string Inform_Date;
+        [DataMember] internal string Inform_Str;
+        [DataMember] internal List<string> need_items;
+        [DataMember] internal bool Inform_Checked;
     }
 
-    [DataContract]
-    public class _User_Id__Friend_List
+    [DataContract]  //Add, Del
+    internal class _User_Id__Friend_List
     {
-        [DataMember] public string Friend_Id { get; set; }
-        [DataMember] public string Nickname { get; set; }
+        //primary key and foregin key from "User_Table"
+        [DataMember] internal string Friend_Id;
+        [DataMember] internal string Nickname;
     }
 
-    [DataContract]
-    public class _User_Id__Setting_Info
+    [DataContract]  //Edit
+    internal class _User_Id__Setting_Info
     {
-        [DataMember] public string Info_Id { get; set; }
-        [DataMember] public string Info_Str { get; set; }
+        //length size = 4 | primary key
+        [DataMember] internal string Info_Id;
+        [DataMember] internal string Info_Str;
     }
 
-    [DataContract]
-    public class Chat_Room_List
+    [DataContract]  //Add, Edit, Del
+    internal class Chat_Room_List
     {
-        [DataMember] public string Room_Id { get; set; }
-        [DataMember] public int Users_Num { get; set; }
+        //length size = 8 | primary key
+        [DataMember] internal string Room_Id;
+        [DataMember] internal int Users_Num;        //invite_state가 true인 멤버만 해당
     }
 
-    [DataContract]
-    public class Chat_Room__Room_Id__Info
+    [DataContract]  //Add, Edit, Del
+    internal class Chat_Room__Room_Id__Info
     {
-        [DataMember] public string User_Id { get; set; }
-        [DataMember] public int Read_Msg_Num { get; set; }
-        [DataMember] public string Read_Last_Date { get; set; }
-        [DataMember] public string Sche_List { get; set; }
-        [DataMember] public bool invite_state { get; set; }
+        //length size = 6 | primary key and foregin key from "User_Table"
+        [DataMember] internal string User_Id;
+        [DataMember] internal int Read_Msg_Num;
+        [DataMember] internal string Read_Last_Date;
+        [DataMember] internal string Sche_List; //temp type
+        [DataMember] internal bool invite_state;
     }
 
-    [DataContract]
-    public class Chat_Room__Room_Id___Date_
+    [DataContract]  //Add
+    internal class Chat_Room__Room_Id___Date_
     {
-        [DataMember] public int Msg_Id { get; set; }
-        [DataMember] public string User_Id { get; set; }
-        [DataMember] public int Msg_Kind { get; set; }
-        [DataMember] public string Date { get; set; }
-        [DataMember] public string Msg_Str { get; set; }
+        //primary key
+        [DataMember] internal int Msg_Id;
+        //foregin key from "Chat_Room__Room_Id__Info"
+        [DataMember] internal string User_Id;
+        [DataMember] internal int Msg_Kind;         // 0 == manager chat | 1 == user chat
+        [DataMember] internal string Date;
+        [DataMember] internal string Msg_Str;
     }
 
-    [DataContract]
-    public class _User_Id__Scheduler
+    [DataContract]  //Add, Edit, Del
+    internal class _User_Id__Scheduler
     {
-        [DataMember] public int Sche_Id { get; set; }
-        [DataMember] public string Category { get; set; }
-        [DataMember] public string Begin_Date { get; set; }
-        [DataMember] public string Finish_Date { get; set; }
-        [DataMember] public string Sche_Str { get; set; }
-        [DataMember] public string Daily { get; set; }
-        [DataMember] public string Weekly { get; set; }
-        [DataMember] public string Monthly { get; set; }
-        [DataMember] public string Yearly { get; set; }
-
+        //primary key
+        [DataMember] internal int Sche_Id;
+        [DataMember] internal string Category;
+        [DataMember] internal string Begin_Date;
+        [DataMember] internal string Finish_Date;
+        [DataMember] internal string Sche_Str;
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
+        [DataMember] internal string Alert_Date;
     }
 
-    [DataContract]
-    public class Chat_Room__Room_Id__Scheduler
+    [DataContract]  //Add, Edit, Del
+    internal class Chat_Room__Room_Id__Scheduler
     {
-        [DataMember] public int Sche_Id { get; set; }
-        [DataMember] public string User_Id { get; set; }
-        [DataMember] public string Category { get; set; }
-        [DataMember] public string Begin_Date { get; set; }
-        [DataMember] public string Finish_Date { get; set; }
-        [DataMember] public string Sche_Str { get; set; }
-        [DataMember] public string Daily { get; set; }
-        [DataMember] public string Weekly { get; set; }
-        [DataMember] public string Monthly { get; set; }
-        [DataMember] public string Yearly { get; set; }
+        //primary key
+        [DataMember] internal int Sche_Id;
+        //foregin key from "Chat_Room__Room_Id__Info"
+        [DataMember] internal string User_Id;
+        [DataMember] internal string Category;
+        [DataMember] internal string Begin_Date;
+        [DataMember] internal string Finish_Date;
+        [DataMember] internal string Sche_Str;
+        [DataMember] internal string Daily;
+        [DataMember] internal string Weekly;
+        [DataMember] internal string Monthly;
+        [DataMember] internal string Yearly;
+        [DataMember] internal string Alert_Date;
+    }
 
+    [DataContract]  //Edit
+    internal class Image_Info
+    {
+        //foregin key from "User_Info"
+        [DataMember] internal string Changed_User_Id;
+        [DataMember] internal string Changed_Date;
     }
 
     // Request Data parsing method

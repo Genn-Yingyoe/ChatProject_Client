@@ -61,6 +61,8 @@ namespace CalendarApp.Forms
             txtScheduleContent.Text = "";
             txtScheduleContent.Visible = false;
 
+            chkSelectAll.Checked = false;
+
             ShowSchedulesForDate(e.SelectedDate);
         }
 

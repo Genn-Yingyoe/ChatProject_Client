@@ -15,8 +15,6 @@ namespace CalendarApp.Models
         public string Category { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool IsImportant { get; set; }
         public DateTime AlertDateTime { get; set; }
         public bool IsAlerted { get; set; } = false;
 
