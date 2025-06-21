@@ -33,9 +33,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnLP = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtQ = new System.Windows.Forms.TextBox();
             this.txtA = new System.Windows.Forms.TextBox();
             this.txtPW = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -92,22 +92,22 @@
             this.btnLP.Text = "Cancel";
             this.btnLP.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnOK
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
-            this.button1.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.button1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(36, 155);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(79, 32);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnOK.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnOK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
+            this.btnOK.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnOK.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOK.Location = new System.Drawing.Point(36, 155);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(79, 32);
+            this.btnOK.TabIndex = 12;
+            this.btnOK.Text = "OK";
+            this.btnOK.UseVisualStyleBackColor = false;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // txtID
             // 
@@ -116,12 +116,12 @@
             this.txtID.Size = new System.Drawing.Size(203, 21);
             this.txtID.TabIndex = 13;
             // 
-            // textBox2
+            // txtQ
             // 
-            this.textBox2.Location = new System.Drawing.Point(77, 56);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(203, 21);
-            this.textBox2.TabIndex = 14;
+            this.txtQ.Location = new System.Drawing.Point(77, 56);
+            this.txtQ.Name = "txtQ";
+            this.txtQ.Size = new System.Drawing.Size(203, 21);
+            this.txtQ.TabIndex = 14;
             // 
             // txtA
             // 
@@ -144,9 +144,9 @@
             this.ClientSize = new System.Drawing.Size(302, 198);
             this.Controls.Add(this.txtPW);
             this.Controls.Add(this.txtA);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtQ);
             this.Controls.Add(this.txtID);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnLP);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -166,9 +166,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnLP;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtQ;
         private System.Windows.Forms.TextBox txtA;
         private System.Windows.Forms.TextBox txtPW;
     }
