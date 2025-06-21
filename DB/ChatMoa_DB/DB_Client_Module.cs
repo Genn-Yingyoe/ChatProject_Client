@@ -18,6 +18,7 @@ namespace ChatMoa_DataBaseServer
     internal class DCM
     {
         private string user_id;
+        private string ip_address = "127.0.0.1";        //default address = "127.0.0.1"
 
         private Dictionary<int, List<string>> received_data;
 
@@ -25,6 +26,11 @@ namespace ChatMoa_DataBaseServer
         {
             user_id = "";
             received_data = new Dictionary<int, List<string>>();
+        }
+
+        internal void ip_change(string new_address)
+        {
+            ip_address = new_address;
         }
 
         internal async Task<KeyValuePair<bool, (int, List<int>)>> db_request_data(byte opcode, List<string> items)      //Key : request 성공 여부  |  Value.item1 : received_data의 key  |
@@ -36,7 +42,7 @@ namespace ChatMoa_DataBaseServer
 
             using (var client = new TcpClient())
             {
-                await client.ConnectAsync("127.0.0.1", 5000);   // 서버 IP·포트
+                await client.ConnectAsync(ip_address, 5000);   // 서버 IP·포트
                 NetworkStream ns = client.GetStream();
 
                 n = received_data.Count;
