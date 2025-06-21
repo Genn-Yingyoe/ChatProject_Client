@@ -1016,7 +1016,9 @@ namespace MainSystem
         // 추가 기능 버튼들 (필요에 따라 활용)
         private void button3_Click(object sender, EventArgs e)
         {
-            // 기능 추가 가능
+            CalendarApp.MainForm calendarForm = new CalendarApp.MainForm();
+            calendarForm.UserLoggedIn(currentUserId);  // 현재 사용자 ID 넘겨주기
+            calendarForm.Show();
         }
 
         private void button4_Click(object sender, EventArgs e)
