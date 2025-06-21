@@ -547,6 +547,7 @@ namespace ChatMoa_DataBaseServer
                                     }
                                 }
                                 list.Add((1, user_inform_box));
+
                                 if (user_inform_box.Inform_Kind == "friend_request")
                                 {
                                     string friend = user_inform_box.need_items.First();     //User_Id
@@ -555,25 +556,165 @@ namespace ChatMoa_DataBaseServer
                                     User_Info my_info = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user_id);
 
                                     path.Add(@"\DB\Users\" + user_id + @"\" + user_id + "_Friend_List.ndjson");
-                                    list.Add((0,new _User_Id__Friend_List() { Friend_Id = friend, Nickname = friend_info.Nickname}));
+                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = friend, Nickname = friend_info.Nickname }));
 
                                     path.Add(@"\DB\Users\" + friend + @"\" + friend + "_Friend_List.ndjson");
-                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = user_id, Nickname = my_info.Nickname}));
-
+                                    list.Add((0, new _User_Id__Friend_List() { Friend_Id = user_id, Nickname = my_info.Nickname }));
                                 }
-                                else if(user_inform_box.Inform_Kind == "invite")
+                                else if (user_inform_box.Inform_Kind == "invite")
                                 {
                                     string room_id = user_inform_box.need_items.First();
-                                    List<string> new_items = new List<string>();
-                                    new_items.Add(user_id);
-                                    new_items.Add(room_id);
-                                    new_items.Add(inform_id.ToString());
-                                    opcode_success = await ChatRoomClass.ChatHandlerAsync(ns, 35, new_items, send_datas);
+                                    string today = DateTime.Now.ToString("yyyyMMddHHmmss");
+
+                                    // Chat_Room_List의 Users_Num 증가
+                                    Chat_Room_List room_list_info = await SearchAsync<Chat_Room_List>(@"\DB\Chat_Room_List.ndjson", r => r.Room_Id == room_id);
+                                    if (room_list_info != null)
+                                    {
+                                        room_list_info.Users_Num++;
+                                        path.Add(@"\DB\Chat_Room_List.ndjson");
+                                        using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                        {
+                                            int i = 0;
+                                            var ser = new DataContractJsonSerializer(typeof(Chat_Room_List));
+                                            string line;
+                                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                            {
+                                                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                                {
+                                                    var row = (Chat_Room_List)ser.ReadObject(ms);
+                                                    if (row.Room_Id == room_id)
+                                                    {
+                                                        edit_index.Add(i);
+                                                        break;
+                                                    }
+                                                }
+                                                i++;
+                                            }
+                                        }
+                                        list.Add((1, room_list_info));
+                                    }
+
+                                    // 사용자의 Chat_Room_Info에서 invite_state를 true로 변경
+                                    string room_info_path = @"\DB\ChatRoom\" + room_id + @"\Chat_Room_" + room_id + "_Info.ndjson";
+                                    Chat_Room__Room_Id__Info user_room_info = await SearchAsync<Chat_Room__Room_Id__Info>(room_info_path, r => r.User_Id == user_id);
+                                    if (user_room_info != null)
+                                    {
+                                        Chat_Room__Room_Id__Info manager_info = await SearchAsync<Chat_Room__Room_Id__Info>(room_info_path, r => r.User_Id == "000000");
+
+                                        user_room_info.invite_state = true;
+                                        user_room_info.Read_Msg_Num = manager_info?.Read_Msg_Num ?? 0;
+                                        user_room_info.Read_Last_Date = manager_info?.Read_Last_Date ?? today.Substring(0, 8);
+
+                                        path.Add(room_info_path);
+                                        using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                        {
+                                            int i = 0;
+                                            var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Info));
+                                            string line;
+                                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                            {
+                                                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                                {
+                                                    var row = (Chat_Room__Room_Id__Info)ser.ReadObject(ms);
+                                                    if (row.User_Id == user_id)
+                                                    {
+                                                        edit_index.Add(i);
+                                                        break;
+                                                    }
+                                                }
+                                                i++;
+                                            }
+                                        }
+                                        list.Add((1, user_room_info));
+                                    }
+
+                                    // 관리자의 읽은 메시지 수 증가
+                                    Chat_Room__Room_Id__Info manager_info_update = await SearchAsync<Chat_Room__Room_Id__Info>(room_info_path, r => r.User_Id == "000000");
+                                    if (manager_info_update != null)
+                                    {
+                                        manager_info_update.Read_Msg_Num++;
+                                        manager_info_update.Read_Last_Date = today.Substring(0, 8);
+
+                                        path.Add(room_info_path);
+                                        using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                        {
+                                            int i = 0;
+                                            var ser = new DataContractJsonSerializer(typeof(Chat_Room__Room_Id__Info));
+                                            string line;
+                                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                            {
+                                                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                                {
+                                                    var row = (Chat_Room__Room_Id__Info)ser.ReadObject(ms);
+                                                    if (row.User_Id == "000000")
+                                                    {
+                                                        edit_index.Add(i);
+                                                        break;
+                                                    }
+                                                }
+                                                i++;
+                                            }
+                                        }
+                                        list.Add((1, manager_info_update));
+                                    }
+
+                                    // User_Info 업데이트 (Chat_Room_List에 추가, Waiting_Chat_Room_List에서 제거)
+                                    User_Info user_info = await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user_id);
+                                    if (user_info != null)
+                                    {
+                                        if (user_info.Chat_Room_List == null)
+                                            user_info.Chat_Room_List = new List<string>();
+                                        if (!user_info.Chat_Room_List.Contains(room_id))
+                                            user_info.Chat_Room_List.Add(room_id);
+
+                                        if (user_info.Waiting_Chat_Room_List == null)
+                                            user_info.Waiting_Chat_Room_List = new List<string>();
+                                        user_info.Waiting_Chat_Room_List.Remove(room_id);
+
+                                        path.Add(@"\DB\User_Info.ndjson");
+                                        using (var src = new StreamReader(path.Last(), Encoding.UTF8))
+                                        {
+                                            int i = 0;
+                                            var ser = new DataContractJsonSerializer(typeof(User_Info));
+                                            string line;
+                                            while ((line = await src.ReadLineAsync().ConfigureAwait(false)) != null)
+                                            {
+                                                using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(line)))
+                                                {
+                                                    var row = (User_Info)ser.ReadObject(ms);
+                                                    if (row.User_Id == user_id)
+                                                    {
+                                                        edit_index.Add(i);
+                                                        break;
+                                                    }
+                                                }
+                                                i++;
+                                            }
+                                        }
+                                        list.Add((1, user_info));
+                                    }
+
+                                    // 입장 메시지 추가
+                                    string nickname = (await SearchAsync<User_Info>(@"\DB\User_Info.ndjson", r => r.User_Id == user_id))?.Nickname ?? "사용자";
+                                    string msg_file_path = @"\DB\ChatRoom\" + room_id + @"\" + today.Substring(0, 4) + @"\Chat_Room_"
+                                                       + room_id + "_" + today.Substring(0, 8) + ".ndjson";
+                                    string dir = Path.GetDirectoryName(msg_file_path);
+                                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+                                    int lastMsgId = await ChatRoomClass.LastMsgmId(msg_file_path);
+                                    path.Add(msg_file_path);
+                                    list.Add((0, new Chat_Room__Room_Id___Date_
+                                    {
+                                        Msg_Id = lastMsgId + 1,
+                                        User_Id = "000000",
+                                        Msg_Kind = 0,
+                                        Date = today,
+                                        Msg_Str = nickname + "님이 채팅방에 입장했습니다"
+                                    }));
                                 }
                             }
                             else if (items[2] == "0")
                             {
-                                //not execution
                                 _User_Id__Inform_Box user_inform_box = await SearchAsync<_User_Id__Inform_Box>(@"\DB\Users\" + user_id + @"\" + user_id + "_Inform_Box.ndjson",
                                     r => r.Inform_Id == inform_id);
                                 string room_id = user_inform_box.need_items.First();
@@ -600,7 +741,6 @@ namespace ChatMoa_DataBaseServer
                                     }
                                 }
                                 list.Add((1, user_inform_box));
-
 
                                 if (user_inform_box.Inform_Kind == "invite")
                                 {
