@@ -28,6 +28,7 @@ C:\Users\wlgus\Desktop\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatM
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+<<<<<<< Updated upstream
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
@@ -35,3 +36,12 @@ D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debu
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+=======
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+>>>>>>> Stashed changes

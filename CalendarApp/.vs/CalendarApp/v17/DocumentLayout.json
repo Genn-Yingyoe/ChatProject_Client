@@ -1,0 +1,400 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\services\\schedulemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\services\\schedulemapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\services\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\services\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\db_data_type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\db_data_type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\schedulerclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\schedulerclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\db_io.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\db_data_type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\db_data_type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\chatmoa_databaseserver\\chatroomclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05F369CC-9845-4FB6-8192-60563F1EF9D3}|ChatMoa_DataBaseServer\\ChatMoa_DataBaseServer.csproj|solutionrelative:chatmoa_databaseserver\\chatroomclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\models\\schedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\models\\schedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\models\\datechangedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\models\\datechangedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\customcalendar.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\customcalendar.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\admin\\Desktop\\ChatProject_Client\\DB\\ChatMoa_DB\\DB_Data_Type.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\eventform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\eventform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\chatroomcalendarform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\chatroomcalendarform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.Designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\calendarapp\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 506,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChatRoomCalendarForm.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAcwD0BAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:30.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "MainForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.Designer.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.Designer.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.Designer.cs",
+              "RelativeToolTip": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.Designer.cs",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAAAF8AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:30.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "MainForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2025-06-21T03:14:31.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.111Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EventForm.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\EventForm.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\EventForm.cs",
+              "ViewState": "AQIAAKUAAAAAAAAAAAAAAB8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2025-06-21T03:14:31.112Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ScheduleMapper.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Services\\ScheduleMapper.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Services\\ScheduleMapper.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Services\\ScheduleMapper.cs",
+              "RelativeToolTip": "CalendarApp\\Services\\ScheduleMapper.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAHIAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.112Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DB_Client_Module.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_Client_Module.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\DB_Client_Module.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_Client_Module.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\DB_Client_Module.cs",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAAADwAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.113Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DB_Client_Module.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Services\\DB_Client_Module.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Services\\DB_Client_Module.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Services\\DB_Client_Module.cs",
+              "RelativeToolTip": "CalendarApp\\Services\\DB_Client_Module.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAAADwAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.114Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DB_Data_Type.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\DB_Data_Type.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\DB_Data_Type.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\DB_Data_Type.cs",
+              "RelativeToolTip": "CalendarApp\\DB_Data_Type.cs",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAAwI8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.114Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\Program.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\Program.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\Program.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DB_IO.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_IO.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\DB_IO.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_IO.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\DB_IO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SchedulerClass.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\SchedulerClass.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\SchedulerClass.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\SchedulerClass.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\SchedulerClass.cs",
+              "ViewState": "AQIAAIAAAAAAAAAAAAAAAIYAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DB_Data_Type.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_Data_Type.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\DB_Data_Type.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\DB_Data_Type.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\DB_Data_Type.cs",
+              "ViewState": "AQIAAGgAAAAAAAAAAAAAwI4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ChatRoomClass.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\ChatRoomClass.cs",
+              "RelativeDocumentMoniker": "ChatMoa_DataBaseServer\\ChatRoomClass.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\ChatMoa_DataBaseServer\\ChatRoomClass.cs",
+              "RelativeToolTip": "ChatMoa_DataBaseServer\\ChatRoomClass.cs",
+              "ViewState": "AQIAANkCAAAAAAAAAAAAAPEDAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.117Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Schedule.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Models\\Schedule.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Models\\Schedule.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Models\\Schedule.cs",
+              "RelativeToolTip": "CalendarApp\\Models\\Schedule.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACYAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.117Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "EventForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\EventForm.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "WhenOpened": "2025-06-21T03:14:31.118Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DateChangedEventArgs.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Models\\DateChangedEventArgs.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Models\\DateChangedEventArgs.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Models\\DateChangedEventArgs.cs",
+              "RelativeToolTip": "CalendarApp\\Models\\DateChangedEventArgs.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.118Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Program.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Program.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Program.cs",
+              "RelativeToolTip": "CalendarApp\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.119Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CustomCalendar.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALUAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003302|",
+              "WhenOpened": "2025-06-21T03:14:31.119Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CustomCalendar.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.Designer.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\CustomCalendar.Designer.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.Designer.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\CustomCalendar.Designer.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAAABYAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2025-06-21T03:14:31.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CustomCalendar.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "..\\..\\..\\..\\user\\Desktop\\tpbackupbackup(\uCD5C)\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003302|",
+              "WhenOpened": "2025-06-21T03:14:31.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "DB_Data_Type.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\DB\\ChatMoa_DB\\DB_Data_Type.cs",
+              "RelativeDocumentMoniker": "..\\DB\\ChatMoa_DB\\DB_Data_Type.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\DB\\ChatMoa_DB\\DB_Data_Type.cs",
+              "RelativeToolTip": "..\\DB\\ChatMoa_DB\\DB_Data_Type.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACAAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.122Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "EventForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.Designer.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\EventForm.Designer.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.Designer.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\EventForm.Designer.cs",
+              "ViewState": "AQIAAOABAAAAAAAAAAAAwP0BAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2025-06-21T03:14:31.123Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ChatRoomCalendarForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.Designer.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\ChatRoomCalendarForm.Designer.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.Designer.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\ChatRoomCalendarForm.Designer.cs",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAJMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-21T03:14:31.124Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

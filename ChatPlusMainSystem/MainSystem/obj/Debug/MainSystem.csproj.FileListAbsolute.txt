@@ -81,6 +81,7 @@ C:\Users\wlgus\Desktop\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.Up2Date
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.exe
 C:\Users\wlgus\Desktop\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.pdb
+<<<<<<< Updated upstream
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.exe.config
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.exe
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.pdb
@@ -98,3 +99,25 @@ D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.Up2Date
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.exe
 D:\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.pdb
+=======
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.exe.config
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\MainSystem.pdb
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\ChatMoa_DataBaseServer.exe.config
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.ChatForm.resources
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.LoginForm.resources
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.MainForm.resources
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.Properties.Resources.resources
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.SignupForm.resources
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.GenerateResource.cache
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.csproj.CopyComplete
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.pdb
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.exe
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.pdb
+C:\Users\admin\Desktop\ChatProject_Client\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.exe.config
+>>>>>>> Stashed changes

@@ -70,11 +70,11 @@
     <Compile Include="Forms\EventForm.Designer.cs">
       <DependentUpon>EventForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm.cs">
+    <Compile Include="Forms\CalendarMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Forms\CalendarMain.Designer.cs">
+      <DependentUpon>CalendarMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\DateChangedEventArgs.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -91,8 +91,8 @@
     <EmbeddedResource Include="Forms\EventForm.resx">
       <DependentUpon>EventForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CalendarMain.resx">
+      <DependentUpon>CalendarMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

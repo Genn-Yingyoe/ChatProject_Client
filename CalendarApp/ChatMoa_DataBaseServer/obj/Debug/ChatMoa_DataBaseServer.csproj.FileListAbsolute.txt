@@ -14,6 +14,7 @@ C:\Users\user\Desktop\tpbackupbackup\CalendarApp\ChatMoa_DataBaseServer\obj\Debu
 C:\Users\user\Desktop\tpbackupbackup\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\tpbackupbackup\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\user\Desktop\tpbackupbackup\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+<<<<<<< Updated upstream
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
@@ -22,3 +23,20 @@ C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseSe
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\user\Documents\GitHub\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+=======
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.SuggestedBindingRedirects.cache
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\admin\Desktop\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+>>>>>>> Stashed changes

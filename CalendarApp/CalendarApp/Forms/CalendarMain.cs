@@ -382,15 +382,30 @@ namespace CalendarApp
             }
         }
 
+<<<<<<< Updated upstream:CalendarApp/CalendarApp/Forms/MainForm.cs
         /*private void btnTempLogin_Click(object sender, EventArgs e)
+=======
+        public async void UserLoggedIn(string userId)
+        {
+            this.currentUserId = userId;
+
+            dcm.Login(userId);
+
+            MessageBox.Show($"{userId} 사용자로 로그인되었습니다. 스케줄을 불러옵니다.");
+            await LoadSchedulesFromServer();
+        }
+
+        private void btnTempLogin_Click(object sender, EventArgs e)
+>>>>>>> Stashed changes:CalendarApp/CalendarApp/Forms/CalendarMain.cs
         {
             // 테스트할 임시 사용자 ID
-            string tempUserId = "000000";
+            string tempUserId = "";
 
             UserLoggedIn(tempUserId);
 
             ((Button)sender).Enabled = false;
         }
+<<<<<<< Updated upstream:CalendarApp/CalendarApp/Forms/MainForm.cs
 
         public async void UserLoggedIn(string userId)
         {
@@ -402,14 +417,16 @@ namespace CalendarApp
             await LoadSchedulesFromServer();
         }
 
+=======
+            
+>>>>>>> Stashed changes:CalendarApp/CalendarApp/Forms/CalendarMain.cs
         public void UserLoggedOut()
         {
             this.currentUserId = string.Empty;
             dcm.Logout();
             schedules.Clear();
             RefreshScheduleListUI();
-            MessageBox.Show("로그아웃되었습니다.");
+           MessageBox.Show("로그아웃되었습니다.");
         }
-        */
     }
 }
