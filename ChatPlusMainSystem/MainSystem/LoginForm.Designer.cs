@@ -36,7 +36,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pbApp = new System.Windows.Forms.PictureBox();
+            this.btnIp = new System.Windows.Forms.PictureBox();
+            this.lblIp = new System.Windows.Forms.Label();
+            this.txtIp = new System.Windows.Forms.TextBox();
+            this.btnLP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnIp)).BeginInit();
             this.SuspendLayout();
             // 
             // txtID
@@ -79,7 +84,7 @@
             this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
             this.btnLogin.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnLogin.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnLogin.Location = new System.Drawing.Point(37, 319);
+            this.btnLogin.Location = new System.Drawing.Point(14, 319);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(79, 32);
@@ -96,7 +101,7 @@
             this.btnSignup.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnSignup.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnSignup.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSignup.Location = new System.Drawing.Point(187, 319);
+            this.btnSignup.Location = new System.Drawing.Point(112, 319);
             this.btnSignup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSignup.Name = "btnSignup";
             this.btnSignup.Size = new System.Drawing.Size(79, 32);
@@ -139,12 +144,62 @@
             this.pbApp.TabIndex = 4;
             this.pbApp.TabStop = false;
             // 
+            // btnIp
+            // 
+            this.btnIp.Image = ((System.Drawing.Image)(resources.GetObject("btnIp.Image")));
+            this.btnIp.Location = new System.Drawing.Point(272, 2);
+            this.btnIp.Name = "btnIp";
+            this.btnIp.Size = new System.Drawing.Size(25, 25);
+            this.btnIp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnIp.TabIndex = 7;
+            this.btnIp.TabStop = false;
+            this.btnIp.Click += new System.EventHandler(this.pictureBox1_Click_1);
+            // 
+            // lblIp
+            // 
+            this.lblIp.AutoSize = true;
+            this.lblIp.Location = new System.Drawing.Point(12, 9);
+            this.lblIp.Name = "lblIp";
+            this.lblIp.Size = new System.Drawing.Size(112, 12);
+            this.lblIp.TabIndex = 8;
+            this.lblIp.Text = "ServerIP : 127.0.0.1";
+            // 
+            // txtIp
+            // 
+            this.txtIp.Location = new System.Drawing.Point(130, 6);
+            this.txtIp.Name = "txtIp";
+            this.txtIp.Size = new System.Drawing.Size(136, 21);
+            this.txtIp.TabIndex = 9;
+            this.txtIp.Visible = false;
+            this.txtIp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIp_KeyDown);
+            // 
+            // btnLP
+            // 
+            this.btnLP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnLP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnLP.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
+            this.btnLP.Font = new System.Drawing.Font("돋움", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnLP.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnLP.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLP.Location = new System.Drawing.Point(208, 319);
+            this.btnLP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnLP.Name = "btnLP";
+            this.btnLP.Size = new System.Drawing.Size(79, 32);
+            this.btnLP.TabIndex = 10;
+            this.btnLP.Text = "LostPW";
+            this.btnLP.UseVisualStyleBackColor = false;
+            this.btnLP.Click += new System.EventHandler(this.btnLP_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(299, 362);
+            this.Controls.Add(this.btnLP);
+            this.Controls.Add(this.txtIp);
+            this.Controls.Add(this.lblIp);
+            this.Controls.Add(this.btnIp);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSignup);
@@ -160,6 +215,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
             this.Load += new System.EventHandler(this.LoginForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbApp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnIp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,6 +230,10 @@
         private System.Windows.Forms.PictureBox pbApp;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox btnIp;
+        private System.Windows.Forms.Label lblIp;
+        private System.Windows.Forms.TextBox txtIp;
+        private System.Windows.Forms.Button btnLP;
     }
 }
 
