@@ -82,6 +82,12 @@
     <Compile Include="FriendSelectForm.Designer.cs">
       <DependentUpon>FriendSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageUploadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageUploadForm.Designer.cs">
+      <DependentUpon>ImageUploadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FriendProfileForm.resx">
       <DependentUpon>FriendProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageUploadForm.resx">
+      <DependentUpon>ImageUploadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

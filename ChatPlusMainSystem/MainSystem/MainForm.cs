@@ -13,12 +13,14 @@ namespace MainSystem
 {
     public partial class MainForm : Form
     {
+        
         private string currentUserId;
         private string currentUserName;
         private string currentUserNickname;
         private List<FriendInfo> friendList = new List<FriendInfo>();
         private List<string> chatRoomList = new List<string>();
         private bool isLoadingData = false;
+        private bool _logoutRequested = false;
 
         // 알림 관련
         private Timer notificationTimer;
@@ -29,6 +31,7 @@ namespace MainSystem
         {
             InitializeComponent();
             InitializeUI();
+            this.FormClosing += MainForm_FormClosing;
         }
 
         private void InitializeUI()
@@ -546,19 +549,24 @@ namespace MainSystem
             {
                 if (rdbFriend.Checked)
                 {
+                    // 기존 친구 목록 읽기 :contentReference[oaicite:1]{index=1}
                     await LoadFriendListFromServer();
+
+                    // 추가: 최신 닉네임으로 갱신
+                    await RefreshFriendNicknamesAsync();
+
+                    // 화면에 표시 :contentReference[oaicite:2]{index=2}
                     DisplayFriendList();
                 }
                 else
                 {
-                    await LoadChatRoomListFromServer();
-                    DisplayChatRoomList();
+                    // … 채팅방 로딩 …
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"데이터 로드 중 오류가 발생했습니다.\n{ex.Message}", "오류",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -738,7 +746,7 @@ namespace MainSystem
                     Location = new Point(5, 5),
                     SizeMode = PictureBoxSizeMode.Zoom,
                     BackColor = Color.LightGray,
-                    BorderStyle = BorderStyle.FixedSingle
+                    BorderStyle = BorderStyle.FixedSingle,
                 };
 
                 EventHandler showProfile = (sender, e) =>
@@ -747,94 +755,102 @@ namespace MainSystem
                     string friendId = friend.Friend_Id;
 
                     // 프로필 폼 띄우기 (모달)
-                    using (var profileForm = new FriendProfileForm(friendId,friend.Nickname))
+                    using (var profileForm = new FriendProfileForm(friendId, friend.Nickname, friend.imagepath))
                     {
                         profileForm.ShowDialog();
                     }
                 };
 
-                try
+                var friendImagePath = Path.Combine(Application.StartupPath, "FriendImages", $"{friend.Friend_Id}.jpg");
+                if (File.Exists(friendImagePath))
                 {
-                    string imagePath = Path.Combine(Application.StartupPath, "default_profile.png");
-                    if (File.Exists(imagePath))
-                    {
-                        pic.Image = Image.FromFile(imagePath);
-                    }
+                    pic.Image = Image.FromFile(friendImagePath);
+                    friend.imagepath = friendImagePath;
+                }
+                else
+                {
+                    var defaultPath = Path.Combine(Application.StartupPath, "default_profile.png");
+                    if (File.Exists(defaultPath))
+                        pic.Image = Image.FromFile(defaultPath);
                     else
                     {
+                        // 기존에 그리던 기본 아이콘 로직 유지
                         Bitmap defaultImage = new Bitmap(50, 50);
                         using (Graphics g = Graphics.FromImage(defaultImage))
                         {
                             g.Clear(Color.LightGray);
-                            g.DrawString(friend.Nickname.Substring(0, 1), new Font("맑은 고딕", 20),
-                                Brushes.DarkGray, new PointF(12, 10));
+                            g.DrawString(friend.Nickname.Substring(0, 1),
+                                         new Font("맑은 고딕", 20),
+                                         Brushes.DarkGray,
+                                         new PointF(12, 10));
                         }
                         pic.Image = defaultImage;
                     }
                 }
-                catch { }
 
-                pic.Tag = friend.Friend_Id;
-                pic.Cursor = Cursors.Hand;
+                    
 
-                Label lblNickname = new Label
+                    pic.Tag = friend.Friend_Id;
+                    pic.Cursor = Cursors.Hand;
+
+                    Label lblNickname = new Label
+                    {
+                        Text = friend.Nickname,
+                        Font = new Font("맑은 고딕", 12, FontStyle.Bold),
+                        Location = new Point(65, 10),
+                        Size = new Size(friendPanel.Width - 70, 20),
+                        Tag = friend.Friend_Id
+                    };
+
+                    Label lblId = new Label
+                    {
+                        Text = $"FormClosingID: {friend.Friend_Id}",
+                        Font = new Font("맑은 고딕", 9),
+                        ForeColor = Color.Gray,
+                        Location = new Point(65, 32),
+                        Size = new Size(friendPanel.Width - 70, 20)
+                    };
+
+                    // 친구 클릭 이벤트 수정 - 1:1 채팅방 생성
+                    EventHandler friendClick = async (sender, e) =>
+                    {
+                        //await CreateDirectChatWithFriend(friend);
+                    };
+
+                    friendPanel.Click += friendClick;
+                    pic.Click += friendClick;
+                    lblNickname.Click += friendClick;
+                    lblId.Click += friendClick;
+
+                    friendPanel.MouseEnter += (s, e) => friendPanel.BackColor = Color.FromArgb(240, 240, 240);
+                    friendPanel.MouseLeave += (s, e) => friendPanel.BackColor = Color.White;
+
+                    friendPanel.Controls.Add(pic);
+                    friendPanel.Controls.Add(lblNickname);
+                    friendPanel.Controls.Add(lblId);
+
+                    friendPanel.Click += showProfile;
+                    pic.Click += showProfile;
+                    lblNickname.Click += showProfile;
+                    lblId.Click += showProfile;
+
+                    flpMain.Controls.Add(friendPanel);
+                }
+
+                if (friendList.Count == 0)
                 {
-                    Text = friend.Nickname,
-                    Font = new Font("맑은 고딕", 12, FontStyle.Bold),
-                    Location = new Point(65, 10),
-                    Size = new Size(friendPanel.Width - 70, 20),
-                    Tag = friend.Friend_Id
-                };
-
-                Label lblId = new Label
-                {
-                    Text = $"ID: {friend.Friend_Id}",
-                    Font = new Font("맑은 고딕", 9),
-                    ForeColor = Color.Gray,
-                    Location = new Point(65, 32),
-                    Size = new Size(friendPanel.Width - 70, 20)
-                };
-
-                // 친구 클릭 이벤트 수정 - 1:1 채팅방 생성
-                EventHandler friendClick = async (sender, e) =>
-                {
-                    //await CreateDirectChatWithFriend(friend);
-                };
-
-                friendPanel.Click += friendClick;
-                pic.Click += friendClick;
-                lblNickname.Click += friendClick;
-                lblId.Click += friendClick;
-
-                friendPanel.MouseEnter += (s, e) => friendPanel.BackColor = Color.FromArgb(240, 240, 240);
-                friendPanel.MouseLeave += (s, e) => friendPanel.BackColor = Color.White;
-
-                friendPanel.Controls.Add(pic);
-                friendPanel.Controls.Add(lblNickname);
-                friendPanel.Controls.Add(lblId);
-
-                friendPanel.Click += showProfile;
-                pic.Click += showProfile;
-                lblNickname.Click += showProfile;
-                lblId.Click += showProfile;
-
-                flpMain.Controls.Add(friendPanel);
+                    Label lblEmpty = new Label
+                    {
+                        Text = "친구 목록이 비어있습니다.\n친구를 추가해보세요!",
+                        Font = new Font("맑은 고딕", 10),
+                        ForeColor = Color.Gray,
+                        Size = new Size(flpMain.Width - 20, 60),
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Margin = new Padding(10, 50, 10, 10)
+                    };
+                    flpMain.Controls.Add(lblEmpty);
+                }
             }
-
-            if (friendList.Count == 0)
-            {
-                Label lblEmpty = new Label
-                {
-                    Text = "친구 목록이 비어있습니다.\n친구를 추가해보세요!",
-                    Font = new Font("맑은 고딕", 10),
-                    ForeColor = Color.Gray,
-                    Size = new Size(flpMain.Width - 20, 60),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Margin = new Padding(10, 50, 10, 10)
-                };
-                flpMain.Controls.Add(lblEmpty);
-            }
-        }
 
         private async Task CreateDirectChatWithFriend(FriendInfo friend)
         {
@@ -1106,10 +1122,30 @@ namespace MainSystem
             rdbFriend.Checked = true;
         }
 
+        public void RequestLogout()
+        {
+            _logoutRequested = true;
+            this.Close();
+        }
+
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+
             notificationTimer?.Stop();
             notificationTimer?.Dispose();
+            Application.Exit();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_logoutRequested)
+            {
+                // 로그아웃 경로: 닫지 않고 숨기기
+                e.Cancel = true;
+                this.Hide();
+                return;
+            }
+            // 그 외: 애플리케이션 완전 종료
             Application.Exit();
         }
 
@@ -1128,6 +1164,34 @@ namespace MainSystem
                 configForm.ShowDialog();
             }
         }
+
+        private async Task RefreshFriendNicknamesAsync()
+        {
+            foreach (var friend in friendList)
+            {
+                // opcode 13: user_id_search (ID로 사용자 정보 조회) :contentReference[oaicite:0]{index=0}
+                var items = new List<string> { friend.Friend_Id };
+                var result = await LoginForm.GlobalDCM.db_request_data(13, items);
+
+                if (result.Key && result.Value.Item2.Count >= 2)
+                {
+                    int key = result.Value.Item1;
+                    var indexes = result.Value.Item2;
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
+                    {
+                        // 첫 번째 응답에 담긴 JSON을 FriendInfo로 역직렬화
+                        var updated = LoginForm.DeserializeGlobalDCMJson<FriendInfo>(key, indexes[0]);
+                        friend.Nickname = updated.Nickname;
+                    }
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+            }
+        }
+
+
+
     }
 
     // 모든 데이터 구조들을 MainForm.cs에 통합
@@ -1136,6 +1200,7 @@ namespace MainSystem
     {
         [DataMember] internal string Friend_Id;
         [DataMember] internal string Nickname;
+        [DataMember] internal string imagepath;
     }
 
     [DataContract]

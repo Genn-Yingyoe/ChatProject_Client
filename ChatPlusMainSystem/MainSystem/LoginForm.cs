@@ -18,6 +18,8 @@ namespace MainSystem
 {
     public partial class LoginForm : Form
     {
+        static public string login_ID;
+
         private string ip_address = "127.0.0.1";
         // TextBox 패딩 설정을 위한 Win32 API
         public const int EM_SETRECT = 0xB3;
@@ -118,11 +120,13 @@ namespace MainSystem
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // 전역 변수에 사용자 정보 저장
+                    login_ID = txtID.Text;
                     LoggedInUserId = loginResult.userId;
                     LoggedInUserName = loginResult.userName;
 
                     // DCM에 사용자 ID 설정 (리플렉션 사용)
                     SetDCMUserId(GlobalDCM, loginResult.userId);
+
 
                     // 메인 폼으로 이동
                     MainForm mainForm = new MainForm();

@@ -38,6 +38,15 @@ namespace MainSystem
             btnSelectQuestion.BringToFront();
         }
 
+        public LostPW(string userId) : this()
+        {
+            // ID 텍스트박스에 값 세팅
+            txtID.Text = userId;
+            // 읽기 전용으로 바꾸고, 배경색도 컨트롤 컬러로 변경
+            txtID.ReadOnly = true;
+            txtID.BackColor = SystemColors.Control;
+        }
+
         private void BtnSelectQuestion_Click(object sender, EventArgs e)
         {
             // 간단한 질문 선택 다이얼로그

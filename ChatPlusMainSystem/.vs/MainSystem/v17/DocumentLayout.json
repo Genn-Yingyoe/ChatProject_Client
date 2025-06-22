@@ -3,27 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\configform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -31,8 +19,52 @@
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\lostpw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\lostpw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\lostpw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\lostpw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\friendprofileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\friendprofileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\chatplusmainsystem\\mainsystem\\friendprofileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\friendprofileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\imageuploadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\imageuploadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\imageuploadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\imageuploadform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\profileform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|solutionrelative:mainsystem\\nicknameinputform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE8A428F-71EB-47A6-970F-2EE30C027386}|MainSystem\\MainSystem.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\mainsystem\\db_client_module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,36 +78,134 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LoginForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\LoginForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LoginForm.cs",
+              "RelativeToolTip": "MainSystem\\LoginForm.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T13:09:01.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LoginForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\LoginForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LoginForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\LoginForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T13:09:00.739Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LostPW.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LostPW.cs",
+              "RelativeDocumentMoniker": "MainSystem\\LostPW.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LostPW.cs",
+              "RelativeToolTip": "MainSystem\\LostPW.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAA3wBwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T13:07:12.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LostPW.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LostPW.cs",
+              "RelativeDocumentMoniker": "MainSystem\\LostPW.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\LostPW.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\LostPW.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T13:07:10.813Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FriendProfileForm.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\FriendProfileForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\FriendProfileForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\FriendProfileForm.cs",
+              "RelativeToolTip": "MainSystem\\FriendProfileForm.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwBsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T12:48:46.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FriendProfileForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\FriendProfileForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\FriendProfileForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\FriendProfileForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\FriendProfileForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T12:48:44.794Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ImageUploadForm.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ImageUploadForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\ImageUploadForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ImageUploadForm.cs",
+              "RelativeToolTip": "MainSystem\\ImageUploadForm.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAlwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T12:20:46.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ImageUploadForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ImageUploadForm.cs",
+              "RelativeDocumentMoniker": "MainSystem\\ImageUploadForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ImageUploadForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "MainSystem\\ImageUploadForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T12:18:57.286Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "ProfileForm.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ProfileForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\ProfileForm.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ProfileForm.cs",
               "RelativeToolTip": "MainSystem\\ProfileForm.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAIAxwGoAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAkwFoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T10:34:32.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T10:34:32.791Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "ProfileForm.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ProfileForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\ProfileForm.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ProfileForm.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "MainSystem\\ProfileForm.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T10:34:31Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2025-06-22T10:34:31Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 15,
               "Title": "NicknameInputForm.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\NicknameInputForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\NicknameInputForm.cs",
@@ -83,37 +213,35 @@
               "RelativeToolTip": "MainSystem\\NicknameInputForm.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAEwC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T10:27:48.789Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-22T10:27:48.789Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 14,
               "Title": "NicknameInputForm.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\NicknameInputForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\NicknameInputForm.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\NicknameInputForm.cs [\uB514\uC790\uC778]",
               "RelativeToolTip": "MainSystem\\NicknameInputForm.cs [\uB514\uC790\uC778]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T10:25:25.196Z",
-              "EditorCaption": " [\uB514\uC790\uC778]"
+              "WhenOpened": "2025-06-22T10:25:25.196Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ConfigForm.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ConfigForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\ConfigForm.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ConfigForm.cs",
               "RelativeToolTip": "MainSystem\\ConfigForm.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAuwBgAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAADwv0kAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-22T10:15:51.022Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "ConfigForm.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\ConfigForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\ConfigForm.cs",
@@ -125,20 +253,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\MainForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\MainForm.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\MainForm.cs",
               "RelativeToolTip": "MainSystem\\MainForm.cs",
-              "ViewState": "AgIAAFgEAAAAAAAAAAAowF8EAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-22T09:46:54.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "MainForm.cs [\uB514\uC790\uC778]",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\MainForm.cs",
               "RelativeDocumentMoniker": "MainSystem\\MainForm.cs",
@@ -150,7 +278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 16,
               "Title": "DB_Client_Module.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\ChatPlusMainSystem\\MainSystem\\DB_Client_Module.cs",
               "RelativeDocumentMoniker": "MainSystem\\DB_Client_Module.cs",
@@ -158,8 +286,7 @@
               "RelativeToolTip": "MainSystem\\DB_Client_Module.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-21T10:56:15.385Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-21T10:56:15.385Z"
             }
           ]
         }
