@@ -1,4 +1,4 @@
-﻿namespace MainSystem
+namespace MainSystem
 {
     partial class FriendProfileForm
     {
@@ -54,6 +54,7 @@
             this.btnChat.TabIndex = 1;
             this.btnChat.Text = "New Chat";
             this.btnChat.UseVisualStyleBackColor = true;
+            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
             // 
             // btnDelete
             // 
