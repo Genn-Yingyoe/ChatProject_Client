@@ -78,7 +78,7 @@
             this.txtName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(186, 21);
-            this.txtName.TabIndex = 3;
+            this.txtName.TabIndex = 5;
             // 
             // txtNick
             // 
@@ -86,7 +86,7 @@
             this.txtNick.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtNick.Name = "txtNick";
             this.txtNick.Size = new System.Drawing.Size(184, 21);
-            this.txtNick.TabIndex = 4;
+            this.txtNick.TabIndex = 6;
             // 
             // btnRegister
             // 
@@ -97,7 +97,7 @@
             this.btnRegister.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(301, 63);
-            this.btnRegister.TabIndex = 5;
+            this.btnRegister.TabIndex = 7;
             this.btnRegister.Text = "Register";
             this.btnRegister.UseVisualStyleBackColor = false;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
@@ -174,7 +174,7 @@
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(186, 21);
-            this.textBox1.TabIndex = 12;
+            this.textBox1.TabIndex = 3;
             this.textBox1.UseSystemPasswordChar = true;
             // 
             // label7
@@ -194,7 +194,7 @@
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(186, 21);
-            this.textBox2.TabIndex = 14;
+            this.textBox2.TabIndex = 8;
             // 
             // textBox3
             // 
@@ -202,7 +202,7 @@
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(186, 21);
-            this.textBox3.TabIndex = 15;
+            this.textBox3.TabIndex = 4;
             // 
             // label1
             // 

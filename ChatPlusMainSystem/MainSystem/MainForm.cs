@@ -783,10 +783,10 @@ namespace MainSystem
                     Size = new Size(friendPanel.Width - 70, 20)
                 };
 
-                EventHandler friendClick = (sender, e) =>
+                // 친구 클릭 이벤트 수정 - 1:1 채팅방 생성
+                EventHandler friendClick = async (sender, e) =>
                 {
-                    MessageBox.Show($"{friend.Nickname}님과 채팅을 시작합니다.\nID: {friend.Friend_Id}",
-                        "친구 정보", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    await CreateDirectChatWithFriend(friend);
                 };
 
                 friendPanel.Click += friendClick;
@@ -816,6 +816,90 @@ namespace MainSystem
                     Margin = new Padding(10, 50, 10, 10)
                 };
                 flpMain.Controls.Add(lblEmpty);
+            }
+        }
+
+        private async Task CreateDirectChatWithFriend(FriendInfo friend)
+        {
+            try
+            {
+                // 로딩 표시
+                this.Cursor = Cursors.WaitCursor;
+
+                // 새 1:1 채팅방 생성
+                string roomId = await CreateNewDirectChatRoom(friend);
+
+                if (!string.IsNullOrEmpty(roomId))
+                {
+                    // 채팅방 목록 새로고침
+                    await LoadChatRoomListFromServer();
+
+                    // 채팅방 탭이 선택되어 있다면 UI 업데이트
+                    if (rdbChatroom.Checked)
+                    {
+                        DisplayChatRoomList();
+                    }
+
+                    // 채팅방 열기
+                    OpenChatRoom(roomId);
+                }
+                else
+                {
+                    MessageBox.Show($"{friend.Nickname}님과의 채팅방 생성에 실패했습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"채팅방 생성 중 오류가 발생했습니다.\n{ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private async Task<string> CreateNewDirectChatRoom(FriendInfo friend)
+        {
+            try
+            {
+                // opcode 32: 채팅방 만들기 (친구 1명만 초대)
+                List<string> items = new List<string>
+        {
+            friend.Friend_Id
+        };
+
+                var result = await LoginForm.GlobalDCM.db_request_data(32, items);
+
+                if (result.Key && result.Value.Item2.Count >= 2)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
+                    {
+                        string roomId = LoginForm.GetGlobalDCMResponseData(key, indexes[indexes.Count - 2]);
+                        LoginForm.ClearGlobalDCMReceivedData(key);
+                        return roomId;
+                    }
+                    else
+                    {
+                        LoginForm.ClearGlobalDCMReceivedData(key);
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"1:1 채팅방 생성 오류: {ex.Message}");
+                throw;
             }
         }
 
@@ -951,10 +1035,10 @@ namespace MainSystem
                             DisplayChatRoomList();
                         }
 
-                        // 채팅방 열기 - 수정된 OpenChatRoom 사용
+                        // 채팅방 열기
                         OpenChatRoom(roomId);
 
-                        MessageBox.Show($"채팅방이 생성되었습니다.\nRoom ID: {roomId}", "성공",
+                        MessageBox.Show($"그룹 채팅방이 생성되었습니다.\nRoom ID: {roomId}", "성공",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -977,7 +1061,6 @@ namespace MainSystem
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             FriendInviteForm inviteForm = new FriendInviteForm();
@@ -1016,7 +1099,9 @@ namespace MainSystem
         // 추가 기능 버튼들 (필요에 따라 활용)
         private void button3_Click(object sender, EventArgs e)
         {
-            // 기능 추가 가능
+            CalendarApp.MainForm calendarForm = new CalendarApp.MainForm();
+            calendarForm.UserLoggedIn(currentUserId);  // 현재 사용자 ID 넘겨주기
+            calendarForm.Show();
         }
 
         private void button4_Click(object sender, EventArgs e)

@@ -18,6 +18,7 @@ namespace MainSystem
 {
     public partial class LoginForm : Form
     {
+        private string ip_address = "127.0.0.1";
         // TextBox 패딩 설정을 위한 Win32 API
         public const int EM_SETRECT = 0xB3;
 
@@ -391,6 +392,44 @@ namespace MainSystem
         {
             // 로그인 폼이 닫힐 때 애플리케이션 종료
             Application.Exit();
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+            if (txtIp.Visible)
+            {
+                lblIp.Text = "ServerIP : " + txtIp.Text;
+                ip_address = txtIp.Text;
+                GlobalDCM.ip_change(txtIp.Text);
+                txtIp.Visible = false;
+            }
+            else {
+                txtIp.Text = ip_address;
+                txtIp.Visible = true;
+                txtIp.Focus();
+                txtIp.SelectAll();
+            }
+        }
+
+        private void txtIp_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                pictureBox1_Click_1(sender, (EventArgs)e);
+            }
+        }
+
+        private void btnLP_Click(object sender, EventArgs e)
+        {
+            LostPW lost = new LostPW();
+            if (lost.ShowDialog() == DialogResult.OK)
+            {
+                // 회원가입 성공 시 메시지 표시
+                MessageBox.Show("비밀번호가 변경되었습니다. 로그인해주세요.", "비밀번호 변경 완료",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 

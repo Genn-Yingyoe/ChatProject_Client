@@ -28,6 +28,9 @@ namespace MainSystem
         // Room ID에 접근할 수 있는 공개 속성
         public string RoomId => roomId;
 
+        // 나가기 버튼 추가 (디자이너에서 생성되므로 별도 선언 불필요)
+        // private Button btnExit;
+
         public ChatForm()
         {
             InitializeComponent();
@@ -58,6 +61,13 @@ namespace MainSystem
             btnInvite.FlatAppearance.BorderSize = 0;
             btnInvite.Font = new Font("맑은 고딕", 9, FontStyle.Bold);
 
+            // 나가기 버튼 스타일 (디자이너에서 이미 생성됨)
+            btnExit.BackColor = Color.FromArgb(180, 60, 60);
+            btnExit.ForeColor = Color.White;
+            btnExit.FlatStyle = FlatStyle.Flat;
+            btnExit.FlatAppearance.BorderSize = 0;
+            btnExit.Font = new Font("맑은 고딕", 9, FontStyle.Bold);
+
             // 채팅 목록 영역 스타일
             flpChatList.BackColor = Color.White;
             flpChatList.BorderStyle = BorderStyle.FixedSingle;
@@ -85,6 +95,83 @@ namespace MainSystem
 
             // 초기 채팅 로드
             LoadInitialMessages();
+        }
+
+        // 채팅방 나가기 버튼 클릭 이벤트
+        private async void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "정말로 채팅방을 나가시겠습니까?\n나가면 채팅 목록에서 제거됩니다.",
+                "채팅방 나가기",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                await ExitChatRoom();
+            }
+        }
+
+        // 채팅방 나가기 기능 - opcode 34 사용
+        private async Task ExitChatRoom()
+        {
+            try
+            {
+                // 타이머 정지 (나가기 진행 중 새 메시지 로드 방지)
+                refreshTimer?.Stop();
+
+                // opcode 34: 채팅방 나가기
+                List<string> items = new List<string>
+                {
+                    roomId
+                };
+
+                var result = await LoginForm.GlobalDCM.db_request_data(34, items);
+
+                if (result.Key && result.Value.Item2.Count > 0)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
+                    {
+                        MessageBox.Show("채팅방을 나갔습니다.", "완료",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // 채팅방 폼 닫기
+                        this.DialogResult = DialogResult.OK; // 나가기 성공을 부모 폼에 알림
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("채팅방 나가기에 실패했습니다.", "오류",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        // 실패 시 타이머 재시작
+                        refreshTimer?.Start();
+                    }
+
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+                else
+                {
+                    MessageBox.Show("채팅방 나가기에 실패했습니다.\n서버 오류일 수 있습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // 실패 시 타이머 재시작
+                    refreshTimer?.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"채팅방 나가기 중 오류가 발생했습니다.\n{ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // 오류 시 타이머 재시작
+                refreshTimer?.Start();
+            }
         }
 
         // 닉네임 가져오기 및 캐시 - DCM 사용하도록 수정

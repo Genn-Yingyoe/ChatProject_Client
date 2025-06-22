@@ -18,6 +18,7 @@ namespace ChatMoa_DataBaseServer
     internal class DCM
     {
         private string user_id;
+        private string ip_address = "127.0.0.1";        //default address = "127.0.0.1"
 
         private Dictionary<int, List<string>> received_data;
 
@@ -25,6 +26,11 @@ namespace ChatMoa_DataBaseServer
         {
             user_id = "";
             received_data = new Dictionary<int, List<string>>();
+        }
+
+        internal void ip_change(string new_address)
+        {
+            ip_address = new_address;
         }
 
         internal async Task<KeyValuePair<bool, (int, List<int>)>> db_request_data(byte opcode, List<string> items)      //Key : request 성공 여부  |  Value.item1 : received_data의 key  |
@@ -36,7 +42,7 @@ namespace ChatMoa_DataBaseServer
 
             using (var client = new TcpClient())
             {
-                await client.ConnectAsync("127.0.0.1", 5000);   // 서버 IP·포트
+                await client.ConnectAsync(ip_address, 5000);   // 서버 IP·포트
                 NetworkStream ns = client.GetStream();
 
                 n = received_data.Count;
@@ -64,7 +70,7 @@ namespace ChatMoa_DataBaseServer
             Encoding utf8 = Encoding.UTF8;
             byte[][] data = parts.Select(p => utf8.GetBytes(p)).ToArray();
 
-            int len = 1 + 6 + 1 + (parts.Count * 1);        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
+            int len = 1 + 6 + 1 + (parts.Count * sizeof(int));        // 각 body의 길이 정보를 1byte로 보내기에  "* 1"
             len += data.Sum(b => b.Length);
 
 
@@ -79,7 +85,11 @@ namespace ChatMoa_DataBaseServer
             packet[pos++] = (byte)parts.Count;
 
             foreach (var b in data)
-                packet[pos++] = (byte)b.Length;
+            {
+                byte[] tmp = BitConverter.GetBytes(b.Length);
+                Buffer.BlockCopy(tmp, 0, packet, pos, sizeof(int));
+                pos += sizeof(int);
+            }
 
             foreach (var b in data)
             {
@@ -91,6 +101,45 @@ namespace ChatMoa_DataBaseServer
                     .ConfigureAwait(false);
 
             List<int> result = new List<int>();
+
+            if (opcode == 15)
+            {
+                try
+                {
+                    byte[] lenBuf = await ReadExact(ns, 4);
+                    if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+                    uint i_len = BitConverter.ToUInt32(lenBuf, 0);
+
+                    byte[] i_body = await ReadExact(ns, (int)i_len);
+
+                    string path = bodyStr[2];
+                    File.WriteAllBytes(path, i_body);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            else if (opcode == 16)
+            {
+                string dir = bodyStr[2];
+
+                try
+                {
+                    byte[] img = System.IO.File.ReadAllBytes(dir);
+
+                    byte[] lenBuf = BitConverter.GetBytes((uint)img.Length);
+                    if (BitConverter.IsLittleEndian) Array.Reverse(lenBuf);
+
+                    await ns.WriteAsync(lenBuf, 0, 4);   // 헤더
+                    await ns.WriteAsync(img, 0, img.Length); // 바디
+                    Console.WriteLine($"송신 완료 ({img.Length} B)");
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
 
             try
             {
@@ -107,8 +156,7 @@ namespace ChatMoa_DataBaseServer
                 }
                 else
                     throw new Exception("Error");
-            }
-            catch (Exception e)
+            } catch (Exception e)
             {
                 //error
                 return null;
@@ -120,14 +168,15 @@ namespace ChatMoa_DataBaseServer
         private async Task<(int, int)> ReadAckAsync(NetworkStream ns, int num)          // item1: 0 == error | 1 == success + end | 2 == success + additional execution      || item2: receive_data_index
         {
             byte[] state_buf = new byte[1];
-            byte[] receive_buf_len = new byte[1];
+            byte[] receive_buf_len = new byte[sizeof(int)];
             byte[] receive_buf;
             int result = -1;
             int n = await ns.ReadAsync(state_buf, 0, 1).ConfigureAwait(false);
             if (state_buf[0] != 0 && n != 0)
             {
-                n = await ns.ReadAsync(receive_buf_len, 0, 1).ConfigureAwait(false);
-                receive_buf = new byte[receive_buf_len[0]];
+                n = await ns.ReadAsync(receive_buf_len, 0, sizeof(int)).ConfigureAwait(false);
+                int item_len = BitConverter.ToInt32(receive_buf_len, 0);
+                receive_buf = new byte[item_len];
                 n = await ns.ReadAsync(receive_buf, 0, receive_buf_len[0]).ConfigureAwait(false);
 
                 received_data[num].Add(Encoding.UTF8.GetString(receive_buf));           // login 등 성공여부만을 전달받는 경우에는 >> "1" : 성공 | "0" : 실패
@@ -163,6 +212,19 @@ namespace ChatMoa_DataBaseServer
             }
         }
 
+        private static async Task<byte[]> ReadExact(Stream s, int len)
+        {
+            byte[] buf = new byte[len];
+            int read = 0;
+            while (read < len)
+            {
+                int n = await s.ReadAsync(buf, read, len - read);
+                if (n == 0) throw new IOException("remote closed");
+                read += n;
+            }
+            return buf;
+        }
+
         private void Login(string user_id)
         {
             this.user_id = user_id;
@@ -174,6 +236,6 @@ namespace ChatMoa_DataBaseServer
             this.received_data = new Dictionary<int, List<string>>();
         }
 
-        private string my_User_Id() { return this.user_id; }
+        private string my_User_Id(){ return this.user_id; }
     }
 }
