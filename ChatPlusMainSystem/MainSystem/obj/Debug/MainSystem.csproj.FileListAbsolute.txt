@@ -124,3 +124,6 @@ C:\Users\woaqo\Desktop\ChatProject_Client-main\ChatProject_Client-main\ChatPlusM
 C:\Users\woaqo\Desktop\ChatProject_Client-main\ChatProject_Client-main\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.pdb
 C:\Users\woaqo\Desktop\ChatProject_Client-main\ChatProject_Client-main\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.exe.config
 C:\Users\woaqo\Desktop\ChatProject_Client-main\ChatProject_Client-main\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.LostPW.resources
+C:\Users\woaqo\Desktop\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.pdb
+C:\Users\woaqo\Desktop\ChatPlusMainSystem\MainSystem\bin\Debug\CalendarApp.exe.config
+C:\Users\woaqo\Desktop\ChatPlusMainSystem\MainSystem\obj\Debug\MainSystem.LostPW.resources

@@ -10,7 +10,8 @@ namespace MainSystem
         private FlowLayoutPanel flpChatList;
         private TextBox txtMessage;
         private Button btnSend;
-        private Button btnInvite;  // 초대 버튼 추가
+        private Button btnInvite;  // 초대 버튼
+        private Button btnExit;    // 나가기 버튼 추가
         private Label lblRoomInfo;
         private Panel pnlBottom;
 
@@ -26,11 +27,12 @@ namespace MainSystem
         private void InitializeComponent()
         {
             this.lblRoomInfo = new Label();
+            this.btnExit = new Button();        // 나가기 버튼 추가
             this.flpChatList = new FlowLayoutPanel();
             this.pnlBottom = new Panel();
             this.txtMessage = new TextBox();
             this.btnSend = new Button();
-            this.btnInvite = new Button();  // 초대 버튼 추가
+            this.btnInvite = new Button();
             this.pnlBottom.SuspendLayout();
             this.SuspendLayout();
 
@@ -48,6 +50,23 @@ namespace MainSystem
             this.lblRoomInfo.TabIndex = 0;
             this.lblRoomInfo.Text = "채팅방";
             this.lblRoomInfo.TextAlign = ContentAlignment.MiddleLeft;
+
+            // 
+            // btnExit
+            // 
+            this.btnExit.Anchor = ((AnchorStyles)((AnchorStyles.Top | AnchorStyles.Right)));
+            this.btnExit.BackColor = Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatStyle = FlatStyle.Flat;
+            this.btnExit.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(129)));
+            this.btnExit.ForeColor = Color.White;
+            this.btnExit.Location = new Point(720, 5);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new Size(70, 30);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "나가기";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new EventHandler(this.btnExit_Click);
 
             // 
             // flpChatList
@@ -69,7 +88,7 @@ namespace MainSystem
             // pnlBottom
             // 
             this.pnlBottom.BackColor = Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.pnlBottom.Controls.Add(this.btnInvite);  // 초대 버튼 추가
+            this.pnlBottom.Controls.Add(this.btnInvite);
             this.pnlBottom.Controls.Add(this.btnSend);
             this.pnlBottom.Controls.Add(this.txtMessage);
             this.pnlBottom.Dock = DockStyle.Bottom;
@@ -89,7 +108,7 @@ namespace MainSystem
             this.txtMessage.Location = new Point(10, 15);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new Size(610, 30);  // 크기 조정 (초대 버튼 공간 확보)
+            this.txtMessage.Size = new Size(610, 30);
             this.txtMessage.TabIndex = 0;
             this.txtMessage.KeyDown += new KeyEventHandler(this.txtMessage_KeyDown);
 
@@ -102,7 +121,7 @@ namespace MainSystem
             this.btnInvite.FlatStyle = FlatStyle.Flat;
             this.btnInvite.Font = new Font("맑은 고딕", 9F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(129)));
             this.btnInvite.ForeColor = Color.White;
-            this.btnInvite.Location = new Point(630, 15);  // 위치 조정
+            this.btnInvite.Location = new Point(630, 15);
             this.btnInvite.Name = "btnInvite";
             this.btnInvite.Size = new Size(75, 30);
             this.btnInvite.TabIndex = 2;
@@ -119,7 +138,7 @@ namespace MainSystem
             this.btnSend.FlatStyle = FlatStyle.Flat;
             this.btnSend.Font = new Font("맑은 고딕", 10F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(129)));
             this.btnSend.ForeColor = Color.White;
-            this.btnSend.Location = new Point(710, 15);  // 위치 조정
+            this.btnSend.Location = new Point(710, 15);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new Size(75, 30);
             this.btnSend.TabIndex = 1;
@@ -134,6 +153,7 @@ namespace MainSystem
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
             this.ClientSize = new Size(800, 560);
+            this.Controls.Add(this.btnExit);      // 나가기 버튼을 폼에 추가
             this.Controls.Add(this.flpChatList);
             this.Controls.Add(this.pnlBottom);
             this.Controls.Add(this.lblRoomInfo);
