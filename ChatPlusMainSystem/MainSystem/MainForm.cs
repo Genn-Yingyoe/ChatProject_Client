@@ -741,6 +741,18 @@ namespace MainSystem
                     BorderStyle = BorderStyle.FixedSingle
                 };
 
+                EventHandler showProfile = (sender, e) =>
+                {
+                    // sender로부터 친구 ID 가져오기
+                    string friendId = friend.Friend_Id;
+
+                    // 프로필 폼 띄우기 (모달)
+                    using (var profileForm = new FriendProfileForm(friendId,friend.Nickname))
+                    {
+                        profileForm.ShowDialog();
+                    }
+                };
+
                 try
                 {
                     string imagePath = Path.Combine(Application.StartupPath, "default_profile.png");
@@ -786,7 +798,7 @@ namespace MainSystem
                 // 친구 클릭 이벤트 수정 - 1:1 채팅방 생성
                 EventHandler friendClick = async (sender, e) =>
                 {
-                    await CreateDirectChatWithFriend(friend);
+                    //await CreateDirectChatWithFriend(friend);
                 };
 
                 friendPanel.Click += friendClick;
@@ -800,6 +812,11 @@ namespace MainSystem
                 friendPanel.Controls.Add(pic);
                 friendPanel.Controls.Add(lblNickname);
                 friendPanel.Controls.Add(lblId);
+
+                friendPanel.Click += showProfile;
+                pic.Click += showProfile;
+                lblNickname.Click += showProfile;
+                lblId.Click += showProfile;
 
                 flpMain.Controls.Add(friendPanel);
             }
@@ -1106,7 +1123,10 @@ namespace MainSystem
 
         private void button4_Click(object sender, EventArgs e)
         {
-            // 기능 추가 가능
+            using (var configForm = new ConfigForm(currentUserId,currentUserNickname))
+            {
+                configForm.ShowDialog();
+            }
         }
     }
 
