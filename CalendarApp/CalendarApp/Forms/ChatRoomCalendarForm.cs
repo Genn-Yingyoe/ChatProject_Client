@@ -324,5 +324,10 @@ namespace CalendarApp.Forms
                 item.Checked = isChecked;
             }
         }
+
+        private void ChatRoomCalendarForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

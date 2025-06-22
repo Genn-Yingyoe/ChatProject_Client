@@ -165,6 +165,11 @@ namespace CalendarApp.Forms
             Invalidate();
         }
 
+        private void CustomCalendar_Load(object sender, EventArgs e)
+        {
+
+        }
+
         public void SetSelectedDate(DateTime date)
         {
             this.SelectedDate = date;

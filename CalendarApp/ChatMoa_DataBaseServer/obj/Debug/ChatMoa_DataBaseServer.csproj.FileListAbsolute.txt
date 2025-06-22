@@ -22,3 +22,10 @@ C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\obj
 C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
 C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\user\Desktop\tpbackupbackup(최)\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
+C:\Users\User\Desktop\자료\Project\ChatProject_Client\CalendarApp\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb

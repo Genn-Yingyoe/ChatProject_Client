@@ -22,6 +22,26 @@ namespace MainSystem
             InitializeComponent();
             this.userId = userId;
             this.nick = nick;
+
+            button1.BackColor = Color.FromArgb(41, 47, 102);
+            button1.ForeColor = Color.White;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.FlatAppearance.BorderSize = 0;
+
+            button2.BackColor = Color.FromArgb(41, 47, 102);
+            button2.ForeColor = Color.White;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.FlatAppearance.BorderSize = 0;
+
+            button3.BackColor = Color.FromArgb(41, 47, 102);
+            button3.ForeColor = Color.White;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.FlatAppearance.BorderSize = 0;
+
+            button4.BackColor = Color.FromArgb(41, 47, 102);
+            button4.ForeColor = Color.White;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.FlatAppearance.BorderSize = 0;
         }
 
         private void ConfigForm_Load(object sender, EventArgs e)

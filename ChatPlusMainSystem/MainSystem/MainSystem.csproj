@@ -144,8 +144,14 @@
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FriendInviteForm.resx">
+      <DependentUpon>FriendInviteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FriendProfileForm.resx">
       <DependentUpon>FriendProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FriendSelectForm.resx">
+      <DependentUpon>FriendSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageUploadForm.resx">
       <DependentUpon>ImageUploadForm.cs</DependentUpon>
@@ -162,6 +168,9 @@
     <EmbeddedResource Include="NicknameInputForm.resx">
       <DependentUpon>NicknameInputForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NotificationPopupForm.resx">
+      <DependentUpon>NotificationPopupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProfileForm.resx">
       <DependentUpon>ProfileForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,6 +186,9 @@
     </Compile>
     <EmbeddedResource Include="SignupForm.resx">
       <DependentUpon>SignupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInviteDialog.resx">
+      <DependentUpon>UserInviteDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

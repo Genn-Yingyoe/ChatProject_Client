@@ -385,8 +385,13 @@ namespace CalendarApp
 
             dcm.Login(userId);
 
-            MessageBox.Show($"{userId} 사용자로 로그인되었습니다. 스케줄을 불러옵니다.");
+            MessageBox.Show($"사용자로 로그인되었습니다. 스케줄을 불러옵니다.");
             await LoadSchedulesFromServer();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
 
         /*private void btnTempLogin_Click(object sender, EventArgs e)

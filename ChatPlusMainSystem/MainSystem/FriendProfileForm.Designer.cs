@@ -30,10 +30,10 @@ namespace MainSystem
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FriendProfileForm));
             this.pictureBoxFriend = new System.Windows.Forms.PictureBox();
-            this.btnChat = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnChat = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,31 +46,13 @@ namespace MainSystem
             this.pictureBoxFriend.TabStop = false;
             this.pictureBoxFriend.Click += new System.EventHandler(this.pictureBoxFriend_Click);
             // 
-            // btnChat
-            // 
-            this.btnChat.Location = new System.Drawing.Point(27, 268);
-            this.btnChat.Name = "btnChat";
-            this.btnChat.Size = new System.Drawing.Size(85, 41);
-            this.btnChat.TabIndex = 1;
-            this.btnChat.Text = "New Chat";
-            this.btnChat.UseVisualStyleBackColor = true;
-            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(148, 268);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(81, 41);
-            this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(106, 230);
+            this.label1.Font = new System.Drawing.Font("±¼¸²", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(90, 230);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 12);
+            this.label1.Size = new System.Drawing.Size(54, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "label1";
             // 
@@ -83,19 +65,47 @@ namespace MainSystem
             this.label2.TabIndex = 4;
             this.label2.Text = "label2";
             // 
+            // btnChat
+            // 
+            this.btnChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnChat.Font = new System.Drawing.Font("µ¸¿ò", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnChat.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnChat.Location = new System.Drawing.Point(32, 271);
+            this.btnChat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnChat.Name = "btnChat";
+            this.btnChat.Size = new System.Drawing.Size(79, 32);
+            this.btnChat.TabIndex = 5;
+            this.btnChat.Text = "Login";
+            this.btnChat.UseVisualStyleBackColor = false;
+            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(47)))), ((int)(((byte)(102)))));
+            this.btnDelete.Font = new System.Drawing.Font("µ¸¿ò", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnDelete.Location = new System.Drawing.Point(159, 271);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(79, 32);
+            this.btnDelete.TabIndex = 6;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            // 
             // FriendProfileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(202)))), ((int)(((byte)(224)))));
             this.ClientSize = new System.Drawing.Size(263, 321);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnChat);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBoxFriend);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FriendProfileForm";
-            this.Text = "ProfileForm";
+            this.Text = "ChatMoa";
             this.Load += new System.EventHandler(this.FriendProfileForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriend)).EndInit();
             this.ResumeLayout(false);
@@ -106,9 +116,9 @@ namespace MainSystem
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBoxFriend;
-        private System.Windows.Forms.Button btnChat;
-        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnChat;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

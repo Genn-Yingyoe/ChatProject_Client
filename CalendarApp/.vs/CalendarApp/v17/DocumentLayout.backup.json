@@ -1,0 +1,134 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\calendarapp\\calendarapp\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|c:\\users\\user\\desktop\\\uC790\uB8CC\\project\\chatproject_client\\calendarapp\\calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\chatroomcalendarform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\eventform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{37358936-4871-471C-9EE8-F5CA9CEF6CC8}|CalendarApp\\CalendarApp.csproj|solutionrelative:calendarapp\\forms\\customcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 506,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ChatRoomCalendarForm.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAowH8AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:45:59.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\MainForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "CalendarApp\\Forms\\MainForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:33:55.468Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\MainForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\MainForm.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\MainForm.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAIkBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:34:25.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CustomCalendar.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeToolTip": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwA4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:33:58.41Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "CalendarApp\\Forms\\ChatRoomCalendarForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:33:48.143Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EventForm.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\EventForm.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\EventForm.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "CalendarApp\\Forms\\EventForm.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:33:01.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CustomCalendar.cs [\uB514\uC790\uC778]",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs",
+              "RelativeDocumentMoniker": "CalendarApp\\Forms\\CustomCalendar.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\\uC790\uB8CC\\Project\\ChatProject_Client\\CalendarApp\\CalendarApp\\Forms\\CustomCalendar.cs [\uB514\uC790\uC778]",
+              "RelativeToolTip": "CalendarApp\\Forms\\CustomCalendar.cs [\uB514\uC790\uC778]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-22T15:33:01.589Z",
+              "EditorCaption": " [\uB514\uC790\uC778]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
