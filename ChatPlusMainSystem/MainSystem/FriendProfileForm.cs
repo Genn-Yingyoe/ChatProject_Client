@@ -106,7 +106,103 @@ namespace MainSystem
         {
 
         }
+        private async void btnChat_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 버튼 비활성화 및 로딩 표시
+                btnChat.Enabled = false;
+                btnChat.Text = "채팅방 생성 중...";
+                this.Cursor = Cursors.WaitCursor;
 
+                // opcode 32: 채팅방 만들기 (친구 1명 초대)
+                List<string> items = new List<string> { friendId };
+                var result = await LoginForm.GlobalDCM.db_request_data(32, items);
 
+                if (result.Key && result.Value.Item2.Count >= 2)
+                {
+                    int key = result.Value.Item1;
+                    List<int> indexes = result.Value.Item2;
+
+                    string lastResponse = LoginForm.GetGlobalDCMResponseData(key, indexes.Last());
+
+                    if (lastResponse == "1")
+                    {
+                        // 채팅방 ID 가져오기
+                        string roomId = LoginForm.GetGlobalDCMResponseData(key, indexes[indexes.Count - 2]);
+
+                        // 성공 메시지
+                        MessageBox.Show($"{friendName}님과의 채팅방이 생성되었습니다!\n채팅방으로 이동합니다.", "성공",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // 채팅방 열기
+                        OpenChatRoom(roomId);
+
+                        // 프로필 창 닫기
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{friendName}님과의 채팅방 생성에 실패했습니다.", "오류",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    LoginForm.ClearGlobalDCMReceivedData(key);
+                }
+                else
+                {
+                    MessageBox.Show("서버와 통신에 실패했습니다.", "통신 오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"채팅방 생성 중 오류가 발생했습니다.\n{ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 버튼 복원
+                btnChat.Enabled = true;
+                btnChat.Text = "채팅하기";
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void OpenChatRoom(string roomId)
+        {
+            try
+         {
+                // 이미 열린 채팅방이 있는지 확인
+                foreach (Form openForm in Application.OpenForms)
+                {
+                    if (openForm is ChatForm chatForm && chatForm.RoomId == roomId)
+                    {
+                        chatForm.BringToFront();
+                        chatForm.Activate();
+                        return;
+                    }
+                }
+
+                // 새 채팅방 열기
+                ChatForm newChatForm = new ChatForm();
+
+                // 현재 사용자 정보 가져오기
+                string currentUserId = LoginForm.LoggedInUserId;
+                string currentUserName = LoginForm.LoggedInUserName;
+
+                // 닉네임이 없으면 이름 사용
+                string displayName = !string.IsNullOrEmpty(currentUserName) ? currentUserName : currentUserId;
+        
+                // 채팅방 초기화 및 열기
+                newChatForm.InitializeChat(currentUserId, displayName, roomId);
+                newChatForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"채팅방 열기 중 오류가 발생했습니다.\n{ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
