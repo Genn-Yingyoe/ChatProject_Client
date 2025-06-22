@@ -284,8 +284,8 @@ namespace ChatMoa_DataBaseServer
 
                                 _User_Id__Setting_Info make_user_setting_info1 = new _User_Id__Setting_Info()
                                 {
-                                    Info_Id = "",
-                                    Info_Str = ""
+                                    Info_Id = "theme",
+                                    Info_Str = "0"
                                 };
                                 path.Add(@"\DB\Users\" + new_user_id + @"\" + new_user_id + "_Setting_Info.ndjson");
                                 list.Add((0, make_user_setting_info1));
