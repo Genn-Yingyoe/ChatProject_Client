@@ -56,6 +56,12 @@
     <Compile Include="ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigForm.Designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB_Client_Module.cs" />
     <Compile Include="DB_Data_Type.cs" />
     <Compile Include="FriendInviteForm.cs">
@@ -63,6 +69,12 @@
     </Compile>
     <Compile Include="FriendInviteForm.Designer.cs">
       <DependentUpon>FriendInviteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FriendProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FriendProfileForm.Designer.cs">
+      <DependentUpon>FriendProfileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FriendSelectForm.cs">
       <SubType>Form</SubType>
@@ -88,11 +100,23 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NicknameInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NicknameInputForm.Designer.cs">
+      <DependentUpon>NicknameInputForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NotificationPopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NotificationPopupForm.Designer.cs">
       <DependentUpon>NotificationPopupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfileForm.Designer.cs">
+      <DependentUpon>ProfileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +135,12 @@
     <EmbeddedResource Include="ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FriendProfileForm.resx">
+      <DependentUpon>FriendProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +149,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NicknameInputForm.resx">
+      <DependentUpon>NicknameInputForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfileForm.resx">
+      <DependentUpon>ProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
