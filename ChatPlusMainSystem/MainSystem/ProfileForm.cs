@@ -83,6 +83,53 @@ namespace MainSystem
                 }
             };
 
+            // ProfileForm.cs – “이미지 변경” 버튼 클릭 핸들러 추가
+            button2.Click += async (sender, e) =>
+            {
+                // 1) 이미지 선택 폼 띄우기
+                using (var uploadForm = new ImageUploadForm())
+                {
+                    if (uploadForm.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    string selectedPath = uploadForm.SelectedImagePath;
+                    button2.Enabled = false;
+
+                    // 2) 서버에 이미지 업로드 (opcode 16: upload_image)
+                    var items = new List<string> { "0", id, selectedPath };
+                    var result = await LoginForm.GlobalDCM.db_request_data(16, items); // :contentReference[oaicite:0]{index=0}
+
+                    if (result.Key && result.Value.Item2.Count > 0)
+                    {
+                        int keyIndex = result.Value.Item1;
+                        int lastIdx = result.Value.Item2.Last();
+                        string response = LoginForm.GetGlobalDCMResponseData(keyIndex, lastIdx);
+                        LoginForm.ClearGlobalDCMReceivedData(keyIndex);
+
+                        if (response != "0")
+                        {
+                            MessageBox.Show("프로필 이미지가 성공적으로 업데이트되었습니다.",
+                                            "업데이트 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // 3) PictureBox 갱신
+                            pictureBox1.Image = Image.FromFile(selectedPath);
+                            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                        }
+                        else
+                        {
+                            MessageBox.Show("이미지 업로드에 실패했습니다.",
+                                            "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("서버와 통신에 실패했습니다.",
+                                        "통신 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    button2.Enabled = true;
+                }
+            };
+
         }
 
         private async void FriendProfileForm_Load(object sender, EventArgs e)

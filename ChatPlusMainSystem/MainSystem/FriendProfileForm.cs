@@ -13,30 +13,30 @@ namespace MainSystem
 {
     public partial class FriendProfileForm : Form
     {
-        private string friendId;
-        private string friendName;
+        private readonly string friendId;
+        private readonly string friendName;
+        private readonly string friendImagePath;
         private readonly string defaultImagePath;
 
-        public FriendProfileForm(string friendId, string nick)
+        public FriendProfileForm(string friendId, string nick, string imagePath)
         {
             InitializeComponent();
             this.friendId = friendId;
             this.friendName = nick;
-
-            // 기본 이미지 경로(Application 실행 폴더)
-            defaultImagePath = Path.Combine(Application.StartupPath, "default_profile.png");
+            this.friendImagePath = imagePath;
+            this.defaultImagePath = Path.Combine(Application.StartupPath, "default_profile.png");
 
             label1.Text = friendName;
             label2.Text = friendId;
 
             // 생성 시점에 기본 이미지 세팅
-            if (File.Exists(defaultImagePath))
-            {
+            if (!string.IsNullOrEmpty(friendImagePath) && File.Exists(friendImagePath))
+                pictureBoxFriend.Image = Image.FromFile(friendImagePath);
+            else if (File.Exists(defaultImagePath))
                 pictureBoxFriend.Image = Image.FromFile(defaultImagePath);
-            }
+
             pictureBoxFriend.SizeMode = PictureBoxSizeMode.Zoom;
 
-            // Load 이벤트 연결
             this.Load += FriendProfileForm_Load;
 
             // FriendProfileForm.cs – 생성자 또는 Load 이벤트 이후에 추가
@@ -86,22 +86,44 @@ namespace MainSystem
                 Directory.CreateDirectory(imageDir);
             string localPath = Path.Combine(imageDir, $"{friendId}.jpg");
 
+            // 기존 파일 삭제해서 항상 최신 이미지 받기
+            if (File.Exists(localPath))
+            {
+                try
+                {
+                    File.Delete(localPath);
+                }
+                catch { /* 삭제 못해도 계속 진행 */ }
+            }
+
             // 서버에서 이미지 다운로드 시도
             var items = new List<string> { "0", friendId, localPath };
             var result = await LoginForm.GlobalDCM.db_request_data(15, items);
 
             if (result.Key && File.Exists(localPath))
             {
-                // 성공적으로 불러왔으면 실제 이미지로 교체
-                pictureBoxFriend.Image = Image.FromFile(localPath);
+                // 이전에 PictureBox에 로드된 이미지 메모리 해제
+                if (pictureBoxFriend.Image != null)
+                {
+                    pictureBoxFriend.Image.Dispose();
+                    pictureBoxFriend.Image = null;
+                }
+
+                // 스트림으로 로드해서 파일 잠금 방지
+                using (var fs = new FileStream(localPath, FileMode.Open, FileAccess.Read))
+                {
+                    pictureBoxFriend.Image = Image.FromStream(fs);
+                }
                 pictureBoxFriend.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
-                // 실패 시 기본 이미지를 유지 (이미 생성자에서 세팅됨)
-                pictureBoxFriend.SizeMode = PictureBoxSizeMode.CenterImage;
+                // 다운로드 실패 시 기본 이미지 유지
+                pictureBoxFriend.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
+
+
         private void pictureBoxFriend_Click(object sender, EventArgs e)
         {
 
