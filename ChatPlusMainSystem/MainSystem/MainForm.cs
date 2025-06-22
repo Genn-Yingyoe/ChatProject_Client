@@ -804,7 +804,7 @@ namespace MainSystem
 
                     Label lblId = new Label
                     {
-                        Text = $"FormClosingID: {friend.Friend_Id}",
+                        Text = $"ID: {friend.Friend_Id}",
                         Font = new Font("맑은 고딕", 9),
                         ForeColor = Color.Gray,
                         Location = new Point(65, 32),
