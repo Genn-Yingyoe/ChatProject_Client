@@ -23,6 +23,16 @@ namespace MainSystem
             this.id = id;
             this.name = nick;
 
+            button2.BackColor = Color.FromArgb(41, 47, 102);
+            button2.ForeColor = Color.White;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.FlatAppearance.BorderSize = 0;
+
+            button1.BackColor = Color.FromArgb(41, 47, 102);
+            button1.ForeColor = Color.White;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.FlatAppearance.BorderSize = 0;
+
             // 기본 이미지 경로(Application 실행 폴더)
             defaultImagePath = Path.Combine(Application.StartupPath, "default_profile.png");
 

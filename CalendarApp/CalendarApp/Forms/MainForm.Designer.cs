@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.listViewSchedules = new System.Windows.Forms.ListView();
             this.Category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Title = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAddSchedule = new System.Windows.Forms.Button();
             this.btnDeleteSchedule = new System.Windows.Forms.Button();
-            this.btnTempLogin = new System.Windows.Forms.Button();
             this.txtScheduleContent = new System.Windows.Forms.TextBox();
             this.chkSelectAll = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
@@ -46,9 +46,10 @@
             this.Title});
             this.listViewSchedules.FullRowSelect = true;
             this.listViewSchedules.HideSelection = false;
-            this.listViewSchedules.Location = new System.Drawing.Point(11, 320);
+            this.listViewSchedules.Location = new System.Drawing.Point(10, 256);
+            this.listViewSchedules.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.listViewSchedules.Name = "listViewSchedules";
-            this.listViewSchedules.Size = new System.Drawing.Size(460, 360);
+            this.listViewSchedules.Size = new System.Drawing.Size(403, 289);
             this.listViewSchedules.TabIndex = 0;
             this.listViewSchedules.UseCompatibleStateImageBehavior = false;
             this.listViewSchedules.View = System.Windows.Forms.View.Details;
@@ -67,9 +68,11 @@
             // 
             // btnAddSchedule
             // 
-            this.btnAddSchedule.Location = new System.Drawing.Point(273, 693);
+            this.btnAddSchedule.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnAddSchedule.Location = new System.Drawing.Point(239, 554);
+            this.btnAddSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddSchedule.Name = "btnAddSchedule";
-            this.btnAddSchedule.Size = new System.Drawing.Size(85, 46);
+            this.btnAddSchedule.Size = new System.Drawing.Size(74, 37);
             this.btnAddSchedule.TabIndex = 1;
             this.btnAddSchedule.Text = "일정 추가";
             this.btnAddSchedule.UseVisualStyleBackColor = true;
@@ -77,41 +80,35 @@
             // 
             // btnDeleteSchedule
             // 
-            this.btnDeleteSchedule.Location = new System.Drawing.Point(374, 693);
+            this.btnDeleteSchedule.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnDeleteSchedule.Location = new System.Drawing.Point(327, 554);
+            this.btnDeleteSchedule.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDeleteSchedule.Name = "btnDeleteSchedule";
-            this.btnDeleteSchedule.Size = new System.Drawing.Size(85, 46);
+            this.btnDeleteSchedule.Size = new System.Drawing.Size(74, 37);
             this.btnDeleteSchedule.TabIndex = 2;
             this.btnDeleteSchedule.Text = "일정 삭제";
             this.btnDeleteSchedule.UseVisualStyleBackColor = true;
             this.btnDeleteSchedule.Click += new System.EventHandler(this.btnDeleteSchedule_Click);
             // 
-            // btnTempLogin
-            // 
-            this.btnTempLogin.Location = new System.Drawing.Point(33, 692);
-            this.btnTempLogin.Name = "btnTempLogin";
-            this.btnTempLogin.Size = new System.Drawing.Size(126, 23);
-            this.btnTempLogin.TabIndex = 3;
-            this.btnTempLogin.Text = "임시 로그인";
-            this.btnTempLogin.UseVisualStyleBackColor = true;
-            //this.btnTempLogin.Click += new System.EventHandler(this.btnTempLogin_Click);
-            // 
             // txtScheduleContent
             // 
-            this.txtScheduleContent.Location = new System.Drawing.Point(11, 530);
+            this.txtScheduleContent.Location = new System.Drawing.Point(10, 424);
+            this.txtScheduleContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtScheduleContent.Multiline = true;
             this.txtScheduleContent.Name = "txtScheduleContent";
             this.txtScheduleContent.ReadOnly = true;
             this.txtScheduleContent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtScheduleContent.Size = new System.Drawing.Size(460, 150);
+            this.txtScheduleContent.Size = new System.Drawing.Size(403, 121);
             this.txtScheduleContent.TabIndex = 7;
             this.txtScheduleContent.Visible = false;
             // 
             // chkSelectAll
             // 
             this.chkSelectAll.AutoSize = true;
-            this.chkSelectAll.Location = new System.Drawing.Point(18, 295);
+            this.chkSelectAll.Location = new System.Drawing.Point(16, 236);
+            this.chkSelectAll.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chkSelectAll.Name = "chkSelectAll";
-            this.chkSelectAll.Size = new System.Drawing.Size(94, 19);
+            this.chkSelectAll.Size = new System.Drawing.Size(76, 16);
             this.chkSelectAll.TabIndex = 8;
             this.chkSelectAll.Text = "전체 선택";
             this.chkSelectAll.UseVisualStyleBackColor = true;
@@ -119,17 +116,20 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 753);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(422, 602);
             this.Controls.Add(this.chkSelectAll);
             this.Controls.Add(this.txtScheduleContent);
-            this.Controls.Add(this.btnTempLogin);
             this.Controls.Add(this.btnDeleteSchedule);
             this.Controls.Add(this.btnAddSchedule);
             this.Controls.Add(this.listViewSchedules);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
-            this.Text = "캘린더";
+            this.Text = "ChatMoa_Calendar";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,7 +142,6 @@
         private System.Windows.Forms.Button btnDeleteSchedule;
         private System.Windows.Forms.ColumnHeader Category;
         private System.Windows.Forms.ColumnHeader Title;
-        private System.Windows.Forms.Button btnTempLogin;
         private System.Windows.Forms.TextBox txtScheduleContent;
         private System.Windows.Forms.CheckBox chkSelectAll;
     }
