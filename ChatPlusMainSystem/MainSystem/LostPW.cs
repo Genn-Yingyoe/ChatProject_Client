@@ -36,6 +36,8 @@ namespace MainSystem
             btnSelectQuestion.Click += BtnSelectQuestion_Click;
             this.Controls.Add(btnSelectQuestion);
             btnSelectQuestion.BringToFront();
+
+            
         }
 
         public LostPW(string userId) : this()
@@ -123,6 +125,7 @@ namespace MainSystem
 
         private async Task<bool> ChangePasswordWithDCM(List<string> items)
         {
+            dcm.ip_change(LoginForm.ip_address);
             // opcode 3 : change_password { id, ps_question_index, ps_question_answer, new_ps }
             var result = await dcm.db_request_data(3, items);
 
