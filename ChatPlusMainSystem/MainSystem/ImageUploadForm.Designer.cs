@@ -38,9 +38,10 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(12, 242);
+            this.btnBrowse.Location = new System.Drawing.Point(17, 363);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnBrowse.Size = new System.Drawing.Size(107, 34);
             this.btnBrowse.TabIndex = 0;
             this.btnBrowse.Text = "Browse";
             this.btnBrowse.UseVisualStyleBackColor = true;
@@ -48,12 +49,14 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(152, 242);
+            this.btnOK.Location = new System.Drawing.Point(217, 363);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(107, 34);
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click_1);
             // 
             // openFileDialog1
             // 
@@ -61,21 +64,23 @@
             // 
             // pictureBoxPreview
             // 
-            this.pictureBoxPreview.Location = new System.Drawing.Point(12, 12);
+            this.pictureBoxPreview.Location = new System.Drawing.Point(17, 18);
+            this.pictureBoxPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBoxPreview.Name = "pictureBoxPreview";
-            this.pictureBoxPreview.Size = new System.Drawing.Size(215, 215);
+            this.pictureBoxPreview.Size = new System.Drawing.Size(307, 322);
             this.pictureBoxPreview.TabIndex = 2;
             this.pictureBoxPreview.TabStop = false;
             // 
             // ImageUploadForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(242, 282);
+            this.ClientSize = new System.Drawing.Size(346, 423);
             this.Controls.Add(this.pictureBoxPreview);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnBrowse);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "ImageUploadForm";
             this.Text = "ChatMoa";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
