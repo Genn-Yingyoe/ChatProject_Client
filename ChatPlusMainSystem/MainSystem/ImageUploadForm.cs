@@ -42,7 +42,28 @@ namespace MainSystem
 
         private void btnBrowse_Click_1(object sender, EventArgs e)
         {
+            using (var ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    SelectedImagePath = ofd.FileName;
+                    pictureBoxPreview.Image = Image.FromFile(SelectedImagePath);
+                    pictureBoxPreview.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+            }
+        }
 
+        private void btnOK_Click_1(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SelectedImagePath))
+            {
+                MessageBox.Show("업로드할 이미지를 선택해주세요.",
+                                "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }
