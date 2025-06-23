@@ -165,6 +165,11 @@ namespace MainSystem
                 pictureBox1.Image = Image.FromFile(localPath);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
+            else if (File.Exists(localPath))
+            {
+                pictureBox1.Image = Image.FromFile(localPath);
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
             else
             {
                 // 실패 시 기본 이미지를 유지 (이미 생성자에서 세팅됨)
@@ -178,6 +183,11 @@ namespace MainSystem
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

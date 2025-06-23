@@ -20,7 +20,8 @@ namespace MainSystem
     {
         static public string login_ID;
 
-        private string ip_address = "127.0.0.1";
+        static public string ip_address = "127.0.0.1";
+
         // TextBox 패딩 설정을 위한 Win32 API
         public const int EM_SETRECT = 0xB3;
 
