@@ -43,3 +43,10 @@ C:\Users\User\Desktop\자료\Project\ChatProject_Client\ChatPlusMainSystem\ChatM
 C:\Users\User\Desktop\자료\Project\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
 C:\Users\User\Desktop\자료\Project\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
 C:\Users\User\Desktop\자료\Project\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe.config
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.exe
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\bin\Debug\ChatMoa_DataBaseServer.pdb
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.AssemblyReference.cache
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.csproj.CoreCompileInputs.cache
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.exe
+D:\Desktop\ChatProject_Client\ChatPlusMainSystem\ChatMoa_DataBaseServer\obj\Debug\ChatMoa_DataBaseServer.pdb

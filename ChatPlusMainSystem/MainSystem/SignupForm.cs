@@ -254,6 +254,11 @@ namespace MainSystem
             {
                 // 임시 DCM으로 회원가입 요청
                 DCM tempDcm = new DCM();
+
+                tempDcm.ip_change(LoginForm.ip_address);
+
+
+
                 SetDCMUserId(tempDcm, "000000"); // 임시 ID
 
                 // opcode 1: register(회원가입)
@@ -274,6 +279,8 @@ namespace MainSystem
                 {
                     int key = result.Value.Item1;
                     List<int> indexes = result.Value.Item2;
+
+
 
                     // 마지막 응답 확인
                     string response = GetDCMResponseData(tempDcm, key, indexes.Last());
