@@ -165,6 +165,7 @@ namespace MainSystem
                 // 임시 DCM 인스턴스로 로그인 요청 (아직 user_id가 없으므로)
                 DCM tempDcm = new DCM();
                 SetDCMUserId(tempDcm, "000000");  // 임시 ID
+                tempDcm.ip_change(ip_address);
 
                 // opcode 2: 로그인
                 List<string> items = new List<string> { id, password };
